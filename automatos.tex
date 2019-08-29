@@ -1099,7 +1099,7 @@ Para tanto, temos que mostrar que a classe das linguagens reconhecíveis por AFN
 
   \begin{eqnarray*}
     N_1 & = & \langle Q_1, \Sigma, \Delta_1, q_1, F_1 \rangle\\
-    N_2 & = & \langle Q_2, \Sigma, \Delta_2, q_1, F_2 \rangle
+    N_2 & = & \langle Q_2, \Sigma, \Delta_2, q_1', F_2 \rangle
   \end{eqnarray*}
 
   Vamos construir $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$:
@@ -1111,7 +1111,7 @@ Para tanto, temos que mostrar que a classe das linguagens reconhecíveis por AFN
     \begin{array}{ccc}
       \Delta_1(q, a) & \textrm{ se } & q \in Q_1\\
       \Delta_2(q, a) & \textrm{ se } & q \in Q_2\\
-      \{q_1, q_2\}   & \textrm{ se } & q = q_0 \textrm{ e } a = \varepsilon \\
+      \{q_1, q_1'\}   & \textrm{ se } & q = q_0 \textrm{ e } a = \varepsilon \\
       \emptyset     & \textrm{ se }  & q = q_0 \textrm{ e } a \neq \varepsilon \\
     \end{array}\right.$
   \end{itemize}
@@ -1139,7 +1139,7 @@ Para tanto, temos que mostrar que a classe das linguagens reconhecíveis por AFN
       \tikzset{
         coil/.style={ decorate, decoration={ snake=coil} },
       }
-      \node[state, initial] (1) {$q_2$};
+      \node[state, initial] (1) {$q_1'$};
       \node[state, accepting, minimum size=0pt] (2) at (3,1){};
       \node[state, accepting, minimum size=0pt] (4) at (3,-1){};
       \path[->] (1) edge[coil]  (2);
@@ -1155,7 +1155,7 @@ Para tanto, temos que mostrar que a classe das linguagens reconhecíveis por AFN
       }
       \node[state, initial] (0) {$q_0$};
       \node[state, color=blue] (1) at (2,1) {$q_1$};
-      \node[state, color=red] (2) at (2,-1) {$q_2$};
+      \node[state, color=red] (2) at (2,-1) {$q_1'$};
       \node[state, accepting, minimum size=0pt, color=blue] (f1) at (5,2){};
       \node[state, accepting, minimum size=0pt, color=blue] (f2) at (5,1){};
       \node[state, accepting, minimum size=0pt, color=blue] (f3) at (5,0){};
@@ -1234,7 +1234,7 @@ Se $A, B \subseteq \Sigma^*$ são reconhecíveis por AFNs então $A \circ B$ tam
 
   \begin{eqnarray*}
     N_1 & = & \langle Q_1, \Sigma, \Delta_1, q_1, F_1 \rangle\\
-    N_2 & = & \langle Q_2, \Sigma, \Delta_2, q_1, F_2 \rangle
+    N_2 & = & \langle Q_2, \Sigma, \Delta_2, q_1', F_2 \rangle
   \end{eqnarray*}
 
   Vamos construir $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$:
@@ -1247,7 +1247,7 @@ Se $A, B \subseteq \Sigma^*$ são reconhecíveis por AFNs então $A \circ B$ tam
     \begin{array}{ccc}
       \Delta_1(q, a) & \textrm{ se } & q \in Q_1 \textrm{ e } q \notin F_1\\
       \Delta_1(q, a) & \textrm{ se } & q \in F_1 \textrm{ e } a \neq \varepsilon\\
-      \Delta_1(q, a) \cup \{q_2\} & \textrm{ se } & q \in F_1 \textrm{ e } a = \varepsilon\\
+      \Delta_1(q, a) \cup \{q_1'\} & \textrm{ se } & q \in F_1 \textrm{ e } a = \varepsilon\\
       \Delta_2(q, a) & \textrm{ se } & q \in Q_2\\
      \end{array}\right.$
   \end{itemize}
@@ -1476,7 +1476,7 @@ Se $A, B \subseteq \Sigma^*$ são reconhecíveis por AFNs então $A \circ B$ tam
 
 \begin{proof}
   Pelos lemas anteriores sabemos que a classe das linguagens reconhecíveis por AFNs é fechada por união, concatenação e estrela de Kleene.
-  Para completar a prova mostraremos que a classe contém as linguagens $\{a\}$ para todo $a \in \Sigma$, $\{epsilon\}$ e $\emptyset$.
+  Para completar a prova mostraremos que a classe contém as linguagens $\{a\}$ para todo $a \in \Sigma$, $\{\varepsilon\}$ e $\emptyset$.
 Os seguintes AFNs fazem exatamente isso:
 
 $N_a$
@@ -1690,7 +1690,7 @@ $(a \abxcup b)^\star aba$
 Na última seção vimos que toda linguagem regular pode ser reconhecida por um autômato finito.
 Veremos agora a relação recíproca, a saber, que toda linguagem reconhecível por um autômato é regular.
 Para isso comecemos com a seguinte definição.
-Um {\em Autômato Finito Generalizado} (AFG) é uma 5-upla $\langle, \Sigma, \delta, q_i, q_f \rangle$ em que:
+Um {\em Autômato Finito Generalizado} (AFG) é uma 5-upla $\langle Q, \Sigma, \delta, q_i, q_f \rangle$ em que:
 
 \begin{itemize}
 \item[] $Q$ é um conjunto de estados,
@@ -1751,6 +1751,7 @@ Omitiremos a partir de agora as setas com etiqueta $\emptyset$.
 \end{example}
 
 \begin{lemma}
+\label{lemma:afg1}
 Para todo AFD $M$ existe um AFG $G$ equivalente.
 \end{lemma}
 \begin{proof}
@@ -1770,6 +1771,7 @@ Para todo AFD $M$ existe um AFG $G$ equivalente.
 
 
 \begin{example}
+\label{ex:afg1}
   \begin{displaymath}
     M = \langle \{1, 2\}, \{a,b\}, \delta, 1, \{2\} \rangle
   \end{displaymath}
@@ -1802,9 +1804,9 @@ Para todo AFD $M$ existe um AFG $G$ equivalente.
   \begin{tabular}{c|cccc}
     $\delta'$ & $s$      & $1$           & $2$           & $f$           \\
     \hline
-    $s$       & $\times$ & $\varepsilon$ & $\emptyset$   & $\emptyset$   \\
+    $s$       & $\times$ & $\epsilon$ & $\emptyset$   & $\emptyset$   \\
     $1$       & $\times$ & $a$           & $b$           & $\emptyset$   \\
-    $2$       & $\times$ & $\emptyset$   & $a \abxcup b$ & $\varepsilon$ \\
+    $2$       & $\times$ & $\emptyset$   & $a \abxcup b$ & $\epsilon$ \\
     $f$       & $\times$ & $\times$      & $\times$      & $\times$      \\
   \end{tabular}
   \end{center}
@@ -1827,6 +1829,7 @@ Para todo AFD $M$ existe um AFG $G$ equivalente.
 \end{example}
 
 \begin{lemma}
+\label{lemma:afg2}
 Se $G$ é um AFG com $k > 2$ estados, então existe um AFG $G'$ com $k-1$ estados tal que $G \sim G'$.
 \end{lemma}
 \begin{proof}
@@ -1873,7 +1876,8 @@ E depois de remover $q_r$ chegamos nos seguinte:
 
 
 \begin{example}
-Considere o AFG $G$ do exemplo \ref{}.
+\label{ex:afg2}
+Considere o AFG $G$ do Exemplo \ref{ex:afg1}.
 Vamos remover o estado $2$ seguindo a construção do lema anterior.
 
 \begin{displaymath}
@@ -1909,10 +1913,10 @@ Toda linguagem reconhecível por AFD é regular.
 \end{theorem}
 \begin{proof}
   Seja $A$ uma linguagem reconhecível por um AFD $M$ i.e. $L(M) = A$.
-  Pelo lema \ref{} existe um AFG $G$ tal que $M \sim G$.
-  Além disso, examinando a construção do lema \ref{} temos que se o número de estados de $M$ é $k$ então o número de estado de $G$ é $k+2$.
+  Pelo Lema \ref{lemma:afg1} existe um AFG $G$ tal que $M \sim G$.
+  Além disso, examinando a construção do Lema \ref{lemma:afg2} temos que se o número de estados de $M$ é $k$ então o número de estado de $G$ é $k+2$.
 
-  Pelo lema \ref{} existe $G_1$ com um estado a menos ($k + 1$ estados) tal que $G_1 \sim G$.
+  Pelo lema \ref{lemma:afg2} existe $G_1$ com um estado a menos ($k + 1$ estados) tal que $G_1 \sim G$.
   Aplicando o lema $k$ vezes obtemos $G_k \sim G$ com exatamente $2$ estados: $q_i$ e $q_f$.
   É claro que $L(G_k) = L(R)$ aonde $\delta_{G_k}(q_i, q_f) = R$.
   Como $G_k \sim G$, temos $L(G) = L(H) = L(R)$.
@@ -1924,8 +1928,8 @@ Toda linguagem reconhecível por AFD é regular.
 
 
 \begin{example}
-  Considere o AFD $M$ do exemplo \ref{}.
-Mostramos que ele é equivalente a um AFG e, em no exemplo \ref{} mostramos um AFG equivalente com 3 estados.
+  Considere o AFD $M$ do Exemplo \ref{ex:afg1}.
+Mostramos que ele é equivalente a um AFG e, em no Exemplo \ref{ex:afg2} mostramos um AFG equivalente com 3 estados.
 Removendo mais um estado ficamos com o seguinte diagrama:
 
 \begin{center}
