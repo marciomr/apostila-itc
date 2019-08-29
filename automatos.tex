@@ -516,18 +516,18 @@ Os {\em autômatos finitos não-determinísticos} (AFN) extendem os determiníst
 \item é possível mudar de estado sem consumir nenhum símbolo da entrada.
 \end{enumerate}
 
-Formalmente um AFN é também definido como uma 5-upla $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$, mas agora $\Delta: Q \times (\Sigma \cup \{\varepsilon\}) \to 2^Q$.
+Definimos formalmente um AFN é também definido como uma 5-upla $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$, mas agora $\Delta: Q \times (\Sigma \cup \{\varepsilon\}) \to 2^Q$.
 Ou seja, a entrada da função pode ser a string vazia $\epsilon$ e sua saída é um conjunto de estados.
 
-Representamos o diagrama de estados da mesma forma que fizemos com os AFDs, mas agora é pssível que de um mesmo estado partam mais de uma seta com o mesmo síbolo, existem setas com $\varepsilon$ e pode haver estados em que não haja seta com determinado símbolo.
+Representamos o diagrama de estados da mesma forma que fizemos com os AFDs, mas agora é possível que de um mesmo estado partam mais de uma seta com o mesmo síbolo, existem setas com $\varepsilon$ e pode haver estados em que não haja seta com determinado símbolo.
 
 Uma string é {\em aceita} por um AFN se existir {\em alguma} possibilidade de execução do autômato que consuma toda string e termine em um estado final.
 
-Formalmente, $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$ aceita uma string $\omega = y_1 \dots y_n$ onde $y_i \in \Sigma \cup \{\varepsilon\}$ se {\em existe} uma sequência de estados $r_0, \dots, r_n$ tal que:
+Formalmente, $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$ aceita uma string $\omega = y_1 \dots y_n$ onde $y_i \in \Sigma \cup \{\varepsilon\}$ se {\em existe} uma sequência de estados $r_0, \dots, r_m$ tal que:
 \begin{enumerate}
 \item $r_0 = q_0$
 \item $r_{i+1} \in \Delta(r_i, y_{i+1})$
-\item $r_n \in F$
+\item $r_m \in F$
 \end{enumerate}
 
 Novamente, escrevemos $L(N)$ para a linguagem formada pelas strings aceitas por $N$.
@@ -535,79 +535,71 @@ Novamente, escrevemos $L(N)$ para a linguagem formada pelas strings aceitas por 
 
 \begin{example}
   \begin{displaymath}
-    N_1 = \langle \{q_1, q_2, q_3, q_4\}, \{0,1\}, \Delta, q_1, \{q_4\}\rangle
+    N_1 = \langle \{q_0, q_1, q_2, q_3\}, \{0,1\}, \Delta, q_0, \{q_3\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|ccc}
     $\Delta$ & $0$ & $1$ & $\varepsilon$\\
     \hline
-    $q_1$ & $\{q_1\}$ & $\{q_1,q_2\}$ & $\emptyset$\\
-    $q_2$ & $\{q_3\}$ & $\emptyset$ & $\{q_3\}$\\
-    $q_3$ & $\emptyset$ & $\{q_4\}$ & $\emptyset$\\
-    $q_4$ & $\{q_4\}$ & $\{q_4\}$ & $\emptyset$\\
+    $q_0$ & $\{q_0\}$ & $\{q_0,q_1\}$ & $\emptyset$\\
+    $q_1$ & $\{q_2\}$ & $\emptyset$ & $\{q_2\}$\\
+    $q_2$ & $\emptyset$ & $\{q_3\}$ & $\emptyset$\\
+    $q_3$ & $\{q_3\}$ & $\{q_3\}$ & $\emptyset$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state] (q3) at (6,0) {$q_3$};
-      \node[state, accepting] (q4) at (9,0) {$q_4$};
-      \path[->] (q1) edge[loop above] node {$0,1$} (q1);
-      \path[->] (q4) edge[loop above] node {$0,1$} (q4);
-      \path[->] (q1) edge node {$1$} (q2);
-      \path[->] (q2) edge node {$0, \varepsilon$} (q3);
-      \path[->] (q3) edge node {$1$} (q4);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state] (q2) at (6,0) {$q_2$};
+      \node[state, accepting] (q3) at (9,0) {$q_3$};
+      \path[->] (q0) edge[loop above] node {$0,1$} (q0);
+      \path[->] (q3) edge[loop above] node {$0,1$} (q3);
+      \path[->] (q0) edge node {$1$} (q1);
+      \path[->] (q1) edge node {$0, \varepsilon$} (q2);
+      \path[->] (q2) edge node {$1$} (q3);
     \end{tikzpicture}
   \end{center}
 
-  Vamos simular as possíveis execuções desse autômato:
+  Vamos simular as possíveis execuções desse autômato para a entrada $010110$:
 
 \begin{center}
   \begin{tikzpicture}[level distance=2cm,sibling distance=.5cm,
    edge from parent path={(\tikzparentnode) -> (\tikzchildnode)}, >=latex]
-    \Tree[.$q_1$
-      \edge[->]node[auto=right]{$0$}; [.$q_1$
-        \edge[->]node[auto=right]{$1$}; [.$q_1$
-          \edge[->]node[auto=right]{$0$}; [.$q_1$
-            \edge[->]node[auto=right]{$1$}; [.$q_1$
-              \edge[->]node[auto=right]{$1$}; [.$q_1$
-                \edge[->]node[auto=right]{$0$}; [.\node[red]{$q_1$}; ]
+    \Tree[.$q_0$
+      \edge[->]node[auto=right]{$0$}; [.$q_0$
+        \edge[->]node[auto=right]{$1$}; [.$q_0$
+          \edge[->]node[auto=right]{$0$}; [.$q_0$
+            \edge[->]node[auto=right]{$1$}; [.$q_0$
+              \edge[->]node[auto=right]{$1$}; [.$q_0$
+                \edge[->]node[auto=right]{$0$}; [.\node[red]{$q_0$}; ]
               ]
-              \edge[->]node[auto=left]{$1$}; [.$q_2$
-                \edge[->]node[auto=right]{$0$}; [.\node[red]{$q_3$}; ]
-                \edge[->]node[auto=left]{$\varepsilon$}; [.\node[red]{$q_3$}; ]
+              \edge[->]node[auto=left]{$1$}; [.$q_1$
+                \edge[->]node[auto=right]{$0$}; [.\node[red]{$q_2$}; ]
+                \edge[->]node[auto=left]{$\varepsilon$}; [.\node[red]{$q_2$}; ]
               ]
             ]
-            \edge[->]node[auto=left]{$1$}; [.$q_2$
-              \edge[->]node[auto=right]{$\varepsilon$}; [.$q_3$
-                \edge[->]node[auto=right]{$1$}; [.$q_4$
-                  \edge[->]node[auto=right]{$0$}; [.\node[blue]{$q_4$}; ]
+            \edge[->]node[auto=left]{$1$}; [.$q_1$
+              \edge[->]node[auto=right]{$\varepsilon$}; [.$q_2$
+                \edge[->]node[auto=right]{$1$}; [.$q_3$
+                  \edge[->]node[auto=right]{$0$}; [.\node[blue]{$q_3$}; ]
                 ]
               ]
             ]
           ]
         ]
-        \edge[->]node[auto=left]{$1$}; [.$q_2$
-          \edge[->]node[auto=right]{$0$}; [.$q_3$
-            \edge[->]node[auto=right]{$1$}; [.$q_4$
-              \edge[->]node[auto=right]{$1$}; [.$q_4$
-                \edge[->]node[auto=right]{$0$}; [.\node[blue]{$q_4$}; ]
+        \edge[->]node[auto=left]{$1$}; [.$q_1$
+          \edge[->]node[auto=right]{$0$}; [.$q_2$
+            \edge[->]node[auto=right]{$1$}; [.$q_3$
+              \edge[->]node[auto=right]{$1$}; [.$q_3$
+                \edge[->]node[auto=right]{$0$}; [.\node[blue]{$q_3$}; ]
               ]
             ]
           ]
-          \edge[->]node[auto=left]{$\varepsilon$}; [.$q_3$
-            \edge[->]node[auto=right]{$0$}; [.$q_4$
-              \edge[->]node[auto=right]{$1$}; [.$q_4$
-                \edge[->]node[auto=right]{$1$}; [.$q_4$
-                  \edge[->]node[auto=right]{$0$}; [.\node[blue]{$q_4$}; ]
-                ]
-              ]
-            ]
-          ]
+          \edge[->]node[auto=left]{$\varepsilon$}; [.\node[red]{$q_2$}; ]
         ]
      ]
    ]
@@ -619,7 +611,7 @@ O autômato para apenas quando toda a entrada foi consumida.
 Note que nos três ramos mais a esquerda quando isso ocorre não estamos em um estado final, mas nas três da direita sim.
 Basta que exita um ramo, uma possibilidade de execução, para que a string seja aceita.
 Assim, neste caso a string de fato é aceita, basta escolher um caminha que termine em um estado final.
-Por exemplo: $q_1, q_1, q_2, q_2, q_3, q_4, q_4, q_4$ satisfaz a definição para a string $0101\varepsilon 10 = 010110$.
+Por exemplo: $q_0, q_0, q_1, q_1, q_2, q_3, q_3, q_3$ satisfaz a definição para a string $0101\varepsilon 10 = 010110$.
 
 \begin{displaymath}
   L(N_1) = \{\omega \in \{0,1\}^* : \omega \textrm{ contém 101 ou 11 como substring}\}
@@ -629,31 +621,31 @@ Por exemplo: $q_1, q_1, q_2, q_2, q_3, q_4, q_4, q_4$ satisfaz a definição par
 
 \begin{example}
     \begin{displaymath}
-    N_2 = \langle \{q_1, q_2, q_3, q_4\}, \{0,1\}, \Delta, q_1, \{q_4\}\rangle
+    N_2 = \langle \{q_0, q_1, q_2, q_3\}, \{0,1\}, \Delta, q_0, \{q_3\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|ccc}
     $\Delta$ & $0$ & $1$ & $\varepsilon$\\
     \hline
-    $q_1$ & $\{q_1\}$ & $\{q_1,q_2\}$ & $\emptyset$\\
+    $q_0$ & $\{q_0\}$ & $\{q_0,q_1\}$ & $\emptyset$\\
+    $q_1$ & $\{q_2\}$ & $\{q_2\}$ & $\emptyset$\\
     $q_2$ & $\{q_3\}$ & $\{q_3\}$ & $\emptyset$\\
-    $q_3$ & $\{q_4\}$ & $\{q_4\}$ & $\emptyset$\\
-    $q_4$ & $\emptyset$ & $\emptyset$ & $\emptyset$\\
+    $q_3$ & $\emptyset$ & $\emptyset$ & $\emptyset$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state] (q3) at (6,0) {$q_3$};
-      \node[state, accepting] (q4) at (9,0) {$q_4$};
-      \path[->] (q1) edge[loop above] node {$0,1$} (q1);
-      \path[->] (q1) edge node {$1$} (q2);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state] (q2) at (6,0) {$q_2$};
+      \node[state, accepting] (q3) at (9,0) {$q_3$};
+      \path[->] (q0) edge[loop above] node {$0,1$} (q0);
+      \path[->] (q0) edge node {$1$} (q1);
+      \path[->] (q1) edge node {$0, 1$} (q2);
       \path[->] (q2) edge node {$0, 1$} (q3);
-      \path[->] (q3) edge node {$0, 1$} (q4);
     \end{tikzpicture}
   \end{center}
 \begin{displaymath}
@@ -662,56 +654,55 @@ Por exemplo: $q_1, q_1, q_2, q_2, q_3, q_4, q_4, q_4$ satisfaz a definição par
 \end{example}
 
 \begin{example}
-  A partir daqui vamos apresentar os autômatos apenas por seu diagrama.
   O seguinte é o diagrama de $N_3$:
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state, accepting] (q2) at (2,1) {$q_2$};
-      \node[state] (q3) at (6,1) {$q_3$};
-      \node[state, accepting] (q4) at (2,-1) {$q_4$};
-      \node[state] (q5) at (4,-3) {$q_5$};
-      \node[state] (q6) at (6,-1) {$q_6$};
-      \path[->] (q1) edge node {$\varepsilon$} (q2);
-      \path[->] (q1) edge node {$\varepsilon$} (q4);
-      \path[->, bend left = 30] (q2) edge node {$0$} (q3);
-      \path[->, bend left = 30] (q3) edge node {$0$} (q2);
-      \path[->] (q4) edge node {$0$} (q5);
-      \path[->] (q5) edge node {$0$} (q6);
-      \path[->] (q6) edge node[above] {$0$} (q4);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state, accepting] (q1) at (3,0) {$q_1$};
+      \node[state] (q2) at (6,0) {$q_2$};
+      \node[state, accepting] (q3) at (9,0) {$q_3$};
+      \path[->] (q0) edge[loop above] node {$0,1$} (q0);
+      \path[->] (q0) edge node {$0$} (q1);
+      \path[->] (q1) edge node {$1$} (q2);
+      \path[->] (q2) edge node {$0$} (q3);
     \end{tikzpicture}
   \end{center}
 \begin{displaymath}
-  L(N_3) = \{\omega \in \{0\}^* : |\omega| \textrm{ é múltiplo de 2 ou de 3}\}
+  L(N_3) = \{\omega \in \{0,1\}^* : |\omega| \textrm{ termina com } 010\}
 \end{displaymath}
 \end{example}
 
 \begin{example}
+  A partir daqui vamos apresentar os autômatos apenas por seu diagrama.
   O seguinte é o diagrama de $N_4$:
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state, accepting] (q2) at (3,0) {$q_2$};
-      \node[state] (q3) at (6,0) {$q_3$};
-      \node[state, accepting] (q4) at (9,0) {$q_4$};
-      \path[->] (q1) edge[loop above] node {$0,1$} (q1);
-      \path[->] (q1) edge node {$0$} (q2);
-      \path[->] (q2) edge node {$1$} (q3);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state, accepting] (q1) at (2,1) {$q_1$};
+      \node[state] (q2) at (6,1) {$q_2$};
+      \node[state, accepting] (q3) at (2,-1) {$q_3$};
+      \node[state] (q4) at (4,-3) {$q_4$};
+      \node[state] (q5) at (6,-1) {$q_5$};
+      \path[->] (q0) edge node {$\varepsilon$} (q1);
+      \path[->] (q0) edge node {$\varepsilon$} (q3);
+      \path[->, bend left = 30] (q1) edge node {$0$} (q2);
+      \path[->, bend left = 30] (q2) edge node {$0$} (q1);
       \path[->] (q3) edge node {$0$} (q4);
+      \path[->] (q4) edge node {$0$} (q5);
+      \path[->] (q5) edge node[above] {$0$} (q3);
     \end{tikzpicture}
   \end{center}
 \begin{displaymath}
-  L(N_4) = \{\omega \in \{0,1\}^* : |\omega| \textrm{ termina com } 010\}
+  L(N_4) = \{\omega \in \{0\}^* : |\omega| \textrm{ é múltiplo de 2 ou de 3}\}
 \end{displaymath}
 \end{example}
 
 \begin{example}
-  A partir daqui vamos apresentar os autômatos apenas por seu diagrama.
-  O seguinte é o diagrama de $N_3$:
+  O seguinte é o diagrama de $N_5$:
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
@@ -743,14 +734,14 @@ Por exemplo: $q_1, q_1, q_2, q_2, q_3, q_4, q_4, q_4$ satisfaz a definição par
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state, accepting] (q3) at (6,0) {$q_3$};
-      \path[->] (q1) edge[loop above] node {$0$} (q1);
-      \path[->] (q2) edge[loop above] node {$1$} (q2);
-      \path[->] (q3) edge[loop above] node {$0$} (q3);
-      \path[->] (q1) edge node {$1$} (q2);
-      \path[->] (q2) edge node {$\varepsilon$} (q3);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state, accepting] (q2) at (6,0) {$q_2$};
+      \path[->] (q0) edge[loop above] node {$0$} (q0);
+      \path[->] (q1) edge[loop above] node {$1$} (q1);
+      \path[->] (q2) edge[loop above] node {$0$} (q2);
+      \path[->] (q0) edge node {$1$} (q1);
+      \path[->] (q1) edge node {$\varepsilon$} (q2);
     \end{tikzpicture}
   \end{center}
 \begin{displaymath}
