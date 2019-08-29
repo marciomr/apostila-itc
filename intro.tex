@@ -42,12 +42,12 @@ Nosso foco neste curso será nos problemas ditos de {\em decisão}, ou seja, naq
   \end{description}
 \end{example}
 
-Como veremos na próxima seção existe uma relação íntima entre problemas de decisão e linguagens formais, a saber, para cada problema de decisão existe uma linguagem formal equivalente e vice-versa.
+Como veremos na próxima seção, existe uma relação íntima entre problemas de decisão e linguagens formais, a saber, para cada problema de decisão existe uma linguagem formal equivalente e vice-versa.
 De fato, grande parte do curso estudaremos classes de linguagens formais.
 
 Voltemos então para a pergunta: o que é um método automático de resolução?
 
-Para responder a essa pergunta, que não tem nada de trivial, precisamos de um {\em modelo e computação} do funcionamento de dispositivos eletrônicos. 
+Para responder a essa pergunta, que não tem nada de trivial, precisamos de um {\em modelo e computação} do funcionamento de dispositivos eletrônicos.
 Como qualquer outro modelo, faremos abstrações, simplificaremos e desprezaremos variáveis.
 
 Podemos refrasear nossa pergunta, de maneira agora um pouco mais precisa:
@@ -60,9 +60,9 @@ Começaremos com modelos simples, adequados para representar dispositivos simple
 Conforme avançarmos no curso estudaremos modelos mais sofisticados capazes de representar classes cada vez maiores de linguagens.
 
 O diagrama abaixo apresenta um resumo dos três primeiros capítulos do livro.
-No Capítulo \ref{} estudaremos Autômatos Finitos Determinísticos e não-Determinísticos, mostraremos que eles são equivalentes e são capazes de reconhecer exatamente a classe das linguagens regulares.
-No Capítulo \ref{} começaremos mostrando que nem toda linguagem é regular, estudaremos as Linguagens Livres de Contexto e os Autômatos de Pilha e mostraremos a equivalência entre os dois. 
-No Capítulo \ref{} veremos Máquinas de Turing Determinísticas e não-Determinísticas, Linguagens Recursivas e Recursivamente Enumeráveis.
+No Capítulo \ref{cha:automatos} estudaremos Autômatos Finitos Determinísticos e não-Determinísticos, mostraremos que eles são equivalentes e são capazes de reconhecer exatamente a classe das linguagens regulares e terminaremos mostrando que nem toda linguagem é regular.
+No Capítulo \ref{cha:ap} começaremos estudando as Linguagens Livres de Contexto e os Autômatos de Pilha, mostraremos a equivalência entre os dois e terminaremos mostrando que nem toda linguagem é livre de contexto.
+No Capítulo \ref{cha:MTs} veremos Máquinas de Turing Determinísticas e não-Determinísticas, Linguagens Recursivas e Recursivamente Enumeráveis.
 
 \begin{table}[htbp]
   \centering
@@ -91,7 +91,7 @@ Em outras palavras: se algo pode ser computado, então ele pode ser computado po
 Por outro lado, veremos que existem linguagens que não são reconhecíveis por MTs, ou equivalentemente, existem problemas de decisão que não admitem solução computacional ({\em indecidíveis}).
 
 \begin{displaymath}
-  Regulares \subset LLCs \subset Recursivas \subset REs \subset Linguagens  
+  Regulares \subset LLCs \subset Recursivas \subset REs \subset Linguagens
 \end{displaymath}
 
 
@@ -114,7 +114,7 @@ A pergunta não é quão eficiente é uma determinada solução de um problema, 
 
 Se substituirmos as MT Determinísticas por não-Determinísticas, teremos outra classe de problemas, a classe $NP$.
 
-O maior problema em aberto hoje na computação, e quiçá na matemática, é exatamente saber se essas classes coincidem:
+O maior problema em aberto hoje na computação, e quiçá na matemática, é saber se essas classes coincidem:
 
 \begin{displaymath}
   P \stackrel{?}{=} NP
@@ -125,7 +125,7 @@ No fim do curso procuraremos definir o problema de maneira formal e apresentar o
 \section{Problemas de Decisão}
 \label{sec:problemas}
 
-Vamos começar estudando um problema de decisão de grande importância na Teoria da Computação por se tratar do primeiro problema demonstradamente NP-completo (veremos sobre isso no capítulo \ref{}).
+Vamos começar estudando um problema de decisão de grande importância na Teoria da Computação por se tratar do primeiro problema demonstradamente NP-completo (veremos isso no Capítulo \ref{cha:complexidade}).
 O problema que nos referimos é o de decidir se uma fórmula proposicional é ou não satisfatível.
 Recordemos do curso de Matemática Discreta que uma fórmula proposicional sempre pode ser escrita na Forma Normal Conjuntiva (FNC), ou seja, como uma conjunção de disjunção de literais.
 Vamos então definir a linguagens das fórmulas supondo que ela esteja na FNC para facilitar.
@@ -147,7 +147,7 @@ Uma sequência de literais é chamado de {\em cláusula} e a representaremos com
 \item[] $p_1p_2p_3$
 \end{itemize}
 \end{example}
- 
+
 Uma sequência de cláusulas e chamada de {\em fórmula} e será representada como $c_1;c_2;\dots;c_n$.
 
 \begin{example}
@@ -158,7 +158,7 @@ Uma sequência de cláusulas e chamada de {\em fórmula} e será representada co
 \item[] $p_1p_2p_3$
 \end{itemize}
 \end{example}
- 
+
 Interpretaremos uma sequência de literais de maneira disjuntiva e uma sequência de cláusulas de maneira conjuntiva da seguinte forma.
 Uma função $v: \mathbb{L} \to \{0,1\}$ é uma {\em valoração} se para todo $p \in \mathbb{L}$ temos:
 
@@ -169,7 +169,7 @@ Uma função $v: \mathbb{L} \to \{0,1\}$ é uma {\em valoração} se para todo $
 
 Dizemos que uma valoração $v$ {\em satisfaz uma cláusula} $l_1 \dots l_n$ se $v(l_i) = 1$ para algum $i$.
 Em outras palavras, a valoração satisfaz a cláusula se ela atribuiu o valor verdade para algum literal da cláusula.
-Uma valoração $v$ {\em satisfaz uma fórmula} $c_1; \dots; c_n$ ela satisfaz cada uma das cláusulas da fórmula.
+Uma valoração $v$ {\em satisfaz uma fórmula na FNC} $c_1; \dots; c_n$ ela satisfaz cada uma das cláusulas da fórmula.
 
 
 \begin{example}
@@ -178,14 +178,14 @@ Seja $\mathbb{P} = \{p_1, p_2, p3\}$. A valoração $v$ tal que $v(p_1) = v(p_2)
 \begin{itemize}
 \item[] $p_1\bar{p_2};p_2;p_3p_1$
 \item[] $p_1\bar{p_1};p_2\bar{p_2}$
-\item[] $\bar{p_3}$ 
+\item[] $\bar{p_3}$
 \end{itemize}
 
 Por outro lado, $v$ não satisfaz as seguintes fórmulas:
 \begin{itemize}
 \item[] $p_3$
 \item[] $p_3;p_1p_2;p_1$
-\item[] $p_3p_1;\bar{p_1}\bar{p_2}$ 
+\item[] $p_3p_1;\bar{p_1}\bar{p_2}$
 \end{itemize}
 \end{example}
 
@@ -197,7 +197,7 @@ Uma fórmula é dita {\em satisfatível} se existe uma valoração $v$ que a sat
 \begin{itemize}
 \item[] $p_1p_2;\bar{p_1}\bar{p_2}$
 \item[] $p_1p_2$
-\item[] $p_1$  
+\item[] $p_1$
 \end{itemize}
 
 São exemplos de fórmulas {\em não} satisfatíveis:
@@ -214,7 +214,7 @@ O problema da satisfatibilidade, ou simplesmente SAT, é um problema de decisão
   \item[] {\bf Entrada:} Uma fórmula $\alpha$ qualquer sobre $\mathbb{P}$.
   \item[] {\bf Saída:} {\tt SIM} se $\alpha$ é satisfatível e {\tt NÃO} caso contrário.
   \end{description}
-  
+
 \section{Linguagens Formais}
 \label{sec:linguagens}
 
@@ -241,7 +241,7 @@ O comprimento de uma string $s$ é representado por $|s|$.
 \item[] $01110$
 \item[] $11$
 \item[] $1$
-\item[] $\varepsilon$ 
+\item[] $\varepsilon$
 \end{itemize}
 
 Além disso temos que:
@@ -249,7 +249,7 @@ Além disso temos que:
 \item[] $|01110| = 5$
 \item[] $|11| = 2$
 \item[] $|1| = 1$
-\item[] $|\varepsilon| = 0$ 
+\item[] $|\varepsilon| = 0$
 \end{itemize}
 \end{example}
 
@@ -267,26 +267,26 @@ São linguagens sobre $\Sigma = \{p_1, p_2\}$:
 \item[] $A = \{p_1, p_2, p_1p_2, p_1p_1\}$
 \item[] $B = \{p_1\}$
 \item[] $C = \emptyset$
-\item[] $D = \{\varepsilon, p_1, p_1p_1, p_1p_1p_1, \dots\}$ 
+\item[] $D = \{\varepsilon, p_1, p_1p_1, p_1p_1p_1, \dots\}$
 \end{itemize}
 \end{example}
 
 Note que, como no último exemplo, uma linguagem pode ser infinita.
-Existe um problema de decisão naturalmente associado a cada linguagem $L$, o problema do reconhecimento:
+Existe um problema de decisão naturalmente associado a cada linguagem $L$, o {\em problema do reconhecimento}:
 
 \begin{description}
 \item[] {\bf Entrada:} $x \in \Sigma^*$
 \item[] {\bf Saída:} {\tt SIM} se $x \in L$ e {\tt NÃO} caso contrário.
 \end{description}
 
-Conversamente, todo problema de decisão possio uma linguagem formal naturalmente associada da seguinte forma.
+Conversamente, todo problema de decisão possui uma linguagem formal naturalmente associada da seguinte forma.
 Seja $A$ a linguagem das entradas aceitas como válidas para o problema.
 Considere agora todas as strings $x$ para as quais o problema de decisão deve responder {\tt SIM}.
 O conjunto dessas strings é a linguagem associada ao problema.
 
 \begin{example}
 O problema SAT induz uma linguagem formal $A \subseteq \Sigma^*$ aonde $\Sigma = \{p_1, \dots, p_n, \bar{p_1}, \dots, \bar{p_n}\}$.
-A linguagem das fórmulas satisfatíveis.  
+A linguagem das fórmulas satisfatíveis.
 \end{example}
 
 
