@@ -41,7 +41,62 @@ O {\em tempo de execução} de uma MT $M$ é uma função $f: \mathbb{N} \to \ma
 
 O tempo de execução de uma MT não-determinística $N$ é uma função $f: \mathbb{N} \to \mathbb{N}$ em que $f(n)$ é o número máximo de passos de {\em alguma} derivação de $N$ para a entrada $\omega$ de tamanho $n$.
 
-% DIAGRAMA
+\begin{multicols}{2}
+\centering
+Determinístico
+
+\vspace{1cm}
+
+\begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
+  \draw [|-|] (-2,0) -- node[left]{$f(n)$} (-2,-8);
+  \node[circle, draw] (q0) {};
+  \node[circle, draw] (q1) at (0, -2) {};
+  \node[circle, draw] (q2) at (0, -4) {};
+  \node[circle, draw] (qn) at (0, -8) {};
+  \path[->] (q0) edge (q1);
+  \path[->] (q1) edge (q2);
+  \path[-, dashed] (q2) edge (qn);
+\end{tikzpicture}
+
+
+\columnbreak
+\centering
+Não Determinístico
+
+\vspace{1cm}
+
+\begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
+  \node[circle, draw] (q0) {};
+  \node[circle, draw] (q11) at (-2, -2) {};
+  \node[circle, draw] (q12) at (0,  -2) {};
+  \node[circle, draw] (q13) at (2,  -2) {};
+  \node[circle, draw] (q21) at (-4, -4) {};
+  \node[circle, draw] (q22) at (-2, -4) {};
+  \node[circle, draw] (q23) at (0,  -4) {};
+  \node[circle, draw] (q24) at (2,  -4) {};
+  \node[circle, draw] (q25) at (4,  -4) {};
+  \node[circle, draw] (qn1) at (-4, -8) {};
+  \node[circle, draw] (qn2) at (-2, -8) {};
+  \node[circle, draw] (qn3) at (0,  -8) {};
+  \node[circle, draw] (qn4) at (2,  -8) {};
+  \node[circle, draw] (qn5) at (4,  -8) {};
+  \path[->] (q0) edge (q11);
+  \path[->] (q0) edge (q12);
+  \path[->] (q0) edge (q13);
+  \path[->] (q11) edge (q21);
+  \path[->] (q11) edge (q22);
+  \path[->] (q12) edge (q23);
+  \path[->] (q13) edge (q24);
+  \path[->] (q13) edge (q25);
+  \path[-, dashed] (q21) edge (qn1);
+  \path[-, dashed] (q22) edge (qn2);
+  \path[-, dashed] (q23) edge (qn3);
+  \path[-, dashed] (q24) edge (qn4);
+  \path[-, dashed] (q25) edge (qn5);
+\end{tikzpicture}
+
+\end{multicols}
+
 
 \begin{theorem}
   Se $t(n) \geq n$ então toda MT não-determinística que consome tempo $t(n)$ é equivalente a uma MT simples que consome tempo $2^{O(t(n))}$.
@@ -54,7 +109,7 @@ O tempo de execução de uma MT não-determinística $N$ é uma função $f: \ma
 
   Assim, o tempo total de excecução dessa simulação é $O(t(n).b^{t(n)}) = 2^{O(t(n))}$ se $t(n) > n$.
 
-  Por fim, essa MT de três fitas pode ser simulada por uma MT simples que consome tempo $2^{O(t^2(n))} = 2^{2O(t(n))} = 2^{O(t(n))}$. 
+  Por fim, essa MT de três fitas pode ser simulada por uma MT simples que consome tempo $2^{O(t^2(n))} = 2^{2O(t(n))} = 2^{O(t(n))}$.
 \end{proof}
 
 \begin{displaymath}
@@ -80,7 +135,7 @@ Esse é o principal problema em aberto na computação.
 Uma forma alternativa de apresentar a classe de problemas NP é por meio de um {\em oráculo}.
 Um {\em oráculo} (ou verificador) para uma linguagem $A$ é um algotimo $V$ tal que:
 \begin{displaymath}
-  A = \{\omega : V \textrm{aceita $\langle \omega, o \rangle$ para alguma string $o$}
+  A = \{\omega : V \textrm{ aceita $\langle \omega, o \rangle$ para alguma string $o$}\}
 \end{displaymath}
 
 \begin{example}
@@ -104,7 +159,7 @@ Um {\em oráculo} (ou verificador) para uma linguagem $A$ é um algotimo $V$ tal
   \begin{displaymath}
     SAT = \{f \in (L \cup \{;\})^*: \textrm{$V$ aceita $\langle f, o \rangle$ para algum $o \in \{0,1\}^*$}\}
   \end{displaymath}
-  
+
   Dizemos, portanto, que $V$ é um {\em verificador polinomial} para SAT.
 \end{example}
 
@@ -157,19 +212,19 @@ O teorema a seguir mostra que a redutibilidade polinonimal preserva o pertencime
   Vamos mostrar que $SAT \leq_P 3SAT$.
 
   A transformação vai substituir cada cláusula $c_i = l_1 \dots l_n$ de cada fórmula $f = c_1;c_2; \dots; c_m$ pela seguinte sequência de cláusulas: $l_1l_2m_1;\overline{m_1}l_3m_2;\overline{m_2}l_4m_3; \dots ; \overline{m_{n-3}}l_{n-1}l_n$.
-  Essa transformação é claramente polinomial e é possível mostrar que $f \in SAT$ sse essa nova fórmula também for satisfatível. 
+  Essa transformação é claramente polinomial e é possível mostrar que $f \in SAT$ sse essa nova fórmula também for satisfatível.
 \end{example}
 
 Uma linguagem $A$ é {\em NP-completa} se:
 \begin{itemize}
 \item $A \in NP$ e
-\item para todo $B \in NP$ temos que $B \leq_P A$  
+\item para todo $B \in NP$ temos que $B \leq_P A$
 \end{itemize}
 
 Os seguintes são corolários da definição de NP-completude:
 
 \begin{corollary}
-  Seja $A$ uma linguagem NP-completa, se $A \in P$ entçao $P = NP$.  
+  Seja $A$ uma linguagem NP-completa, se $A \in P$ entçao $P = NP$.
 \end{corollary}
 
 \begin{corollary}
@@ -218,7 +273,7 @@ A linguagem SAT é NP-completa.
   Escrevemos $f_m$ como a conjunção de todas as janelas legais.
   Ou seja, $f_m$ é tal que $f_m \in SAT$ sse a configuração da linha $i$ segue da configurção da linha $i-1$ em $N$.
 
-  Assim, a fórmula $f = f_c;f_i;f_a;f_m \in SAT$ sse $\omega \in B$ para algum $B \in NP$. 
+  Assim, a fórmula $f = f_c;f_i;f_a;f_m \in SAT$ sse $\omega \in B$ para algum $B \in NP$.
 \end{proof}
 
 \begin{example}
@@ -246,11 +301,10 @@ A linguagem SAT é NP-completa.
   \end{displaymath}
 
 \end{example}
-  
+
 \begin{corollary}
   3SAT é NP-completa
 \end{corollary}
 
 %\section{Complexidade de Espaço}
 %\label{sec:espaco}
-
