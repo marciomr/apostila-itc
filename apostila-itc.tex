@@ -1,0 +1,50 @@
+\documentclass[a4,12pt]{book}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[portugues]{mystyle}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{automata, positioning, decorations.pathmorphing}
+
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * matha
+      <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+      }{}
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareFontSubstitution{U}{matha}{m}{n}
+\DeclareMathSymbol{\abxcup}{\mathbin}{matha}{'131}
+
+\newcounter{mycounter}
+\setcounter{mycounter}{0}
+\newenvironment{exercicio}{\refstepcounter{mycounter}
+    {\bf Exercício~\themycounter: }     
+      \rmfamily}{\medskip}
+
+\begin{document}
+
+\bibliographystyle{alpha}
+
+\author{Márcio Moretto Ribeiro}
+
+\title{Introdução à Teoria da Computação}
+
+\maketitle
+\tableofcontents
+
+\include{intro}
+\include{automatos}
+\include{ap}
+\include{mt}
+\include{complexidade}
+
+\appendix
+
+\include{exercicio}
+
+%\bibliography{ref}
+\end{document}

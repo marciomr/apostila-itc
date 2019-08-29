@@ -1,0 +1,175 @@
+\chapter{Exercícios}
+\label{cha:exercicios}
+
+
+\section{Exercícios do Capítulo \ref{cha:automatos}}
+\label{sec:ex-automatos}
+
+\begin{exercicio}
+  Para cada uma das seguintes expressões regulares dê uma string na linguagem representada por ela e uma string que não está nessa linguagem.
+
+\begin{itemize}
+\item[a)] $(ab \abxcup \epsilon)b^*$
+\item[b)] $(ab)^\star bb$
+\item[c)] $(a \abxcup b)ba^\star$
+\item[d)] $(aa)^\star(bb)^\star bb$
+\end{itemize}
+
+\end{exercicio}
+
+
+\begin{exercicio}
+  Dê o diagrama de estado {\bf e} a descrição formal de AFDs que reconheçam as seguintes linguagens:
+
+\begin{itemize}
+\item[a)] $\{\omega \in \{0,1\}^* : \omega \textrm{ começa com } 1 \textrm{ e termina com } 0\}$
+\item[b)] $\{\omega \in \{0,1\}^* : \omega \textrm{ contém a substring } 000 \}$
+\item[c)] $\{0,1\}^* - \{\varepsilon\}$
+\item[d)] $\{\omega \in \{0,1\}^* : \omega \textrm{ começa com } 1 \textrm{ e tem comprimento par }\}$
+\end{itemize}
+
+\end{exercicio}
+
+
+\begin{exercicio}
+  Dê o diagrama de estados de AFNs que reconheçam a linguagem:
+\begin{itemize}
+\item[a)] $0^\star 1^\star$ com dois estados.
+\item[b)] $(01)^\star$ com três estados.
+\item[c)] $(0 \abxcup 1)$ com três estados.
+\item[d)] $\{\omega \in \{0,1\}^\star : \omega$ começa com $0$ e tem comprimento par ou começa com $1$ e tem comprimento ímpar $\}$
+\end{itemize}
+\end{exercicio}
+
+
+\begin{exercicio}
+  Seja $A = \{\omega \in \{0,1\}^* : \omega$ começa com $1$ e termina com $0 \}$ e $B = \{\omega \in \{0,1\}^* : \omega$ começa com $0$ e tem comprimento par ou começa com $1$ e tem comprimento ímpar $\}$. Desenhe o diagrama de estados para AFN que reconheça:
+\begin{itemize}
+\item[a)] $A \circ B$
+\item[b)] $B \circ A$
+\item[c)] $A \cup B$
+\item[d)] $B^*$
+\end{itemize}
+\end{exercicio}
+
+
+\begin{exercicio}
+  Use o método visto em sala para desenhar o diagrama de estados AFD que reconheça a mesma linguagem que o seguinte diagrama AFN reconhece. Em seguida desenhe o mesmo AFD omitindo os estados supérfluos.
+
+\begin{figure}[htp]
+  \centering
+  \begin{tikzpicture}[>=latex,node distance=3cm,semithick,auto]
+    \node                   (l)                                           {};
+    \node[state]            (q1)    [right of=l,node distance=1.5cm]      {$1$};
+    \node[state]            (q2)    [double,right of=q1]                  {$2$};
+    \path[->]               (l)     edge                                       node        {}              (q1)
+                            (q1)    edge  [bend right=45,below]                node        {$a,b$}         (q2)
+                                    edge  [in=120,out=60,above,distance=1cm]   node        {$a$}           (q1)
+                            (q2)    edge  [bend right=45,above]                node        {$a$}           (q1)
+                                    edge  [in=120,out=60,above,distance=1cm]   node        {$b$}           (q2);
+  \end{tikzpicture}
+\end{figure}
+
+
+\end{exercicio}
+
+\begin{exercicio}
+Use o método visto em aula para encontrar uma expressão regular que reconhece a linguagem reconhecida pelo segundo AFD desenhado acima.
+\end{exercicio}
+
+\newpage
+
+\section{Exercícos do Capítulo \ref{cha:ap}}
+\label{sec:ex-ap}
+
+\begin{exercicio}
+  O que é uma gramática ambígüa? A seguinte gramática $G = \langle V, \Sigma, R, E \rangle$, cujas regras $R$ estão descritas a seguir, é ambígüa?
+  \begin{eqnarray*}
+    E & \rightarrow & E \land E | E \lor E | p | \neg p
+  \end{eqnarray*}
+\end{exercicio}
+
+
+\begin{exercicio}
+Desenhe o diagrama de estados de um autômato com pilha que reconhece a seguinte linguagem\footnote{Lembre-se que $\omega^R$ é $\omega$ com os símbolos invertidos}:
+\begin{displaymath}
+  A = \{\omega.\omega^R : \omega \in \{0,1\}^* \}
+\end{displaymath}
+\end{exercicio}
+
+
+
+\begin{exercicio}
+  Mostre que a linguagem do exercício anterior não é regular.
+\end{exercicio}
+
+
+\begin{exercicio}
+  Mostre uma GLC associada a cada uma das linguagens abaixo:
+  \begin{enumerate}
+  \item[a)] $\{\omega \in \{0,1\}^* : \omega \textrm{ possui pelo menos dois 1s} \}$
+  \item[b)] $\{\omega.\omega^R : \omega \in \{0,1\}^*\}$
+  \item[c)] $\{0^n1^n: n \geq 0\}$
+  \end{enumerate}
+\end{exercicio}
+
+\begin{exercicio}
+  Use o teorema visto em aula para construir um autômato com pilha a partir da gramática $G = \langle V, \Sigma, R, E \rangle$, cujas regras $R$ estão descritas a seguir:
+
+  \begin{eqnarray*}
+    E & \rightarrow & C \land C | C\\
+    C & \rightarrow & L \lor L | L\\
+    L & \rightarrow & p | \neg p\\
+  \end{eqnarray*}
+\end{exercicio}
+
+\begin{exercicio}
+  Mostre que a seguinte linguagem não é livre de contexto:
+  \begin{displaymath}
+    \{0^n1^n0^n1^n : n \geq 0\}
+  \end{displaymath}
+
+\end{exercicio}
+
+\newpage
+
+\section{Exercícos do Capítulo \ref{cha:MTs}}
+\label{sec:ex-mts}
+
+\begin{exercicio}
+Considere a Máquina de Turing $M = \langle Q, \Sigma, \Gamma, \delta, q_0, q_a, q_r \rangle$ em que $Q = \{q_0, q_1, q_a, q_r\}$, $\Sigma = \{a,b\}$, $\Gamma = \{a,b, \textvisiblespace\}$, e $\delta$ é o seguinte:
+  \begin{eqnarray*}
+    \delta(q_0, a) & = & \langle q_0, a, D \rangle \\ 
+    \delta(q_0, b) & = & \langle q_0, b, D\rangle \\
+    \delta(q_0, \textvisiblespace) & = & \langle q_1, \textvisiblespace, E\rangle \\
+    \delta(q_1, a) & = & \langle q_a, a, D\rangle \\
+    \delta(q_1, b) & = & \langle q_r, b, D\rangle \\
+    \delta(q_1, \textvisiblespace) & = & \langle q_r, \textvisiblespace, D\rangle \\
+  \end{eqnarray*}
+
+Para cada uma das seguintes strings, escreva as configurações da máquina, da inicial até a final e indique se a string é aceita ou rejeitada:
+
+\begin{enumerate}
+\item $aaa$
+\item $aba$
+\item $aab$
+\item $bbb$
+\end{enumerate}
+\end{exercicio}
+
+\begin{exercicio}
+Construa uma MT que decide se a string $\omega \in \{a,b\}^*$ começa com $a$ e termina com $b$.
+\end{exercicio}
+
+\begin{exercicio}
+Construa uma MT que decide se a string $\omega \in \{0\}^*$ tem comprimento par.
+\end{exercicio}
+
+\newpage
+
+%\section{Exercícos do Capítulo \ref{cha:complexidade}}
+%\label{sec:ex-complexidade}
+
+%\begin{exercicio}
+%  Sabemos que o problema SAT é NP-completo, mostre que 3SAT é NP-completo. 
+%\end{exercicio}

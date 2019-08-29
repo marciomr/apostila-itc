@@ -1,0 +1,256 @@
+\chapter{Complexidade Computacional}
+\label{cha:complexidade}
+
+Até aqui nos ocupamos principalmente do problema da expressivdade de modelos de computação.
+Ou seja, o que é possível computar com cada modelo.
+Terminamos o último capítulo com um modelo bastante expressivo das Máquinas de Turing.
+Vimos que mesmo nesse modelo há problemas que não são computáveis, como o problema da parada.
+
+Neste último capítulo nos voltaremos para outra questão: que problemas computacionais são resolvíveis de maneira eficiente?
+Por efeciente entendemo que há algum recurso escasso consumido pelo algoritmo que resolve o problema, por exemplo tempo ou espaço de memória.
+
+\section{Complexidade de Tempo}
+\label{sec:tempo}
+
+O {\em tempo de execução} de uma MT $M$ é uma função $f: \mathbb{N} \to \mathbb{N}$ em que $f(n)$ é o número máximo de passos de derivação para uma entrada $\omega$ qualquer de tamanho $n$.
+
+\begin{displaymath}
+  TIME(t(n)) = \{A \subseteq \Sigma^* : \textrm{$\exists$ MT simples que decide $A$ em tempo $O(t(n))$}\}
+\end{displaymath}
+
+\begin{example}
+  $TIME(n)$ é a classe dos problemas resolvíveis em tempos {\em linear} no pior caso.
+
+  $TIME(n^2)$ é a classe dos problemas resolvíveis em tempo {\em quadrático} no pior caso.
+\end{example}
+
+\begin{theorem}
+  Se $t(n) \geq n$ então toda MT multifita que consome tempo $t(n)$ é equivalente a uma MT simples que consome tempo $O(t^2(n))$.
+\end{theorem}
+\begin{proof}
+  Considere a simulação de uma MT com $k$ fitas que vimos no Teorema \ref{}.
+
+  $M$ varre a fita em tempo $O(n)$ para obter as informação necessárias para o próximo passo.
+
+  Para executar um passo $M$ no pior precisamos abrir um espaço em branco na fita e para isso deslocamos todo conteúdo uma posição para a direita.
+  Nesse caso como o tamanho máximo da fita é $O(t(n))$, precisaríamos de $O(t(n))$ passos para esse deslocamento.
+
+  Assim, o tempo total de excecução é $t(n).O(t(n)) + O(n)$.
+  Se $t(n) \geq n$ então $t(n).O(t(n)) + O(n) = O(t^2(n))$.
+\end{proof}
+
+O tempo de execução de uma MT não-determinística $N$ é uma função $f: \mathbb{N} \to \mathbb{N}$ em que $f(n)$ é o número máximo de passos de {\em alguma} derivação de $N$ para a entrada $\omega$ de tamanho $n$.
+
+% DIAGRAMA
+
+\begin{theorem}
+  Se $t(n) \geq n$ então toda MT não-determinística que consome tempo $t(n)$ é equivalente a uma MT simples que consome tempo $2^{O(t(n))}$.
+\end{theorem}
+\begin{proof}
+  Vimos no Teorema \ref{} como simular uma MT não-determinística $N$ usando uma MT com 3 fitas usando uma busca em largura.
+
+  Seja $b$ o número máximo de ramificações de na excecuçaõ $N$.
+  O número total de nós da árvore é $O(b^{t(n)})$ e a excecução de cada nó toma tempo $O(t(n))$ no pior caso.
+
+  Assim, o tempo total de excecução dessa simulação é $O(t(n).b^{t(n)}) = 2^{O(t(n))}$ se $t(n) > n$.
+
+  Por fim, essa MT de três fitas pode ser simulada por uma MT simples que consome tempo $2^{O(t^2(n))} = 2^{2O(t(n))} = 2^{O(t(n))}$. 
+\end{proof}
+
+\begin{displaymath}
+  NTIME(t(n)) = \{A \subseteq \Sigma^* : \textrm{$\exists$ MT não-det. que decide $A$ em tempo $O(t(n))$}\}
+\end{displaymath}
+
+Vamos definir duas classes de complexidade de tempo.
+A classe $P$ contém todas as linguagens decidíveis por MT simples em tempo polinomial e a classe $NP$ que contém todas as linguágens decidíveis por MTs não-determinísticas em tempo polinomial:
+\begin{displaymath}
+  P = \bigcup_k TIME(n^k)
+\end{displaymath}
+
+\begin{displaymath}
+  NP = \bigcup_k NTIME(n^k)
+\end{displaymath}
+
+É evidente que toda linguagem em $P$ pertence a $NP$.
+Ou seja, $P \subseteq NP$.
+Não sabemos, porém, se é verdade que $NP \subseteq P$.
+Em outra palavras, se existem soluções polinomiais em MTs simples para os problemas em que possuem solução em MTs não-determinísticas.
+Esse é o principal problema em aberto na computação.
+
+Uma forma alternativa de apresentar a classe de problemas NP é por meio de um {\em oráculo}.
+Um {\em oráculo} (ou verificador) para uma linguagem $A$ é um algotimo $V$ tal que:
+\begin{displaymath}
+  A = \{\omega : V \textrm{aceita $\langle \omega, o \rangle$ para alguma string $o$}
+\end{displaymath}
+
+\begin{example}
+  Seja $L = \{p_1, \dots, p_n, \bar{p_1} \dots \bar{p_n}\}$ uma alfabeto.
+  Uma {\em cláusula} sobre $L$ é uma string $c \in L^*$ e uma {\em fórmula} é uma string $f \in (L\cup\{;\})^*$.
+  Uma {\em valoração} é uma função $v : L \to \{0,1\}$ tal que $v(p) = 1$ sse $v(\bar{p}) = 0$.
+  Uma valoração $v$ {\em satisfaz uma cláusula} $c$ se $v(l) = 1$ para {\em algum} $l$ em $c$ e $v$ {\em satisfaz uma fórmula} $f = c_1;c_2;\dots;c_m$ se ele satisfaz {\em todas} as cláusulas $c_1, \dots, c_n$.
+
+  Definimos o {\em problema da satisfatibilidade} da seguinte forma:
+  \begin{displaymath}
+    SAT = \{f \in (L \cup \{;\})^*: \textrm{existe $v$ que satisfaz $f$}\}
+  \end{displaymath}
+
+  Uma valoração pode ser descrita como uma string $o \in \{0,1\}^*$.
+  (Por exemplo, a string $101$ indica que $v(p_1) = 1$, $v(p_2) = 0$ e $v(p_3) = 1$).
+
+  É fácil construir uma MT $V$ que recebe uma fórmula $f \in (L \cup \{;\})^*$ e um string $o \in \{0,1\}^*$ e aceita se a valoração $v$ representada por $o$ satisfaz $f$ e rejeita caso contrário.
+  Essa verificação pode ser feita em tempo polinomial em relação a $|f|$.
+  Note que podemos descrever o problema SAT da seguinte forma:
+
+  \begin{displaymath}
+    SAT = \{f \in (L \cup \{;\})^*: \textrm{$V$ aceita $\langle f, o \rangle$ para algum $o \in \{0,1\}^*$}\}
+  \end{displaymath}
+  
+  Dizemos, portanto, que $V$ é um {\em verificador polinomial} para SAT.
+\end{example}
+
+\begin{theorem}
+  Uma linguagem $A \in NP$ sse exsite um verificador polinomial para $A$.
+\end{theorem}
+\begin{proof}
+  Se $A \in NP$ então, por definição, existe uma MT não-determinística $N$ que decide $A$ em tempo polinomial.
+  Considere uma string $\omega$ qualquer.
+  Se $\omega \in A$ então $N$ aceita, senão rejeita.
+  De qualquer forma existe um ramo da excecução de $N$ que termina em menos de $O(n^k)$ passos.
+  Seja $o$ a codificação desse ramo (a string que indica a cada passo qual o caminho que foi seguido).
+  Simulando $N$ como uma MT com três fitas, e colocando $o$ na terceira, decidimos se $\omega$ é aceito ou não em tempo polinomial.
+
+  Agora considere o outro lado.
+  Seja $V$ ium verificador para $A$ que decide se a entrada é aceita em tempo $O(n^k)$.
+  Escolhemos não deterministicamente uma string $o$ com tamanho máximo $n^k$.
+  Em cada ramo e excecutamos $V$ sobre $\langle \omega, o \rangle$ para um $o$ distinto e aceitamos $\omega$ se $V$ aceitar $\langle \omega, o \rangle$ para algum $o$.
+  Se nenhum ramo $V$ aceitar a entrada então rejeitamos $\omega$.
+\end{proof}
+
+\section{NP-completude}
+\label{sec:np-completude}
+
+Na última seção definimos as classes $P$ e $NP$ e mencionamos que a pergunta se $P \stackrel{?}{=} NP$ é um problema em aberto na computação.
+O que faremos então será tentar classificar que problemas são mais ``fáceis'' ou mais ``difíceis'' do que outros.
+
+Dizemos que uma função $f : \Sigma^* \to Sigma^*$ é {\em computável em tempo polinomial} se existe um polinômio $p$ e uma MT que ao receber $\omega \in \Sigma^*$ para depois de $p(|\omega|)$ passos e devolve $f(\omega)$.
+
+Uma linguagem $A$ é {\em polinomialmente redutível} a $B$ (escrevemos $A \leq_p B$) se existe $f: \Sigma^* \to \Sigma^*$ que seja computável em tempo polinomial e tal que $\omega \in A$ sse $f(\omega) \in B$.
+
+O teorema a seguir mostra que a redutibilidade polinonimal preserva o pertencimento na classe $P$:
+
+\begin{theorem}
+  Se $A \leq_P B$ e $B \in P$ então $A \in P$.
+\end{theorem}
+\begin{proof}
+  Seja $M$ uma MT que decide $B$ em tempo polinomial e seja $f$ a redução polinomial de $A$ em $B$.
+  Construímos uma MT $N$ da seguinte forma: $N$ recebe $\omega$ e computa $f(\omega)$ então roda $M$ sobre $f(\omega)$.
+
+  Pela definição de $f$, $M$ aceita $f(\omega)$ sse $\omega \in A$ e, portanto, $N$ aceita $\omega$.
+  Além disso, $N$ é polinomial pois cada passo é polinomial e polinômios são fechados por composição.
+\end{proof}
+
+\begin{example}
+  \begin{displaymath}
+    3SAT = \{f \in SAT : \textrm{cada clásula de $f$ tem tamanho exatamente 3}\}
+  \end{displaymath}
+
+  Vamos mostrar que $SAT \leq_P 3SAT$.
+
+  A transformação vai substituir cada cláusula $c_i = l_1 \dots l_n$ de cada fórmula $f = c_1;c_2; \dots; c_m$ pela seguinte sequência de cláusulas: $l_1l_2m_1;\overline{m_1}l_3m_2;\overline{m_2}l_4m_3; \dots ; \overline{m_{n-3}}l_{n-1}l_n$.
+  Essa transformação é claramente polinomial e é possível mostrar que $f \in SAT$ sse essa nova fórmula também for satisfatível. 
+\end{example}
+
+Uma linguagem $A$ é {\em NP-completa} se:
+\begin{itemize}
+\item $A \in NP$ e
+\item para todo $B \in NP$ temos que $B \leq_P A$  
+\end{itemize}
+
+Os seguintes são corolários da definição de NP-completude:
+
+\begin{corollary}
+  Seja $A$ uma linguagem NP-completa, se $A \in P$ entçao $P = NP$.  
+\end{corollary}
+
+\begin{corollary}
+  Se $A$ é NP-completa e $A \leq_P B$ então $B$ também é NP-completa.
+\end{corollary}
+
+Ou seja, intuitivamente as linguagens NP-completas são as mais difíceis dentro da classe NP.
+Além disso, se conhecemos uma linguagem NP-completa, então podemos inferir que outras linguagens também o são por redução polinomail.
+
+Resta mostrar que pelo menos uma linguagem é NP-completa.
+
+\begin{theorem}[Cook-Levin]
+A linguagem SAT é NP-completa.
+\end{theorem}
+\begin{proof}
+  Mostramos na última seção que $SAT \in NP$.
+  Temos que mostrar que $B \neq_P SAT$ para todo $B \in NP$.
+  Se $B \in NP$ então existe uma MT não-determinística $N$ que decide $B$ em tempo polinomial $n^k$.
+
+  Um {\em tableau} para $N$ sobre a entrada $\omega$ é uma tabela $n^k \times n^k$ cujas linhas são configurações de um ramo de $N$ com entrada $\omega$.
+  Assim, a primeira linha contém a configuração inicial e deve haver um tableau que contém uma configuração de aceitação para cada $\omega \in B$.
+
+  % diagrama
+
+  Vamos representar o tableuau como um fórmula $f$ que é satisfatível sse existe um tableau que aceita $\omega$.
+
+  Seja $C = Q \cup \Gamma \cup \{\#\}$, temos uma variável $x_{i,j,s}$ para cada $i,j \in \{1, \dots, n^k\}$ e cada $s \in C$.
+  A ideia é que uma valoração $v$ satisfaz $x_{i,j,s}$ se a célula $\langle i, j \rangle$ no tableau contém o símbolo $s$.
+  Projetaremos a fórmula $f$ de modo que uma valoração que satisfaz $f$ corresponde a um tableau que reconhece $\omega$.
+
+  \begin{displaymath}
+    f_c = x_{1,1,s_1}x_{1,1,s_2} \dots x_{1,1,s_n}; \overline{x_{1,1,s_1}x_{1,1,s_2}}; \overline{x_{1,1,s_1}x_{1,1,s_3}} \dots; x_{1,2,s_1}x_{1,2,s_2} \dots
+  \end{displaymath}
+
+  A fórmula $f_c \in SAT$ sse cada célula contém exatamente um símbolo.
+
+  Escrevemos a fórmula $f_i$ de forma que $f_i \in SAT$ sse a primeira linha do tableau contém a configuração inicial de $N$.
+
+  \begin{displaymath}
+    f_a = x_{1,1,q_a}x_{1,2,q_a} \dots x_{n^k,n^k, q_a}
+  \end{displaymath}
+
+  A fórmula $f_a \in SAT$ sse alguma linha é uma configuração de aceitação.
+
+  Uma {\em janela} $2 \times 3$ no tableua é {\em legal} se não viola as ações especificadas pela função de transição de $N$ (Exemplo \ref{ex:janela}).
+  Escrevemos $f_m$ como a conjunção de todas as janelas legais.
+  Ou seja, $f_m$ é tal que $f_m \in SAT$ sse a configuração da linha $i$ segue da configurção da linha $i-1$ em $N$.
+
+  Assim, a fórmula $f = f_c;f_i;f_a;f_m \in SAT$ sse $\omega \in B$ para algum $B \in NP$. 
+\end{proof}
+
+\begin{example}
+  \label{ex:janela}
+  Considere que $\Delta(q_1, b) = \{\langle q_2, c, E\rangle, \langle q_2, a, D \rangle\}$, as seguintes janelas são legais:
+
+  \begin{displaymath}
+    \begin{array}{|c|c|c|}
+      \hline
+      a & q_1 & b \\
+      \hline
+      a & a & q_2 \\
+      \hline
+    \end{array}
+  \end{displaymath}
+
+    \begin{displaymath}
+    \begin{array}{|c|c|c|}
+      \hline
+      a & q_1 & b \\
+      \hline
+      q_2 & a & c \\
+      \hline
+    \end{array}
+  \end{displaymath}
+
+\end{example}
+  
+\begin{corollary}
+  3SAT é NP-completa
+\end{corollary}
+
+%\section{Complexidade de Espaço}
+%\label{sec:espaco}
+

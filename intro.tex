@@ -1,0 +1,302 @@
+\chapter{Introdução}
+\label{cha:intro}
+
+\section{Apresentação}
+\label{sec:apresentacao}
+
+O curso de Teoria da computação procura responder duas perguntas centrais da área de Ciência da Computação:
+\begin{enumerate}
+\item Que problemas são resolvíveis de forma automática? (computabilidade)
+\item Que problemas são resolvíveis de maneita eficiente? (complexidade)
+\end{enumerate}
+
+Para responder à primeira pergunta primeiro devemos esclarecer alguns pontos:
+\begin{itemize}
+\item O que estamos chamando de {\em problema} no sentido computacional do termo?
+\item O que é um {\em método automático} de resolução?
+\end{itemize}
+
+Extencionalmente, um {\em problema computacional} é uma espécie de função que descreve os valores aceitos como {\em entrada} (domínio) e os valores esperados como {\em saída}.
+A solução de um problema computacional, como estamos acostumados, é uma sequência de instruções inequívocas -- um algoritmo -- que dado um elemento válido de entrada produz a saída esperada.
+
+\begin{example}
+O {\em problema da ordenação} pode ser descrito da seguinte maneira:
+
+\begin{description}
+\item[] {\bf Entrada:} Uma sequência de $n$ inteiros $\langle a_1, \dots, a_n \rangle$.
+\item[] {\bf Saída:} Uma permutação da entrada $\langle a_1', \dots, a_n' \rangle$ em que $a_i \leq a_j$ para todo $i < j$.
+\end{description}
+
+Uma {\em instância} desse problema seria dada por uma entrada específica (e.g. $\langle 4, 2, 42, 24 \rangle$) e sua saída ($\langle 2, 4, 24, 42 \rangle$).
+E a solução do problema é qualquer dos algoritmos de ordenação que estudamos no curso de análise de algoritmos.
+\end{example}
+
+Nosso foco neste curso será nos problemas ditos de {\em decisão}, ou seja, naqueles cuja saída deve ser {\tt SIM} ou {\tt NÃO}
+
+
+\begin{example}
+  O seguinte é um problema clássico de decisão:
+  \begin{description}
+  \item[] {\bf Entrada:} Um inteiro $n > 1$.
+  \item[] {\bf Saída:} {\tt SIM} se {\tt n} é primo e {\tt NÃO} caso contrário.
+  \end{description}
+\end{example}
+
+Como veremos na próxima seção existe uma relação íntima entre problemas de decisão e linguagens formais, a saber, para cada problema de decisão existe uma linguagem formal equivalente e vice-versa.
+De fato, grande parte do curso estudaremos classes de linguagens formais.
+
+Voltemos então para a pergunta: o que é um método automático de resolução?
+
+Para responder a essa pergunta, que não tem nada de trivial, precisamos de um {\em modelo e computação} do funcionamento de dispositivos eletrônicos. 
+Como qualquer outro modelo, faremos abstrações, simplificaremos e desprezaremos variáveis.
+
+Podemos refrasear nossa pergunta, de maneira agora um pouco mais precisa:
+\begin{itemize}
+\item Que linguagens são reconhecíveis por certo modelo de computação?
+\end{itemize}
+
+Durante o curso estudaremos uma sequência de modelos de computação com {\em expressividade} crescente.
+Começaremos com modelos simples, adequados para representar dispositivos simples e capazes de reconhecer uma certa classe de linguagens.
+Conforme avançarmos no curso estudaremos modelos mais sofisticados capazes de representar classes cada vez maiores de linguagens.
+
+O diagrama abaixo apresenta um resumo dos três primeiros capítulos do livro.
+No Capítulo \ref{} estudaremos Autômatos Finitos Determinísticos e não-Determinísticos, mostraremos que eles são equivalentes e são capazes de reconhecer exatamente a classe das linguagens regulares.
+No Capítulo \ref{} começaremos mostrando que nem toda linguagem é regular, estudaremos as Linguagens Livres de Contexto e os Autômatos de Pilha e mostraremos a equivalência entre os dois. 
+No Capítulo \ref{} veremos Máquinas de Turing Determinísticas e não-Determinísticas, Linguagens Recursivas e Recursivamente Enumeráveis.
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|ccc|c|}
+    \hline
+    {\bf Modelos de Computação} && {\bf Classes de Linguagens} & \multirow{5}{*}{\begin{turn}{-90}$\xrightarrow{expressividade}$\end{turn}}\\
+    \cline{1-3}
+    AFD & \multirow{2}{*}{$\Leftrightarrow$} & \multirow{2}{*}{Linguagens Regulares}& \\
+    AFN  &&&\\
+    \cline{1-3}
+    AP & $\Leftrightarrow$ & Linguagens Livres de Contexto &\\
+    \cline{1-3}
+    \multirow{2}{*}{MT} & \multirow{2}{*}{$\Leftrightarrow$} & Linguagens Recursivas &\\
+    & & Ling. Recursivamente Enumeráveis &\\
+    \hline
+  \end{tabular}
+  \caption{Resumo da apostila}
+  \label{tab:resumo}
+\end{table}
+
+
+As Máquinas de Turing (MTs) são o modelo mais completo que veremos.
+Na verdade a Tese de Church afirma que de fato, as MTs são o modelo mais completo possível.
+Em outras palavras: se algo pode ser computado, então ele pode ser computado por uma MT.
+
+Por outro lado, veremos que existem linguagens que não são reconhecíveis por MTs, ou equivalentemente, existem problemas de decisão que não admitem solução computacional ({\em indecidíveis}).
+
+\begin{displaymath}
+  Regulares \subset LLCs \subset Recursivas \subset REs \subset Linguagens  
+\end{displaymath}
+
+
+Para finalizar o curso, no último capítulo nos voltaremos para a segunda pergunta central:
+\begin{itemize}
+\item Que problemas podem ser resolvidos de maneira eficiente?
+\end{itemize}
+
+A resposta dessa pergunta certamente depende do modelo de computação que estamos considerando e o que entendemos por {\em eficiência}.
+Vamos convencionar que estamos falando de MTs e que por eficientes queremos dizer soluções que consomem tempo polinomial em relação ao tamanho da entrada.
+Assim, podemos refrasear a questão central da seguinte forma:
+
+\begin{itemize}
+\item Para quais problemas existe uma MT que o resolve em tempo polinomial?
+\end{itemize}
+
+Chamaremos essa classe de problemas de $P$.
+Note que, diferente do curso de análise de algoritmos em que o foco está nos algoritmos e sua eficiência, aqui o foco está nos problemas.
+A pergunta não é quão eficiente é uma determinada solução de um problema, mas que problemas estão em cada classe.
+
+Se substituirmos as MT Determinísticas por não-Determinísticas, teremos outra classe de problemas, a classe $NP$.
+
+O maior problema em aberto hoje na computação, e quiçá na matemática, é exatamente saber se essas classes coincidem:
+
+\begin{displaymath}
+  P \stackrel{?}{=} NP
+\end{displaymath}
+
+No fim do curso procuraremos definir o problema de maneira formal e apresentar os poucos resultados mais simples sobre esse assunto.
+
+\section{Problemas de Decisão}
+\label{sec:problemas}
+
+Vamos começar estudando um problema de decisão de grande importância na Teoria da Computação por se tratar do primeiro problema demonstradamente NP-completo (veremos sobre isso no capítulo \ref{}).
+O problema que nos referimos é o de decidir se uma fórmula proposicional é ou não satisfatível.
+Recordemos do curso de Matemática Discreta que uma fórmula proposicional sempre pode ser escrita na Forma Normal Conjuntiva (FNC), ou seja, como uma conjunção de disjunção de literais.
+Vamos então definir a linguagens das fórmulas supondo que ela esteja na FNC para facilitar.
+
+Partimos de um conjuntos finito cujos elementos são chamados {\em variáveis proposicionais} $\mathbb{P} = \{p_1 \dots p_n\}$.
+
+Um {\em literal} é qualquer elemento de $\mathbb{L} = \mathbb{P} \cup \overline{\mathbb{P}}$ onde $\overline{\mathbb{P}} = \{\bar{p_i}: p_i \in \mathbb{P}\}$.
+Ou seja, um literal é uma variável ou sua negação que representamos pelo mesmo símbolo com um traço em cima.
+
+Uma sequência de literais é chamado de {\em cláusula} e a representaremos como $l_1l_2\dots\l_n$ onde $l_i \in \mathbb{L}$.
+
+
+\begin{example}
+  Seja $\mathbb{P} = \{p_1, p_2, p_3\}$ então as seguintes são cláusulas:
+\begin{itemize}
+\item[] $p_1p_2p_3\bar{p_1}$
+\item[] $p_2\bar{p_2}p_1$
+\item[] $p_1$
+\item[] $p_1p_2p_3$
+\end{itemize}
+\end{example}
+ 
+Uma sequência de cláusulas e chamada de {\em fórmula} e será representada como $c_1;c_2;\dots;c_n$.
+
+\begin{example}
+  Seja $\mathbb{P} = \{p_1, p_2, p_3\}$ então as seguintes são fórmulas:
+\begin{itemize}
+\item[] $p_1p_2;p_2p_3;\bar{p_3}$
+\item[] $p_1\bar{p_1};p_2\bar{p_2}$
+\item[] $p_1p_2p_3$
+\end{itemize}
+\end{example}
+ 
+Interpretaremos uma sequência de literais de maneira disjuntiva e uma sequência de cláusulas de maneira conjuntiva da seguinte forma.
+Uma função $v: \mathbb{L} \to \{0,1\}$ é uma {\em valoração} se para todo $p \in \mathbb{L}$ temos:
+
+\begin{eqnarray*}
+  v(p) = 1 & \textrm{sse} & v(\bar{p}) = 0\\
+  v(p) = 0 & \textrm{sse} & v(\bar{p}) = 1\\
+\end{eqnarray*}
+
+Dizemos que uma valoração $v$ {\em satisfaz uma cláusula} $l_1 \dots l_n$ se $v(l_i) = 1$ para algum $i$.
+Em outras palavras, a valoração satisfaz a cláusula se ela atribuiu o valor verdade para algum literal da cláusula.
+Uma valoração $v$ {\em satisfaz uma fórmula} $c_1; \dots; c_n$ ela satisfaz cada uma das cláusulas da fórmula.
+
+
+\begin{example}
+Seja $\mathbb{P} = \{p_1, p_2, p3\}$. A valoração $v$ tal que $v(p_1) = v(p_2) = 1$ e $v(p_3) = 0$ satisfaz as seguintes fórmulas:
+
+\begin{itemize}
+\item[] $p_1\bar{p_2};p_2;p_3p_1$
+\item[] $p_1\bar{p_1};p_2\bar{p_2}$
+\item[] $\bar{p_3}$ 
+\end{itemize}
+
+Por outro lado, $v$ não satisfaz as seguintes fórmulas:
+\begin{itemize}
+\item[] $p_3$
+\item[] $p_3;p_1p_2;p_1$
+\item[] $p_3p_1;\bar{p_1}\bar{p_2}$ 
+\end{itemize}
+\end{example}
+
+Uma fórmula é dita {\em satisfatível} se existe uma valoração $v$ que a satisfaça.
+
+
+\begin{example}
+  São exemplos de fórmulas satisfatíveis:
+\begin{itemize}
+\item[] $p_1p_2;\bar{p_1}\bar{p_2}$
+\item[] $p_1p_2$
+\item[] $p_1$  
+\end{itemize}
+
+São exemplos de fórmulas {\em não} satisfatíveis:
+\begin{itemize}
+\item[] $p_1;\bar{p_1}$
+\item[] $p_1\bar{p_2};p_2;\bar{p_1}$
+\end{itemize}
+\end{example}
+
+
+O problema da satisfatibilidade, ou simplesmente SAT, é um problema de decisão que pode ser enunciado da seguinte forma:
+
+  \begin{description}
+  \item[] {\bf Entrada:} Uma fórmula $\alpha$ qualquer sobre $\mathbb{P}$.
+  \item[] {\bf Saída:} {\tt SIM} se $\alpha$ é satisfatível e {\tt NÃO} caso contrário.
+  \end{description}
+  
+\section{Linguagens Formais}
+\label{sec:linguagens}
+
+Um {\em alfabeto} é um conjunto finito qualquer $\Sigma$ cujos elementos são chamados {\em símbolos}.
+
+
+\begin{example}
+  São exemplos de alfabeto:
+\begin{itemize}
+\item[] $\Sigma = \{p_1, p_2, p_3\}$
+\item[] $\overline{\Sigma} = \{\bar{p_1}, \bar{p_2}, \bar{p_3}\}$
+\item[] $\Sigma \cup \overline{\Sigma} = \{p_1, p_2, p_3, \bar{p_1}, \bar{p_2}, \bar{p_3}\}$
+\end{itemize}
+
+\end{example}
+
+Uma sequência de símbolos de um alfabeto $\Sigma$ é chamada de uma {\em string} ou {\em palavra} sobre esse alfabeto.
+A string vazia, que representa a sequencia de zero símbolos, será representa por $\varepsilon$.
+O comprimento de uma string $s$ é representado por $|s|$.
+
+\begin{example}
+  São string sobre $\Sigma = \{0,1\}$ os seguintes:
+\begin{itemize}
+\item[] $01110$
+\item[] $11$
+\item[] $1$
+\item[] $\varepsilon$ 
+\end{itemize}
+
+Além disso temos que:
+\begin{itemize}
+\item[] $|01110| = 5$
+\item[] $|11| = 2$
+\item[] $|1| = 1$
+\item[] $|\varepsilon| = 0$ 
+\end{itemize}
+\end{example}
+
+Sejam $x = a_1 \dots a_n$ e $y = b_1 \dots b_m$ duas strings.
+A {\em concatenação} de $x$ com $y$ será representada por $x \cdot y = xy = a_1\dots a_n b_1 \dots b_n$.
+Note que nem sempre $x \cdot y = y \cdot x$.
+Além disso, para todo $x$ temos que $\varepsilon \cdot x = x \cdot \varepsilon = x$.
+
+O conjunto de todas as strings sobre um alfabeto $\Sigma$ será representada por $\Sigma^*$.
+Um conjunto de strings $A$ sobre $\Sigma$ é chamado de uma {\em linguagem sobre $\Sigma$} i.e. $A \subseteq \Sigma^*$ é uma linguagem.
+
+\begin{example}
+São linguagens sobre $\Sigma = \{p_1, p_2\}$:
+\begin{itemize}
+\item[] $A = \{p_1, p_2, p_1p_2, p_1p_1\}$
+\item[] $B = \{p_1\}$
+\item[] $C = \emptyset$
+\item[] $D = \{\varepsilon, p_1, p_1p_1, p_1p_1p_1, \dots\}$ 
+\end{itemize}
+\end{example}
+
+Note que, como no último exemplo, uma linguagem pode ser infinita.
+Existe um problema de decisão naturalmente associado a cada linguagem $L$, o problema do reconhecimento:
+
+\begin{description}
+\item[] {\bf Entrada:} $x \in \Sigma^*$
+\item[] {\bf Saída:} {\tt SIM} se $x \in L$ e {\tt NÃO} caso contrário.
+\end{description}
+
+Conversamente, todo problema de decisão possio uma linguagem formal naturalmente associada da seguinte forma.
+Seja $A$ a linguagem das entradas aceitas como válidas para o problema.
+Considere agora todas as strings $x$ para as quais o problema de decisão deve responder {\tt SIM}.
+O conjunto dessas strings é a linguagem associada ao problema.
+
+\begin{example}
+O problema SAT induz uma linguagem formal $A \subseteq \Sigma^*$ aonde $\Sigma = \{p_1, \dots, p_n, \bar{p_1}, \dots, \bar{p_n}\}$.
+A linguagem das fórmulas satisfatíveis.  
+\end{example}
+
+
+
+\section{Bibliografia}
+\label{sec:biblio}
+
+\begin{itemize}
+\item Introdução à Teoria da Computação - Michael Sipser
+\item Elementos da Teoria da Computação - Lewis e Papadimitrius
+\item Computabilidade, Funções Computáveis, Lógica e os Fundamentos da Matemática - Carnielli e Epstein
+\item Computational Complexity - Christos H. Papadimitriou
+\end{itemize}
