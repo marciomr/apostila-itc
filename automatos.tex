@@ -155,7 +155,7 @@ Denotaremos $L(r)$ a linguagem {\em expressa} pela expressão regular $r$:
 \section{Autômatos Finitos Determinísticos}
 \label{sec:afd}
 
-Um {\em Autômato Finito Determinístico} (AFD) é um modelo de computação, o mais simples que estudaremos, adequado para representar sistemas computacionais simples como portas automáticas e elevadores.
+Um {\em Autômato Finito Determinístico} (AFD) é um modelo de computação, o mais simples que estudaremos, adequado para representar sistemas computacionais simples como portas automáticas de elevadores e termostatos.
 
 Um AFD é definido formalmente como uma 5-upla $M = \langle Q, \Sigma, \delta, q_0, F \rangle$ em que:
 \begin{itemize}
@@ -210,12 +210,11 @@ A função de transição é representada por uma seta entre os estado com uma e
 \begin{example}
   Considere o seguinte AFD:
 
-
   \begin{eqnarray*}
-    M & = & \langle Q, \Sigma, \delta, q_1, F \rangle\\
-    Q & = & \{q_1, q_2, q_3\}\\
+    M & = & \langle Q, \Sigma, \delta, q_0, F \rangle\\
+    Q & = & \{q_0, q_1, q_2\}\\
     \Sigma & = & \{0,1\}\\
-    F & = & \{q_2\}\\
+    F & = & \{q_1\}\\
   \end{eqnarray*}
 
   Para simplificar, normalmente escreveremos a função $\delta$ como uma tabela:
@@ -224,21 +223,21 @@ A função de transição é representada por uma seta entre os estado com uma e
   \begin{tabular}{c|cc}
     $\delta$ & $0$ & $1$ \\
     \hline
-    $q_1$ & $q_1$ & $q_2$\\
-    $q_2$ & $q_3$ & $q_2$\\
-    $q_3$ & $q_2$ & $q_2$\\
+    $q_0$ & $q_0$ & $q_1$\\
+    $q_1$ & $q_2$ & $q_1$\\
+    $q_2$ & $q_1$ & $q_1$\\
   \end{tabular}
   \end{center}
 
 Essa tabela indica que:
 
 \begin{eqnarray*}
-  \delta(q_1, 0) & = & q_1\\
-  \delta(q_1, 1) & = & q_2\\
-  \delta(q_2, 0) & = & q_3\\
-  \delta(q_2, 1) & = & q_2\\
-  \delta(q_3, 0) & = & q_2\\
-  \delta(q_3, 1) & = & q_2
+  \delta(q_0, 0) & = & q_0\\
+  \delta(q_0, 1) & = & q_1\\
+  \delta(q_1, 0) & = & q_2\\
+  \delta(q_1, 1) & = & q_1\\
+  \delta(q_2, 0) & = & q_1\\
+  \delta(q_2, 1) & = & q_1
 \end{eqnarray*}
 
 O seguinte diagrama de estados representa esse AFD $M$:
@@ -246,14 +245,14 @@ O seguinte diagrama de estados representa esse AFD $M$:
 \begin{center}
 \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
 \tikzset{initial text={}}
-\node[state, initial] (q1) {$q_1$};
-\node[state, accepting] (q2) at (3,0) {$q_2$};
-\node[state, accepting] (q3) at (6,0) {$q_3$};
-\path[->] (q1) edge[loop above] node {$0$} (q1);
-\path[->] (q2) edge[loop above] node {$1$} (q2);
-\path[->] (q1) edge node {$1$} (q2);
-\path[->, bend left = 30] (q2) edge node {$0$} (q3);
-\path[->, bend left = 30] (q3) edge node {$0, 1$} (q2);
+\node[state, initial] (q0) {$q_0$};
+\node[state, accepting] (q1) at (3,0) {$q_1$};
+\node[state] (q2) at (6,0) {$q_2$};
+\path[->] (q0) edge[loop above] node {$0$} (q0);
+\path[->] (q1) edge[loop above] node {$1$} (q1);
+\path[->] (q0) edge node {$1$} (q1);
+\path[->, bend left = 30] (q1) edge node {$0$} (q2);
+\path[->, bend left = 30] (q2) edge node {$0, 1$} (q1);
 \end{tikzpicture}
 \end{center}
 \end{example}
@@ -279,38 +278,38 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 \begin{example}
   O AFD $M$ do exemplo anterior aceita a string $1101$.
 \begin{enumerate}
-\item $r_0 = q_1$
-\item $r_1 = q_2$ pois $\delta(q_1, 1) = q_2$
-\item $r_2 = q_2$ pois $\delta(q_2, 1) = q_2$
-\item $r_3 = q_3$ pois $\delta(q_2, 0) = q_3$
-\item $r_4 = q_2$ pois $\delta(q_3, 1) = q_2$
-\item a string é aceita, pois $r_4 \in F$
+\item $r_0 = q_0$
+\item $r_1 = q_1$ pois $\delta(q_0, 1) = q_1$
+\item $r_2 = q_1$ pois $\delta(q_1, 1) = q_1$
+\item $r_3 = q_2$ pois $\delta(q_1, 0) = q_2$
+\item $r_4 = q_1$ pois $\delta(q_2, 1) = q_1$
+\item a string é aceita, pois $r_4 = q_1 \in F$
 \end{enumerate}
 \end{example}
 
 \begin{example}
   \begin{displaymath}
-    M_1 = \langle \{q_1, q_2\}, \{0,1\}, \delta, q_1, \{q_2\}\rangle
+    M_1 = \langle \{q_0, q_1\}, \{0,1\}, \delta, q_0, \{q_1\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|cc}
     $\delta$ & $0$ & $1$ \\
     \hline
-    $q_1$ & $q_1$ & $q_2$\\
-    $q_2$ & $q_1$ & $q_2$\\
+    $q_0$ & $q_0$ & $q_1$\\
+    $q_1$ & $q_0$ & $q_1$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial] (q1) {$q_1$};
-      \node[state, accepting] (q2) at (3,0) {$q_2$};
-      \path[->] (q1) edge[loop above] node {$0$} (q1);
-      \path[->] (q2) edge[loop above] node {$1$} (q2);
-      \path[->, bend left = 30] (q1) edge node {$1$} (q2);
-      \path[->, bend left = 30] (q2) edge node {$0$} (q1);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state, accepting] (q1) at (3,0) {$q_1$};
+      \path[->] (q0) edge[loop above] node {$0$} (q0);
+      \path[->] (q1) edge[loop above] node {$1$} (q1);
+      \path[->, bend left = 30] (q0) edge node {$1$} (q1);
+      \path[->, bend left = 30] (q1) edge node {$0$} (q0);
     \end{tikzpicture}
   \end{center}
 
@@ -322,27 +321,27 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 
 \begin{example}
   \begin{displaymath}
-    M_2 = \langle \{q_1, q_2\}, \{0,1\}, \delta, q_1, \{q_1\}\rangle
+    M_2 = \langle \{q_0, q_1\}, \{0,1\}, \delta, q_0, \{q_0\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|cc}
     $\delta$ & $0$ & $1$ \\
     \hline
-    $q_1$ & $q_1$ & $q_2$\\
-    $q_2$ & $q_1$ & $q_2$\\
+    $q_0$ & $q_0$ & $q_1$\\
+    $q_1$ & $q_0$ & $q_1$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial, accepting] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \path[->] (q1) edge[loop above] node {$0$} (q1);
-      \path[->] (q2) edge[loop above] node {$1$} (q2);
-      \path[->, bend left = 30] (q1) edge node {$1$} (q2);
-      \path[->, bend left = 30] (q2) edge node {$0$} (q1);
+      \node[state, initial, accepting] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \path[->] (q0) edge[loop above] node {$0$} (q0);
+      \path[->] (q1) edge[loop above] node {$1$} (q1);
+      \path[->, bend left = 30] (q0) edge node {$1$} (q1);
+      \path[->, bend left = 30] (q1) edge node {$0$} (q0);
     \end{tikzpicture}
   \end{center}
 
@@ -396,34 +395,34 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 
 \begin{example}
   \begin{displaymath}
-    M_4 = \langle \{q_1, q_2, q_3, q_4\}, \{0,1\}, \delta, q_1, \{q_4\}\rangle
+    M_4 = \langle \{q_0, q_1, q_2, q_3\}, \{0,1\}, \delta, q_0, \{q_3\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|cc}
     $\delta$ & $0$ & $1$ \\
     \hline
-    $q_1$ & $q_2$ & $q_1$\\
-    $q_2$ & $q_3$ & $q_1$\\
-    $q_3$ & $q_3$ & $q_4$\\
-    $q_4$ & $q_4$ & $q_4$\\
+    $q_0$ & $q_1$ & $q_0$\\
+    $q_1$ & $q_2$ & $q_0$\\
+    $q_2$ & $q_2$ & $q_3$\\
+    $q_3$ & $q_3$ & $q_3$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial, accepting] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state] (q3) at (6,0) {$q_3$};
-      \node[state, accepting] (q4) at (9,0) {$q_4$};
-      \path[->] (q1) edge[loop above] node {$1$} (q1);
-      \path[->] (q3) edge[loop above] node {$0$} (q3);
-      \path[->] (q4) edge[loop above] node {$0,1$} (q4);
-      \path[->, bend left = 30] (q1) edge node {$0$} (q2);
-      \path[->, bend left = 30] (q2) edge node {$1$} (q1);
-      \path[->] (q2) edge node {$0$} (q3);
-      \path[->] (q3) edge node {$1$} (q4);
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state] (q2) at (6,0) {$q_2$};
+      \node[state, accepting] (q3) at (9,0) {$q_3$};
+      \path[->] (q0) edge[loop above] node {$1$} (q0);
+      \path[->] (q2) edge[loop above] node {$0$} (q2);
+      \path[->] (q3) edge[loop above] node {$0,1$} (q3);
+      \path[->, bend left = 30] (q0) edge node {$0$} (q1);
+      \path[->, bend left = 30] (q1) edge node {$1$} (q0);
+      \path[->] (q1) edge node {$0$} (q2);
+      \path[->] (q2) edge node {$1$} (q3);
     \end{tikzpicture}
   \end{center}
 
@@ -434,34 +433,34 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 
 \begin{example}
   \begin{displaymath}
-    M_5 = \langle \{q_1, q_2, q_3, q_4\}, \{a,b\}, \delta, q_1, \{q_3\}\rangle
+    M_5 = \langle \{q_0, q_1, q_2, q_3\}, \{a,b\}, \delta, q_0, \{q_2\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|cc}
     $\delta$ & $a$ & $b$ \\
     \hline
+    $q_0$ & $q_1$ & $q_0$\\
     $q_1$ & $q_2$ & $q_1$\\
     $q_2$ & $q_3$ & $q_2$\\
-    $q_3$ & $q_4$ & $q_3$\\
-    $q_4$ & $q_4$ & $q_4$\\
+    $q_3$ & $q_3$ & $q_3$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial, accepting] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state, accepting] (q3) at (6,0) {$q_3$};
-      \node[state] (q4) at (9,0) {$q_4$};
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state, accepting] (q2) at (6,0) {$q_2$};
+      \node[state] (q3) at (9,0) {$q_3$};
+      \path[->] (q0) edge[loop above] node {$b$} (q0);
       \path[->] (q1) edge[loop above] node {$b$} (q1);
       \path[->] (q2) edge[loop above] node {$b$} (q2);
-      \path[->] (q3) edge[loop above] node {$b$} (q3);
-      \path[->] (q4) edge[loop above] node {$a,b$} (q4);
+      \path[->] (q3) edge[loop above] node {$a,b$} (q3);
+      \path[->] (q0) edge node {$a$} (q1);
       \path[->] (q1) edge node {$a$} (q2);
       \path[->] (q2) edge node {$a$} (q3);
-      \path[->] (q3) edge node {$a$} (q4);
     \end{tikzpicture}
   \end{center}
 
@@ -472,30 +471,30 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 
 \begin{example}
   \begin{displaymath}
-    M_6 = \langle \{q_1, q_2, q_3\}, \{a,b\}, \delta, q_1, \{q_3\}\rangle
+    M_6 = \langle \{q_0, q_1, q_2\}, \{a,b\}, \delta, q_0, \{q_2\}\rangle
   \end{displaymath}
 
   \begin{center}
   \begin{tabular}{c|cc}
     $\delta$ & $a$ & $b$ \\
     \hline
+    $q_0$ & $q_0$ & $q_1$\\
     $q_1$ & $q_1$ & $q_2$\\
-    $q_2$ & $q_2$ & $q_3$\\
-    $q_3$ & $q_3$ & $q_3$\\
+    $q_2$ & $q_2$ & $q_2$\\
   \end{tabular}
   \end{center}
 
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial, accepting] (q1) {$q_1$};
-      \node[state] (q2) at (3,0) {$q_2$};
-      \node[state, accepting] (q3) at (6,0) {$q_3$};
+      \node[state, initial, accepting] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state, accepting] (q2) at (6,0) {$q_2$};
+      \path[->] (q0) edge[loop above] node {$a$} (q0);
       \path[->] (q1) edge[loop above] node {$a$} (q1);
-      \path[->] (q2) edge[loop above] node {$a$} (q2);
-      \path[->] (q3) edge[loop above] node {$a,b$} (q3);
+      \path[->] (q2) edge[loop above] node {$a,b$} (q2);
+      \path[->] (q0) edge node {$b$} (q1);
       \path[->] (q1) edge node {$b$} (q2);
-      \path[->] (q2) edge node {$b$} (q3);
     \end{tikzpicture}
   \end{center}
 
