@@ -257,7 +257,7 @@ O seguinte diagrama de estados representa esse AFD $M$:
 \end{center}
 \end{example}
 
-Dizemos que um AFD $M = \langle Q, \Sigma, \delta, q_o, F \rangle$ {\em aceita}, ou {\em reconhece}, uma string $\omega = a_0 a_1 \dots a_n$ se existe uma sequência de estadps $r_0, r_1, \dots, r_m$ tal que:
+Dizemos que um AFD $M = \langle Q, \Sigma, \delta, q_o, F \rangle$ {\em aceita}, ou {\em reconhece}, uma string $\omega = a_0 a_1 \dots a_n$ se existe uma sequência de estados $r_0, r_1, \dots, r_m$ tal que:
 \begin{enumerate}
 \item $r_0 = q_0$
 \item $\delta(r_i, a_{i+1}) = r_{i+1}$
@@ -506,7 +506,7 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
 \section{Autômatos Finitos Não-Determinísticos}
 \label{sec:afn}
 
-Um AFD ao ler um símbolo $a$ em um estado $q$ tem uma única possíbilidade de próximo estado (por isso determinístico).
+Um AFD ao ler um símbolo $a$ em um estado $q$ tem uma única possibilidade de próximo estado (por isso determinístico).
 Na definição isso é garantido pelo fato de $\delta$ ser uma função.
 No diagrama de estados isso se reflete no fato de que de cada estado sai uma e uma única seta com cada símbolo do alfabeto.
 
@@ -519,7 +519,7 @@ Os {\em autômatos finitos não-determinísticos} (AFN) extendem os determiníst
 Definimos formalmente um AFN é também definido como uma 5-upla $N = \langle Q, \Sigma, \Delta, q_0, F \rangle$, mas agora $\Delta: Q \times (\Sigma \cup \{\varepsilon\}) \to 2^Q$.
 Ou seja, a entrada da função pode ser a string vazia $\epsilon$ e sua saída é um conjunto de estados.
 
-Representamos o diagrama de estados da mesma forma que fizemos com os AFDs, mas agora é possível que de um mesmo estado partam mais de uma seta com o mesmo síbolo, existem setas com $\varepsilon$ e pode haver estados em que não haja seta com determinado símbolo.
+Representamos o diagrama de estados da mesma forma que fizemos com os AFDs, mas agora é possível que de um mesmo estado partam mais de uma seta com o mesmo símbolo, existem setas com $\varepsilon$ e pode haver estados em que não haja seta com determinado símbolo.
 
 Uma string é {\em aceita} por um AFN se existir {\em alguma} possibilidade de execução do autômato que consuma toda string e termine em um estado final.
 
@@ -609,7 +609,7 @@ Novamente, escrevemos $L(N)$ para a linguagem formada pelas strings aceitas por 
 Cada ramo dessa árvore representa uma possível execução do autômato para a entrada dada.
 O autômato para apenas quando toda a entrada foi consumida.
 Note que nos três ramos mais a esquerda quando isso ocorre não estamos em um estado final, mas nas três da direita sim.
-Basta que exita um ramo, uma possibilidade de execução, para que a string seja aceita.
+Basta que exista um ramo, uma possibilidade de execução, para que a string seja aceita.
 Assim, neste caso a string de fato é aceita, basta escolher um caminha que termine em um estado final.
 Por exemplo: $q_0, q_0, q_1, q_1, q_2, q_3, q_3, q_3$ satisfaz a definição para a string $0101\varepsilon 10 = 010110$.
 
@@ -981,7 +981,7 @@ O que faremos nesse caso será incluir no estado atual todos os estados que cons
   Para todo AFN $N$ existe um AFD $M$ tal que $N \sim M$.
 \end{theorem}
 \begin{proof}
-  Sejam $N$ e $M$ como definidos na demonstração do lema anterior
+  Sejam $N$ e $M$ como definidos na demonstração do lema anterior.
   Considere a seguinte função $E: Q' \to Q'$:
   \begin{displaymath}
     E(R) = \{q \in Q: \exists q' \in R(q' \stackrel{\varepsilon}{\rightsquigarrow} q) \}
