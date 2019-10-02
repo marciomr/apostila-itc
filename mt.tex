@@ -719,7 +719,7 @@ Porém, por mais que pareçam muito mais poderosas, assim com as outras variante
 \label{sec:problema-parada}
 
 As diversas variantes de Máquinas de Turing (multifitas, RAM e mesmo as não-determinísticas) são equivalentes a MTs simples.
-Além disso vimos que todas as Línguagens Livres de Contexto são recursivas (Teorema \ref{}), ou seja, toda LLC podem ser reconhecidas por uma MT.
+Além disso vimos que todas as Linguagens Livres de Contexto são recursivas (Teorema \ref{}), ou seja, toda LLC pode ser reconhecida por uma MT.
 Vimos também linguagens que não são livres de contexto e são reconhecidas por MTs.
 Assim, parece que chegamos em um modelo que é mais expressivo do que os que vimos até aqui e parece que chegamos em uma espécie de limite -- todas as tentativas de tornar o modelo mais expressivo falharam.
 Nesta seção veremos que mesmo esse modelo super-expressivo tem limitações.
@@ -769,7 +769,7 @@ Podemos representar uma MT é descrita como uma sequência de instruções com o
   q_0 a \to q_1 b D
 \end{displaymath}
 
-Ou seja, podemos representar uma sequência de instruçõe como uma string sobre o alfabeto $\Sigma_{MT} = Q \cup \Sigma \cap \{E, D, \to, \#\}$ (o símbolo $\#$ é usado para separar as instruções).
+Ou seja, podemos representar uma sequência de instruções como uma string sobre o alfabeto $\Sigma_{MT} = Q \cup \Sigma \cap \{E, D, \to, \#\}$ (o símbolo $\#$ é usado para separar as instruções).
 Existem infinitas MTs, ou equivalentemente, infinitas strings em $\Sigma_{MT}^*$.
 Pelo teorema de Cantor vimos que o conjunto $2^{\Sigma_{MT}^*}$ tem cardinalidade maior do que $\Sigma_{MT}^*$.
 Ou seja, existem mais linguagens do que MTs.
@@ -788,8 +788,8 @@ Essa descoberta do começo dos anos 30 dá origem ao que hoje chamamos de {\em c
 
 \subsection{O Problema da Parada}
 
-Note que não dicemo que $U$ decide $A_{MT}$.
-Se $M$ aceita $x$, então, por definição $U$ aceita $\langle m, x\rangle$, mas não dicemos o que acontece se $M$ rejeita $x$.
+Note que não dissemos que $U$ decide $A_{MT}$.
+Se $M$ aceita $x$, então, por definição $U$ aceita $\langle m, x\rangle$, mas não dissemos o que acontece se $M$ rejeita $x$.
 No caso de $M$ rejeitar $x$, $U$ não pode aceitar $\langle m, x \rangle$.
 Neste caso $U$ pode rejeitar $\langle m, x \rangle$, mas podem ocorrer outras coisas, por exemplo, $U$ pode entrar em loop infinito e nem aceitar nem rejeitar a entrada.
 
