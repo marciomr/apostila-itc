@@ -1,4 +1,4 @@
-# Apostila de Segurança da Informação
+# Apostila de Introdução à Teoria da Computação
 Apostila para o curso de Introdução à Teoria da Computação
 
 Essas são notas de aula da disciplina Introdução à Teoria da Computação ministrados no segundo semestre de 2019 para uma das turmas do período noturno do curso de Sistemas de Informação da Escola de Artes Ciências e Humanidades (EACH) da USP.
