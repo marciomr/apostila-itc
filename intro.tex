@@ -7,7 +7,7 @@
 O curso de Teoria da computação procura responder duas perguntas centrais da área de Ciência da Computação:
 \begin{enumerate}
 \item Que problemas são resolvíveis de forma automática? (computabilidade)
-\item Que problemas são resolvíveis de maneita eficiente? (complexidade)
+\item Que problemas são resolvíveis de maneira eficiente? (complexidade)
 \end{enumerate}
 
 Para responder à primeira pergunta primeiro devemos esclarecer alguns pontos:
@@ -43,11 +43,11 @@ Nosso foco neste curso será nos problemas ditos de {\em decisão}, ou seja, naq
 \end{example}
 
 Como veremos na próxima seção, existe uma relação íntima entre problemas de decisão e linguagens formais, a saber, para cada problema de decisão existe uma linguagem formal equivalente e vice-versa.
-De fato, grande parte do curso estudaremos classes de linguagens formais.
+De fato, em grande parte do curso estudaremos classes de linguagens formais.
 
 Voltemos então para a pergunta: o que é um método automático de resolução?
 
-Para responder a essa pergunta, que não tem nada de trivial, precisamos de um {\em modelo e computação} do funcionamento de dispositivos eletrônicos.
+Para responder a essa pergunta, que não tem nada de trivial, precisamos de um {\em modelo} do funcionamento de dispositivos eletrônicos.
 Como qualquer outro modelo, faremos abstrações, simplificaremos e desprezaremos variáveis.
 
 Podemos refrasear nossa pergunta, de maneira agora um pouco mais precisa:
@@ -85,7 +85,7 @@ No Capítulo \ref{cha:MTs} veremos Máquinas de Turing Determinísticas e não-D
 
 
 As Máquinas de Turing (MTs) são o modelo mais completo que veremos.
-Na verdade a Tese de Church afirma que de fato, as MTs são o modelo mais completo possível.
+Na verdade a Tese de Church afirma que, de fato, as MTs são o modelo mais completo possível.
 Em outras palavras: se algo pode ser computado, então ele pode ser computado por uma MT.
 
 Por outro lado, veremos que existem linguagens que não são reconhecíveis por MTs, ou equivalentemente, existem problemas de decisão que não admitem solução computacional ({\em indecidíveis}).
@@ -211,7 +211,7 @@ São exemplos de fórmulas {\em não} satisfatíveis:
 O problema da satisfatibilidade, ou simplesmente SAT, é um problema de decisão que pode ser enunciado da seguinte forma:
 
   \begin{description}
-  \item[] {\bf Entrada:} Uma fórmula $\alpha$ qualquer sobre $\mathbb{P}$.
+  \item[] {\bf Entrada:} Uma fórmula $\alpha$ na FNC qualquer sobre $\mathbb{P}$.
   \item[] {\bf Saída:} {\tt SIM} se $\alpha$ é satisfatível e {\tt NÃO} caso contrário.
   \end{description}
 
