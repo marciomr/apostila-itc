@@ -20,7 +20,7 @@ Voltaremos nossa atenção um instante para conjuntos (classes) de linguagens, o
 Podemos aplicar operações sobre linguagens.
 Como linguagens são conjuntos de strings, podemos tomar a {\em união} de duas linguagens:
 \begin{displaymath}
-  A \cup B = \{x \in \Sigma^* : x \in A \textrm{ ou } x \in B\}
+  A \cup B = \{x \in \Sigma^* : x \in A \textrm{ ou } y \in B\}
 \end{displaymath}
 
 
@@ -96,7 +96,7 @@ Por fim, $\L$ é {\em fechada pela estrela de Kleene} quando temos que:
   \begin{eqnarray*}
     \L_1 & = & \{\{a\}, \{b\}\} \\
     \L_2 & = & \{\{a\}, \{b\}, \{a, b\}\}\\
-    \L_3 & = & \{\{a\}, \{a, aa\}, \{a, aa, aaa\} \dots\}\\
+    \L_3 & = & \{\{a\}, \{aa\}, \{aaa\}, \{aaaa\} \dots\}\\
     \L_4 & = & \{\{a\}, \{\varepsilon, a, aa, aaa, \dots\}\}\\
   \end{eqnarray*}
 
@@ -132,30 +132,35 @@ Uma {\em expressão regular} pode ser definida da seguinte forma:
 \end{example}
 
 Denotaremos $L(r)$ a linguagem {\em expressa} pela expressão regular $r$:
-\begin{itemize}
-\item[] $L(a) = \{a\}$ para todo $a \in \Sigma$
-\item[] $L(\epsilon) = \{\varepsilon\}$
-\item[] $L(\o) = \emptyset$
-\item[] $L(r_1 \abxcup r_2) = L(r_1) \cup L(r_2)$
-\item[] $L(r_1r_2) = L(r_1) \circ L(r_2)$
-\item[] $L(r^\star) = L(r)^*$
-\end{itemize}
+\begin{eqnarray*}
+  L(a) & = & \{a\} \textrm{ para todo $a \in \Sigma$}\\
+  L(\epsilon) & = & \{\varepsilon\}\\
+  L(\o) & = & \emptyset\\
+  L(r_1 \abxcup r_2) & = & L(r_1) \cup L(r_2)\\
+  L(r_1r_2) & = & L(r_1) \circ L(r_2)\\
+  L(r^\star) & = & L(r)^*
+\end{eqnarray*}
 
+\begin{eqnarray*}
+L(\o) & = & \emptyset\\
+L(01) & = & L(0) \circ L(1) \\
+      & = & \{0\} \circ \{1\}\\
+      & = & \{01\}\\
+L(01^\star\abxcup 1) & = & L(01^\star) \cup L(1) \\
+                     & = & L(0) \circ L(1^\star) \cup \{1\} \\
+                     & = & \{0\}\circ\{1\}^* \cup \{1\} \\
+                     & = & \{1, 0, 01, 011, 0111 \dots\}\\
+L(\epsilon \abxcup \o) & = & L(\epsilon) \cup L(\o) \\
+                       & = & \{\varepsilon\} \cup \emptyset \\
+                       & = & \{\varepsilon\}
+\end{eqnarray*}
 
-\begin{example}
-  \begin{itemize}
-  \item[] $L(\o) = \emptyset$
-  \item[] $L(01) = L(0) \circ L(1) = \{01\}$
-  \item[] $L(01^\star\abxcup 1) = L(01^\star) \cup L(1) = L(0) \circ L(1^\star) \cup \{1\} = \{0\}\circ\{1\}^* \cup \{1\} = \{0, \varepsilon, 1, 11, 111 \dots\}$
-  \item[] $L(\epsilon \abxcup \o) = L(\epsilon) \cup L(\o) = \{\varepsilon\} \cup \emptyset = \{\varepsilon\}$
-\end{itemize}
-\end{example}
-
+Podemos definir a classe das linguagens regulares como a classe das linguagens expressíveis por meio de expressões regulares.
 
 \section{Autômatos Finitos Determinísticos}
 \label{sec:afd}
 
-Um {\em Autômato Finito Determinístico} (AFD) é um modelo de computação, o mais simples que estudaremos, adequado para representar sistemas computacionais simples como portas automáticas de elevadores e termostatos.
+Um {\em Autômato Finito Determinístico} (AFD) é um modelo de computação, o mais simples que estudaremos, adequado para representar sistemas computacionais simples como portas automáticas, elevadores e termostatos.
 
 Um AFD é definido formalmente como uma 5-upla $M = \langle Q, \Sigma, \delta, q_0, F \rangle$ em que:
 \begin{itemize}
@@ -261,7 +266,7 @@ Dizemos que um AFD $M = \langle Q, \Sigma, \delta, q_o, F \rangle$ {\em aceita},
 \begin{enumerate}
 \item $r_0 = q_0$
 \item $\delta(r_i, a_{i+1}) = r_{i+1}$
-\item $r_n \in F$
+\item $r_m \in F$
 \end{enumerate}
 
 Dizemos que $M$ {\em consome} a string conforme passa de um estado para outro.
@@ -465,7 +470,7 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
   \end{center}
 
   \begin{displaymath}
-    L(M_5) = \{\omega \in \{0,1\}^* : \omega \textrm{ contém exatamente dois } a \}
+    L(M_5) = \{\omega \in \{a,b\}^* : \omega \textrm{ contém exatamente dois } a \}
   \end{displaymath}
 \end{example}
 
@@ -487,7 +492,7 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
   \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
-      \node[state, initial, accepting] (q0) {$q_0$};
+      \node[state, initial] (q0) {$q_0$};
       \node[state] (q1) at (3,0) {$q_1$};
       \node[state, accepting] (q2) at (6,0) {$q_2$};
       \path[->] (q0) edge[loop above] node {$a$} (q0);
@@ -499,7 +504,7 @@ Escrevemos $L(M)$ para a linguagem das strings aceitas por $M$.
   \end{center}
 
   \begin{displaymath}
-    L(M_6) = \{\omega \in \{0,1\}^* : \omega \textrm{ contém pelo menos dois } b \}
+    L(M_6) = \{\omega \in \{a,b\}^* : \omega \textrm{ contém pelo menos dois } b \}
   \end{displaymath}
 \end{example}
 
