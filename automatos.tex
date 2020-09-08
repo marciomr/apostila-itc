@@ -666,7 +666,7 @@ Por exemplo: $q_0, q_0, q_1, q_1, q_2, q_3, q_3, q_3$ satisfaz a definição par
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
       \tikzset{initial text={}}
       \node[state, initial] (q0) {$q_0$};
-      \node[state, accepting] (q1) at (3,0) {$q_1$};
+      \node[state] (q1) at (3,0) {$q_1$};
       \node[state] (q2) at (6,0) {$q_2$};
       \node[state, accepting] (q3) at (9,0) {$q_3$};
       \path[->] (q0) edge[loop above] node {$0,1$} (q0);
@@ -714,7 +714,7 @@ Por exemplo: $q_0, q_0, q_1, q_1, q_2, q_3, q_3, q_3$ satisfaz a definição par
       \tikzset{initial text={}}
       \node[state, initial] (q1) {$q_1$};
       \node[state] (q2) at (2,1.5) {$q_2$};
-      \node[state] (q3) at (5,1.5) {$q_3$};
+      \node[state, accepting] (q3) at (5,1.5) {$q_3$};
       \node[state] (q4) at (2,-1.5) {$q_4$};
       \node[state, accepting] (q5) at (5,-1.5) {$q_5$};
       \path[->] (q2) edge[loop above] node {$0,1$} (q2);
@@ -1032,7 +1032,7 @@ O que faremos nesse caso será incluir no estado atual todos os estados que cons
       \node[state, accepting] (23) at (3,0) {$\{q_1,q_2\}$};
       \node[state, accepting, red] (123) at (6,0){$Q$};
       \node[state, red] (2) at (0,3) {$\{q_1\}$};
-      \node[state] (0) at (3,3) {$\{\emptyset\}$};
+      \node[state] (0) at (3,3) {$l\emptyset$};
       \node[state, accepting] (3) at (6,3){$\{q_2\}$};
       \node[state, red] (12) at (1,-3) {$\{q_0, q_1\}$};
       \node[state, accepting, red] (13) at (5,-3){$\{q_0,q_2\}$};
