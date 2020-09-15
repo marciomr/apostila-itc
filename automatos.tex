@@ -2097,7 +2097,7 @@ Ou seja, $x \cdot y^i \cdot z \in A$ para todo $i = 0, 1, 2, \dots$
 \begin{example}
   Vamos mostrar que $A = \{0^n 1^n: n \geq 0\}$ não é regular.
 
-  Seja $p$ p comprimento do bombeamento e $\omega = 0^p 1^p \in A$.
+  Seja $p$ o comprimento do bombeamento e $\omega = 0^p 1^p \in A$.
   Se $A$ fosse regular, pelo lema do bombeamento, $\omega$ poderia ser dividida em três partes $\omega = x  y  z$ e para todo $i = 0, 1, \dots$ teríamos $x  y^i  z \in A$.
 
 Se $y$ é formada só por $0$s ou só por $1$s então $x  y  y  z$ possuiria um número diferente de $0$s e $1$s e, portanto, $x  y  y  z \notin A$.
@@ -2125,18 +2125,18 @@ Dividimos $\omega = xyz$ com $|xy| \leq p$ então $y$ contém apenas $0$s e $xyy
 \end{example}
 
 
+%\begin{example}
+%  Vamos mostrar que $A = \{ 1^{n^2} : n \geq 0 \}$ não é regular.
+
+%  Seja $p$ o comprimento do bombeamento e $\omega = 1^{p^2} \in A$.
+%  Dividimos $\omega = xyz$ com $|xy| \leq p$.
+%  Como $|y| \leq p$ então $|xyyz| \leq p^2 + p < p^2 + 2p + 1 = (p + 1)^2$.
+%  Logo $p^2 < |xyyz| < (p+1)^2$.
+%\end{example}
+
+
 \begin{example}
-  Vamos mostrar que $A = \{ 1^{n^2} : n \geq 0 \}$ não é regular.
-
-  Seja $p$ o comprimento do bombeamento e $\omega = 1^{p^2} \in A$.
-  Dividimos $\omega = xyz$ com $|xy| \leq p$.
-  Como $|y| \leq p$ então $|xyyz| \leq p^2 + p < p^2 + 2p + 1 = (p + 1)^2$.
-  Logo $p^2 < |xyyz| < (p+1)^2$.
-\end{example}
-
-
-\begin{example}
-  Por fim, vamos mostrar que $A = \{0^i 1^j : i < j \}$ não é regular.
+  Por fim, vamos mostrar que $A = \{0^i 1^j : i > j \}$ não é regular.
 
   Seja $p$ o comprimento do bombeamento e $\omega = 0^{p+1} 1^p \in A$.
   Tomamos $\omega = xyz$ com $|xy| \leq p$ e $|y| > 0$.
