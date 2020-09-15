@@ -2047,10 +2047,10 @@ Portanto temos que:
 
 Neste capítulo vimos dois modelos computacionais: AFDs e AFNs.
 Ambos reconhecem a mesma classe de linguagens, a saber, as linguagens regulares.
-Para completar esse capítulo veremos exemplos de linguagens que não são regulares.
+Para completar este capítulo veremos exemplos de linguagens que não são regulares.
 
 \begin{lemma}[Lema do Bombeamento]
-  Se $A$ é uma linguagem regular então exite um número $p$ (chamado {\em comprimento do bombeamento}) tal que se $\omega \in A$ e $|\omega| \leq p$ então $\omega = x \cdot y \cdot z$ onde:
+  Se $A$ é uma linguagem regular então exite um número $p$ (chamado {\em comprimento do bombeamento}) tal que se $\omega \in A$ e $|\omega| \geq p$ então $\omega = x \cdot y \cdot z$ onde:
 \begin{enumerate}
 \item $x \cdot y^i \cdot z \in A$ para todo $i \leq 0$,
 \item $|y| > 0$ e
