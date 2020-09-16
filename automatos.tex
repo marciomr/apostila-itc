@@ -2060,7 +2060,7 @@ Para completar este capítulo veremos exemplos de linguagens que não são regul
 
 \begin{proof}
 Como $A$ é regular, existe AFD $M = \langle Q, \Sigma, \delta, q_0, F \rangle$ tal que $L(M) = A$.
-Seja $p = |Q|$ e seja $\omega \in A$ uma string tal que $|\omega| \leq p$.
+Seja $p = |Q| - 1$ e seja $\omega \in A$ uma string tal que $|\omega| \geq p$.
 
 Como $\omega = a_1 a_2 \dots a_n \in A = L(M)$ existe uma sequência de estados $q_0, \dots, q_n$ onde $q_n \in F$ e $q_{i+1} = \delta(q_i, a_{i+1})$.
 Como $|\omega| = n \geq p$, pelo {\em princípio da casa dos pombos}\footnote{O princípio da casa dos pombos garante que se há $n$ pombos e $p$ casas com $n > p$ então com certeza pelo menos uma casa terá mais de um pombo.} existe pelo menos um estado que se repete na sequência.
@@ -2120,7 +2120,7 @@ Logo $xyyz \notin A$.
 \begin{example}
 Vamos mostrar que $A = \{\omega \omega : \omega \in \{0,1\}^*\}$ não é regular.
 
-Seja $p$ o comprimento do bombeamento e $\omega = 0^p 1^p 0^p 1 \in A$.
+Seja $p$ o comprimento do bombeamento e $\omega = 0^p 1 0^p 1 \in A$.
 Dividimos $\omega = xyz$ com $|xy| \leq p$ então $y$ contém apenas $0$s e $xyyz = 0^p 0 \dots 0 1 0^p 1 \notin A$.
 \end{example}
 
