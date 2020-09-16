@@ -16,7 +16,7 @@ Uma {\em Gramática Livre de Contexto} (GLC) é uma 4-upla $\langle V, \Sigma, R
 \item[] $V$ é um conjunto finito cujos elementos são chamados {\em variáveis},
 \item[] $\Sigma$ é um conjunto finito disjunto de $V$ (i.e. $\Sigma \cap V \neq \emptyset$) cujos elementos são chamados {\em terminais},
 \item[] $R$ é um conjunto finito de {\em regras} e cada regra é da forma $v_1 \to v_2 \dots v_n$ onde $v_1 \in V$ e $v_i \in V \cup \Sigma$ para $i = 2, \dots, n$ e
-\item[] $S \in V$ é uma variável chamada {\em inicial}.   
+\item[] $S \in V$ é uma variável chamada {\em inicial}.
 \end{itemize}
 
 Se $u$, $v$ e $w$ strings sobre o alfabeto $V \cup \Sigma$ e $A \to w$ é uma regra da gramática, dizemos que $uAv$ {\em origina} $uwv$ (escrevemos $uAv \Rightarrow uwv$).
@@ -42,7 +42,7 @@ $01$ pertence a linguagem dessa gramática:
 
 \begin{eqnarray*}
   S & \Rightarrow & 0S1 \\
-    & \Rightarrow & 0 \varepsilon 1 = 01  
+    & \Rightarrow & 0 \varepsilon 1 = 01
 \end{eqnarray*}
 
 $000111$ pertence a linguagem dessa gramática:
@@ -53,7 +53,7 @@ $000111$ pertence a linguagem dessa gramática:
     & \Rightarrow & 00S11\\
     & \Rightarrow & 000S111\\
     & \Rightarrow & 000\varepsilon 111\\
-    & \Rightarrow & 000111  
+    & \Rightarrow & 000111
 \end{eqnarray*}
 
 Não é difícil notar que a linguagem dessa gramática é:
@@ -78,7 +78,7 @@ $G = \langle \{S\}, \{0,1\}, R, S\rangle$ em que $R$ é:
 \begin{displaymath}
   S \to SS | 0 | 1
 \end{displaymath}
- 
+
 $01$ pertence à linguagem de $G$:
 
 \begin{eqnarray*}
@@ -101,7 +101,7 @@ $0101$ pertence à linguagem de $G$:
 
 \begin{example}
 \begin{displaymath}
-G = \langle \{S\}, \{0, 1, \star, \abxcup, \epsilon, \o\}, R, S\rangle  
+G = \langle \{S\}, \{0, 1, \star, \abxcup, \epsilon, \o\}, R, S\rangle
 \end{displaymath}
 \begin{displaymath}
   S \to 0 | 1 | \epsilon | \o | SS | S \abxcup S | S^\star
@@ -128,7 +128,7 @@ Vamos mostrar que $10 \abxcup 1^\star \in L(G)$
   \item $\Sigma = \{a, +, \cdot, (,)\}$
   \end{itemize}
 
-  
+
   \begin{eqnarray*}
     Expr &\to& Expr  +  Termo |  Termo \\
     Termo &\to& Termo \cdot Fator |  Fator \\
@@ -152,21 +152,21 @@ Podemos representar a derivação do último exemplo por meio de uma {\em árvor
   \begin{tikzpicture}[level distance=2cm,sibling distance=.5cm]
     \Tree[.$Expr$
       \edge[-]node{}; [.$Expr$
-        \edge[-]node{}; [.$Termo$ 
+        \edge[-]node{}; [.$Termo$
           \edge[-]node{}; [.$Fator$
-            \edge[-]node{}; [.$a$ ]   
-          ] 
+            \edge[-]node{}; [.$a$ ]
+          ]
         ]
       ]
       \edge[-]node{}; [.$+$ ]
-      \edge[-]node{}; [.$Termo$ 
+      \edge[-]node{}; [.$Termo$
         \edge[-]node{}; [.$Termo$
           \edge[-]node{}; [.$Fator$
             \edge[-]node{}; [.$a$ ]
           ]
         ]
         \edge[-]node{}; [.$\cdot$ ]
-        \edge[-]node{}; [.$Fator$ 
+        \edge[-]node{}; [.$Fator$
           \edge[-]node{}; [.$a$ ]
         ]
       ]
@@ -218,15 +218,15 @@ Essas derivações são representadas pelas seguintes árvores sintáticas.
   \begin{tikzpicture}[level distance=2cm,sibling distance=.5cm]
     \Tree[.$S$
       \edge[-]node{}; [.$S$
-        \edge[-]node{}; [.$a$ ]   
+        \edge[-]node{}; [.$a$ ]
       ]
       \edge[-]node{}; [.$+$ ]
-      \edge[-]node{}; [.$S$ 
+      \edge[-]node{}; [.$S$
         \edge[-]node{}; [.$S$
           \edge[-]node{}; [.$a$ ]
         ]
         \edge[-]node{}; [.$\cdot$ ]
-        \edge[-]node{}; [.$S$ 
+        \edge[-]node{}; [.$S$
           \edge[-]node{}; [.$a$ ]
         ]
       ]
@@ -247,7 +247,7 @@ Essas derivações são representadas pelas seguintes árvores sintáticas.
         ]
       ]
       \edge[-]node{}; [.$\cdot$ ]
-      \edge[-]node{}; [.$S$ 
+      \edge[-]node{}; [.$S$
         \edge[-]node{}; [.$a$ ]
       ]
     ]
@@ -255,19 +255,19 @@ Essas derivações são representadas pelas seguintes árvores sintáticas.
 \end{center}
 \end{multicols}
 
-  
+
 \end{example}
 
 Uma GLC está na {\em Forma Normal de Chomsky} (FNC) se toda regra é de uma das seguintes formas:
 \begin{itemize}
 \item[] $S \to \varepsilon$
-\item[] $A \to BC|a$ 
+\item[] $A \to BC|a$
 \end{itemize}
 
 Onde $a \in \Sigma$, $A \in V$ e $B,C \in V - \{S\}$.
 
 \begin{theorem}
-  Toda linguagem livre de contexto é gerada por uma GLC na FNC.  
+  Toda linguagem livre de contexto é gerada por uma GLC na FNC.
 \end{theorem}
 \begin{proof}
   Essa prova é construtiva.
@@ -277,7 +277,7 @@ Onde $a \in \Sigma$, $A \in V$ e $B,C \in V - \{S\}$.
 \item Removemos cada regra da forma $A \to \varepsilon$ e criamos uma nova regra para cada ocorrência de $A$ a direita de uma regra em que $A$ não ocorre (por exemplo $R \to uAvAw$ gera três regras $R \to uvAw$, $R\to uAvw$ e $R \to uvw$).
 \item Removemos todas as regras da forma $A \to B$ e criamos uma regra $A \to u$ para cada ocorrência de $B \to u$.
 \item Substituímos $A \to u_1u_2 \dots u_k$ onde $k > 2$ e $u_i \in V \cup \Sigma$ por $A \to u_1A_1$, $A \to u_2A_2$, $\dots$, $A_{k-2} \to u_{k-1}u_k$.
-\item Substituímos $A \to cB$ (e $A \to Bc$) por $A \to BC$ (ou $A \to CB$) e $C \to c$  
+\item Substituímos $A \to cB$ (e $A \to Bc$) por $A \to BC$ (ou $A \to CB$) e $C \to c$
 \end{enumerate}
 \end{proof}
 
@@ -357,7 +357,7 @@ Um {\em autômato com pilha} (AP) é uma 6-upla $\langle Q, \Sigma, \Gamma, \del
 \item $Q$ é um conjunto finito cujos elementos são chamados {\em estados},
 \item $\Sigma$ é um alfabeto chamado {\em alfabeto de entrada},
 \item $\Gamma$ é um alfabeto chamado {\em alfabeto da pilha},
-\item $\delta: Q \times (\Sigma \cup \{\varepsilon\}) \times (\Gamma \cup \{\varepsilon) \to 2^{Q \times (\Gamma \cup \{\varepsilon\})}$ é a {\em função de transição},
+\item $\delta: Q \times (\Sigma \cup \{\varepsilon\}) \times (\Gamma \cup \{\varepsilon\}) \to 2^{Q \times (\Gamma \cup \{\varepsilon\})}$ é a {\em função de transição},
 \item $q_0 \in Q$ é o {\em estado inicial} e
 \item $F \subseteq Q$ é o conjunto dos {\em estados finais}.
 \end{itemize}
@@ -380,10 +380,10 @@ A cada passo o AP lê um símbolo $\omega_{i+1} \in \Sigma \cup \{\varepsilon\}$
     \Gamma & = & \{0, \$\}\\
     F & = & \{q_1, q_4\}
   \end{eqnarray*}
-  
+
 
   $\delta$ é dado pela seguinte tabela:
-  
+
   \begin{tabular}{c|ccc|ccc|ccc|}
     &\multicolumn{3}{|c|}{$0$} & \multicolumn{3}{|c|}{$1$} & \multicolumn{3}{|c|}{$\varepsilon$}\\
     \hline
@@ -402,7 +402,7 @@ A cada passo o AP lê um símbolo $\omega_{i+1} \in \Sigma \cup \{\varepsilon\}$
   \item Começo no estado $q_1$, emppilho $\$$ e vou para $q_2$ (pilha: $\$$).
   \item Leio $0$, empilho $0$ e fico em $q_2$ (pilha: $0\$$).
   \item Leio $1$, desempilho $0$ e vou para $q_3$ (pilha: $\$$).
-  \item Desempilho $\$$ e vou para $q_4 \in F$ (pilha: $\varepsilon$). 
+  \item Desempilho $\$$ e vou para $q_4 \in F$ (pilha: $\varepsilon$).
   \end{enumerate}
 \end{example}
 
@@ -444,7 +444,7 @@ Portanto $L(G) = \{0^n1^n : n \geq 0\}$
 \path[->] (q2) edge node {$\varepsilon$, $\varepsilon \to \varepsilon$} (q3);
 \path[->] (q3) edge node {$\varepsilon$, $\$ \to \varepsilon$} (q4);
 \end{tikzpicture}
-\end{center}  
+\end{center}
 
 Procure verificar com alguns exemplos que $L(G) = \{\omega \omega^R: \omega \in \{0,1\}^*\}$ aonde $\omega^R$ é $\omega$ escrito de trás para frente.
 \end{example}
@@ -472,11 +472,11 @@ Procure verificar com alguns exemplos que $L(G) = \{\omega \omega^R: \omega \in 
 \path[->] (q5) edge node {$\varepsilon$, $\varepsilon \to \varepsilon$} (q6);
 \path[->] (q6) edge node {$\varepsilon$, $\$ \to \varepsilon$} (q7);
 \end{tikzpicture}
-\end{center}  
+\end{center}
 
-Procure verificar com alguns exemplos que: 
+Procure verificar com alguns exemplos que:
 \begin{displaymath}
-L(G) = \{a^ib^jc^k : i = j \textrm{ ou } i = k\}  
+L(G) = \{a^ib^jc^k : i = j \textrm{ ou } i = k\}
 \end{displaymath}
 
 \end{example}
@@ -537,7 +537,7 @@ Para abreviar o seguinte:
 \end{tikzpicture}
 \end{center}
 
-É uma abreviação de: 
+É uma abreviação de:
 
 \begin{center}
 \begin{tikzpicture}[node distance=2cm,auto,>=latex]
@@ -551,7 +551,7 @@ Para abreviar o seguinte:
 \path[->] (q2) edge node {\small $\varepsilon$, $\varepsilon \to x$} (r);
 \end{tikzpicture}
 \end{center}
-  
+
 \end{example}
 
 
@@ -573,7 +573,7 @@ Para abreviar o seguinte:
 
   \begin{eqnarray*}
     \Delta(q_0, \varepsilon, \varepsilon) & = & \{\langle q_I, S\$ \rangle\}\\
-    \Delta(q_I, \varepsilon, \$) & = & \{\langle q_F, \varepsilon \rangle\}\\  
+    \Delta(q_I, \varepsilon, \$) & = & \{\langle q_F, \varepsilon \rangle\}\\
     \Delta(q_I, a, a) & = & \{\langle q_I, \varepsilon \rangle\} \textrm{ para todo } a \in \Sigma\\
     \Delta(q_I, \varepsilon, A) & = & \{\langle q_I, \omega \rangle\} \textrm{ para todo } A \to \omega \in R\\
   \end{eqnarray*}
@@ -594,7 +594,7 @@ Para abreviar o seguinte:
 
 Em palavras, primeiro inserimos $\$$ para marcar o fim da pilha e em seguida inserimos a variável inicial $S$ na pilha e seguimos para o estado intermediário $q_I$.
 Então, não-deterministicamente empilhamos o corpo de alguma das regras $A \to \omega$ ou desempilhamos um símbolo terminal $a$ e o reconhecemos.
-Quando a pilha chega no fim (no símbolo $\$$), desempilhamos e vamos para o estado final.  
+Quando a pilha chega no fim (no símbolo $\$$), desempilhamos e vamos para o estado final.
 \end{proof}
 
 
@@ -646,18 +646,64 @@ O diagrama acima é uma abreviação para o seguinte diagrama:
 
 
 \begin{example}
+  Considere a gramática com as seguintes regras:
+
+  \begin{eqnarray*}
+    S & \to & aTb | b \\
+    T & \to & Ta | \varepsilon \\
+  \end{eqnarray*}
+
+  Usando a construção do teorema anterior o seguinte AP reconhece a linguagem representada por essa gramática:
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+      \tikzset{initial text={}}
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (qI) at (3,0) {$q_I$};
+      \node[state, accepting] (qF) at (6,0) {$q_F$};
+      \path[->] (qI) edge[loop above] node[align=center] {$b, b \to \varepsilon$\\ $a, a \to \varepsilon$\\ $\varepsilon, S \to aTb$\\ $\varepsilon, S \to b$ \\ $\varepsilon, T \to Ta$ \\ $\varepsilon, T \to \varepsilon$} (qI);
+      \path[->] (q0) edge node {\small $\varepsilon$, $\varepsilon \to S\$$} (qI);
+      \path[->] (qI) edge node {\small $\varepsilon$, $\$ \to \varepsilon$} (qF);
+    \end{tikzpicture}
+  \end{center}
+
+  Esse diagrama é uma abreviação do seguinte:
+
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+      \tikzset{initial text={}}
+      \node[state, initial] (q0) {$q_0$};
+      \node[state] (q1) at (3,0) {$q_1$};
+      \node[state] (qI) at (6,0) {$q_I$};
+      \node[state] (q2) at (3,-2) {$q_2$};
+      \node[state] (q3) at (6,-3) {$q_3$};
+      \node[state] (q4) at (9,-3) {$q_4$};
+      \node[state, accepting] (qF) at (9,0) {$q_F$};
+      \path[->] (qI) edge[loop above] node[align=center] {$b, b \to \varepsilon$\\ $a, a \to \varepsilon$\\ $\varepsilon, S \to b$\\ $\varepsilon, T \to \varepsilon$} (qI);
+      \path[->] (q0) edge node {\small $\varepsilon$, $\varepsilon \to \$$} (q1);
+      \path[->] (q1) edge node {\small $\varepsilon$, $\varepsilon \to S$} (qI);
+      \path[->] (qI) edge node[above]{\small $\varepsilon$, $S \to b$} (q2);
+      \path[->] (q2) edge node[below]{\small $\varepsilon$, $\varepsilon \to T$} (q3);
+      \path[->] (q3) edge node[above]{\small $\varepsilon$, $\varepsilon \to a$} (qI);
+      \path[->] (qI) edge node {\small $\varepsilon$, $\$ \to \varepsilon$} (qF);
+      \path[->] (qI) edge node {\small $\varepsilon$, $\$ \to \varepsilon$} (qF);
+      \path[->, bend left = 30] (qI) edge node[above] {$\varepsilon, T \to a$} (q4);
+      \path[->, bend left = 30] (q4) edge node[below] {$\varepsilon, \varepsilon \to T$} (qI);
+    \end{tikzpicture}
+  \end{center}
   
 \end{example}
 
 
 \begin{example}
-  
+% completar
 \end{example}
 
 
 \section{Linguagens Reconhecíveis por APs são Livres e Contexto}
 \label{sec:ap-llc}
 
+% Incluir uma introdução
 
 \begin{lemma}
   Todo AP $P$ é equivalente a outro AP $P'$ em que:
@@ -792,7 +838,7 @@ Seja $x = ayb$, pela H.I., $A_{rs} \Rightarrow^* y$ e logo $A_{pq} \Rightarrow^*
 Por outro lado, se a pilha chega esvaziar entçai ela reconhece uma string $y$ até ficar vazia e $z$ até $q$ e $x = yz$.
 Seja $r$ o estado em $P$ quando a pilha está vazia.
 Pela H.I. $A_{pr} \Rightarrow^* y$ e $A_{rp} \Rightarrow^* z$.
-Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.  
+Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.
 \end{proof}
 
 
@@ -818,7 +864,7 @@ Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.
       \path[->] (2) edge node{$\varepsilon, \$ \to \varepsilon$} (f);
       \path[->] (0) edge node{$\varepsilon, \varepsilon \to \varepsilon$} (f);
     \end{tikzpicture}
-  \end{center}  
+  \end{center}
 
 \begin{displaymath}
   \left.\begin{array}{ccc}
@@ -857,6 +903,7 @@ $P$ reconhece $0011$, portanto essa string deve estar em $L(G)$ onde $G$ é a gr
 \section{Linguagens que não são Livres de Contexto}
 \label{sec:lnlc}
 
+% Incluir uma introdução
 
 \begin{lemma}[Bombeamento para LLCs]
   Se $A$ é uma LLC então existe $p$ (comprimento do bombeamento) tal que se $\omega \in A$ e $|\omega| \geq p$ então $\omega = uvxyz$ e:
@@ -871,14 +918,14 @@ $P$ reconhece $0011$, portanto essa string deve estar em $L(G)$ onde $G$ é a gr
   Se $A$ é uma LLC, então por definição existe uma GLC $G = \langle \Sigma, V, R, S \rangle$ tal que $L(G) = A$.
   Seja $b$ o número máximo de símbolos a direita em uma regra em $R$.
   Se partirmos de uma varíavel qualquer em $G$, em $h$ passos o comprimento máximo da string que é possível produzir é $b^h$ (se desenharmos a árvore sintática da string produzida desta forma, $h$ é a altura desta árvore).
-  
+
   O comprimento do bombeamento será $p = b^{|V| + 1}$.
-  Se $\omega \in A$ e $|\omega| \geq p$, como na hipótese, existe $k$ tal que $S \Rightarrow^k \omega$. 
+  Se $\omega \in A$ e $|\omega| \geq p$, como na hipótese, existe $k$ tal que $S \Rightarrow^k \omega$.
   Vamos supor que $k$ seja o menor valor em que $S$ deriva $\omega$.
   Note que necessariamente $k \geq |V| + 1$.
   É claro que esse caminho possui $|V|+1$ símbolos não-terminais, logo, pelo princípio da casa dos pombos, pelo menos uma variável ocorre mais de uma de uma vez neste caminho.
   Seja $T \in V$ a última variável que ocorre mais de uma vez.
-  
+
   Dividimos $\omega$ em $5$ partes $\omega = uvxyz$ de forma que a penúltima ocorrência de $T$ gera $vxy$ e a última gera $x$ (i.e. $S \Rightarrow^* uTz \Rightarrow^* uvTyz \Rightarrow uvxyz$).
 
 %DIAGRAMA
@@ -905,7 +952,7 @@ Se $|vxy| > p$ então, pelo princípio da casa dos pombos, na derivação da pen
   Temos duas possibilidades:
   \begin{enumerate}
   \item se $v$ e $y$ um único tipo de símbolo cada, então $uv^2xy^2z$ não conterá a mesma quantidade de $a$s, $b$s e $c$s e, portanto, $uv^2xy^2z \notin B$.
-  \item se $v$ ou $y$ contém mais de um símbolo distinto então $uv^2xy^2z$ contém símbolos na ordem errada e, portanto, $uv^2xy^2z \notin B$. 
+  \item se $v$ ou $y$ contém mais de um símbolo distinto então $uv^2xy^2z$ contém símbolos na ordem errada e, portanto, $uv^2xy^2z \notin B$.
   \end{enumerate}
   Concluímos que $B$ não é livre de contexto.
 \end{example}
@@ -945,4 +992,3 @@ Além disso, vimos que linguagens regulares coincidem com as linguagens reconhec
 
 No próximo capítulo passaremos à questão central do curso, a saber, a existência de problemas que não possuem solução computacional.
 Para tanto, precisamos de um modelo de computação capaz de dar conta de qualquer dispositivo mecânico.
-
