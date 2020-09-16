@@ -350,7 +350,9 @@ Onde $a \in \Sigma$, $A \in V$ e $B,C \in V - \{S\}$.
 
 Em um dos exemplos da seção anterior vimos que a linguagem não-regular $\{0^n1^n : n \geq 0\}$ é livre de contexto.
 Portanto, os autômatos finitos não são adequados para reconhecer LLC.
-Nesta seção veremos um novo modelo de computação chamado autômato com pilha  e mais para frente mostraremos sua relação íntima com as LLCs.
+Nesta seção veremos um novo modelo de computação chamado autômato com pilha e mais para frente mostraremos sua relação íntima com as LLCs.
+Um autômato com pilha acrescenta aos autômatos finitos a capacidade de armazenar um mínimo de informação -- uma mémoria muito simples.
+As informações armazenadas, porém, só podem ser acessadas na ordem inversa a que são inseridas como uma pilha (o úlitmo símbolo inserido é o primeiro a ser extraído).
 
 Um {\em autômato com pilha} (AP) é uma 6-upla $\langle Q, \Sigma, \Gamma, \delta, q_0, F \rangle$ onde:
 \begin{itemize}
@@ -485,6 +487,9 @@ L(G) = \{a^ib^jc^k : i = j \textrm{ ou } i = k\}
 
 \section{LLCs são Reconhecíveis por APs}
 \label{sec:llc-ap}
+
+Vimos que há linguagens que são representadas por GLCs que não são regulares e, portanto, não são reconhecíveis por autômatos finitos.
+Nesta seção veremos que toda linguagem livre de contexto é reconhecível por algum autômato de pilha.
 
 Para esta seção usaremos uma abreviação para descrever o empilhamento de uma sequência de símbolos.
 Seja $\omega \in \Gamma^*$, $r, q \in Q$, $a \in \Sigma$ e $s \in \Gamma$, escrevemos $\langle r, \omega \rangle \in \Delta(q, a, s)$ para indicar que ao ler $a$ no estado $q$, desempilhamos $s$ e empilhamos cada um dos símbolos de $\omega$ antes de ir para $r$.
@@ -703,7 +708,8 @@ O diagrama acima é uma abreviação para o seguinte diagrama:
 \section{Linguagens Reconhecíveis por APs são Livres e Contexto}
 \label{sec:ap-llc}
 
-% Incluir uma introdução
+Na seção anterior vimos que toda linguagem livre de contexto é reconhecível por um autômato de pilha.
+Nesta seção faremos o inverso, a saber, mostraremos que toda linguagem reconhecída por autômatos de pilha é livre de contexto.
 
 \begin{lemma}
   Todo AP $P$ é equivalente a outro AP $P'$ em que:
@@ -903,7 +909,8 @@ $P$ reconhece $0011$, portanto essa string deve estar em $L(G)$ onde $G$ é a gr
 \section{Linguagens que não são Livres de Contexto}
 \label{sec:lnlc}
 
-% Incluir uma introdução
+Para concluir nosso estudo do modelo dos autômatos de pilha, vamos mostrar exemplos de linguagens que não são livres de contexto.
+Para isso seguiremos passos análogos aos do capítulo anterior: mostraremos uma condição necessária para uma linguagem ser livre de contexto então mostraremos exemplos de linguagens que não satisfaçam essa condição e, portanto, não são livres de contexto.
 
 \begin{lemma}[Bombeamento para LLCs]
   Se $A$ é uma LLC então existe $p$ (comprimento do bombeamento) tal que se $\omega \in A$ e $|\omega| \geq p$ então $\omega = uvxyz$ e:
