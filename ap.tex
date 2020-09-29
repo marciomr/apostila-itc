@@ -269,80 +269,81 @@ Onde $a \in \Sigma$, $A \in V$ e $B,C \in V - \{S\}$.
 \begin{theorem}
   Toda linguagem livre de contexto é gerada por uma GLC na FNC.
 \end{theorem}
-\begin{proof}
-  Essa prova é construtiva.
+%\begin{proof}
+%  Essa prova é construtiva.
 
-\begin{enumerate}
-\item Criamos um novo estado $S_0$ e uma regra $S_0 \to S$
-\item Removemos cada regra da forma $A \to \varepsilon$ e criamos uma nova regra para cada ocorrência de $A$ a direita de uma regra em que $A$ não ocorre (por exemplo $R \to uAvAw$ gera três regras $R \to uvAw$, $R\to uAvw$ e $R \to uvw$).
-\item Removemos todas as regras da forma $A \to B$ e criamos uma regra $A \to u$ para cada ocorrência de $B \to u$.
-\item Substituímos $A \to u_1u_2 \dots u_k$ onde $k > 2$ e $u_i \in V \cup \Sigma$ por $A \to u_1A_1$, $A \to u_2A_2$, $\dots$, $A_{k-2} \to u_{k-1}u_k$.
-\item Substituímos $A \to cB$ (e $A \to Bc$) por $A \to BC$ (ou $A \to CB$) e $C \to c$
-\end{enumerate}
-\end{proof}
-
-\begin{example}
- Considere por exemplo a seguinte GLC:
-  \begin{eqnarray*}
-    S &\to& ASA | aB\\
-    A &\to& B | S\\
-    B &\to& b | \varepsilon
-  \end{eqnarray*}
-
-  Aplicando o primeiro passo da construção obetmos:
-\begin{eqnarray*}
-    S_0 &\to& S\\
-    S &\to& ASA | aB\\
-    A &\to& B | S\\
-    B &\to& b | \varepsilon
-  \end{eqnarray*}
-
-  Aplicando o segundo passo primeiro removemos $B \to \varepsilon$:
-  \begin{eqnarray*}
-    S_0 &\to& S\\
-    S &\to& ASA | aB | a\\
-    A &\to& B | S | \varepsilon\\
-    B &\to& b
-  \end{eqnarray*}
-
-  Em seguida removemos $A \to \varepsilon$
-  \begin{eqnarray*}
-    S_0 &\to& S\\
-    S &\to& ASA | AS | SA | aB | a\\
-    A &\to& B | S\\
-    B &\to& b
-  \end{eqnarray*}
+%\begin{enumerate}
+%\item Criamos um novo estado $S_0$ e uma regra $S_0 \to S$
+%\item Removemos cada regra da forma $A \to \varepsilon$ e criamos uma nova regra para cada ocorrência de $A$ a direita de uma regra em que $A$ não ocorre (por exemplo $R \to uAvAw$ gera três regras $R \to uvAw$, $R\to uAvw$ e $R \to uvw$).
+%\item Removemos todas as regras da forma $A \to B$ e criamos uma regra $A \to u$ para cada ocorrência de $B \to u$.
+%\item Substituímos $A \to u_1u_2 \dots u_k$ onde $k > 2$ e $u_i \in V \cup \Sigma$ por $A \to u_1A_1$, $A \to u_2A_2$, $\dots$, $A_{k-2} \to u_{k-1}u_k$.
+%\item Substituímos $A \to cB$ (e $A \to Bc$) por $A \to BC$ (ou $A \to CB$) e $C \to c$
+%\end{enumerate}
+%\end{proof}
 
 
-  Aplicando terceiro passo ficamos com o seguinte:
-  \begin{eqnarray*}
-    S_0 &\to& ASA | AS | SA | aB | a\\
-    S &\to& ASA | AS | SA | aB | a\\
-    A &\to& b | ASA | AS | SA | aB | a\\
-    B &\to& b
-  \end{eqnarray*}
+%\begin{example}
+% Considere por exemplo a seguinte GLC:
+%  \begin{eqnarray*}
+%    S &\to& ASA | aB\\
+%    A &\to& B | S\\
+%    B &\to& b | \varepsilon
+%  \end{eqnarray*}
 
-  O quarto passo consiste em substituir as sequência de mais de duas variáveis não terminais:
-  \begin{eqnarray*}
-    S_0 &\to& AA_1 | SA | AS | SA| S | aB | a\\
-    S &\to& AA_1 | AS | SA| S | aB | a\\
-    A &\to& b | AA_1 | AS | SA| S | aB | a\\
-    A_1 &\to& SA\\
-    B &\to& b
-  \end{eqnarray*}
+%  Aplicando o primeiro passo da construção obetmos:
+%\begin{eqnarray*}
+%    S_0 &\to& S\\
+%    S &\to& ASA | aB\\
+%    A &\to& B | S\\
+%    B &\to& b | \varepsilon
+%  \end{eqnarray*}
 
-  Para concluir substituímos os símbolos terminais em regras com um símbolo não terminal:
-  \begin{eqnarray*}
-    S_0 &\to& AA_1 | SA | AS | SA | UB | a\\
-    S &\to& AA_1 | AS | SA | UB | a\\
-    A &\to& b | AA_1 | AS | SA | UB | a\\
-    A_1 &\to& SA\\
-    B &\to& b\\
-    U &\to& a
-  \end{eqnarray*}
+%  Aplicando o segundo passo primeiro removemos $B \to \varepsilon$:
+%  \begin{eqnarray*}
+%    S_0 &\to& S\\
+%    S &\to& ASA | aB | a\\
+%    A &\to& B | S | \varepsilon\\
+%    B &\to& b
+%  \end{eqnarray*}
+
+%  Em seguida removemos $A \to \varepsilon$
+%  \begin{eqnarray*}
+%    S_0 &\to& S\\
+%    S &\to& ASA | AS | SA | aB | a\\
+%    A &\to& B | S\\
+%    B &\to& b
+%  \end{eqnarray*}
 
 
-\end{example}
+%  Aplicando terceiro passo ficamos com o seguinte:
+%  \begin{eqnarray*}
+%    S_0 &\to& ASA | AS | SA | aB | a\\
+%    S &\to& ASA | AS | SA | aB | a\\
+%    A &\to& b | ASA | AS | SA | aB | a\\
+%    B &\to& b
+%  \end{eqnarray*}
+
+%  O quarto passo consiste em substituir as sequência de mais de duas variáveis não terminais:
+%  \begin{eqnarray*}
+%    S_0 &\to& AA_1 | SA | AS | SA| S | aB | a\\
+%    S &\to& AA_1 | AS | SA| S | aB | a\\
+%    A &\to& b | AA_1 | AS | SA| S | aB | a\\
+%    A_1 &\to& SA\\
+%    B &\to& b
+%  \end{eqnarray*}
+
+%  Para concluir substituímos os símbolos terminais em regras com um símbolo não terminal:
+%  \begin{eqnarray*}
+%    S_0 &\to& AA_1 | SA | AS | SA | UB | a\\
+%    S &\to& AA_1 | AS | SA | UB | a\\
+%    A &\to& b | AA_1 | AS | SA | UB | a\\
+%    A_1 &\to& SA\\
+%    B &\to& b\\
+%    U &\to& a
+%  \end{eqnarray*}
+
+
+%\end{example}
 
 
 \section{Autômatos de Pilha}
@@ -401,7 +402,7 @@ A cada passo o AP lê um símbolo $\omega_{i+1} \in \Sigma \cup \{\varepsilon\}$
 
   $M$ reconhece a string $01$:
   \begin{enumerate}
-  \item Começo no estado $q_1$, emppilho $\$$ e vou para $q_2$ (pilha: $\$$).
+  \item Começo no estado $q_1$, empilho $\$$ e vou para $q_2$ (pilha: $\$$).
   \item Leio $0$, empilho $0$ e fico em $q_2$ (pilha: $0\$$).
   \item Leio $1$, desempilho $0$ e vou para $q_3$ (pilha: $\$$).
   \item Desempilho $\$$ e vou para $q_4 \in F$ (pilha: $\varepsilon$).
@@ -696,7 +697,7 @@ O diagrama acima é uma abreviação para o seguinte diagrama:
       \path[->, bend left = 30] (q4) edge node[below] {$\varepsilon, \varepsilon \to T$} (qI);
     \end{tikzpicture}
   \end{center}
-  
+
 \end{example}
 
 
