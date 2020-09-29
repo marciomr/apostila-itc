@@ -979,25 +979,77 @@ Para isso seguiremos passos análogos aos do capítulo anterior: mostraremos uma
 
   Dividimos $\omega$ em $5$ partes $\omega = uvxyz$ de forma que a penúltima ocorrência de $T$ gera $vxy$ e a última gera $x$ (i.e. $S \Rightarrow^* uTz \Rightarrow^* uvTyz \Rightarrow uvxyz$).
 
-  %DIAGRAMA
-%    \begin{center}
-%    \begin{tikzpicture}
-%      \node (S) {$S$};
-%      \node (R1) at (0,-1) {$R$};
-%      \node (R2) at (0,-2) {$R$};
- %     \path[->] (qI) edge[loop above] node[align=center] {$(, ( \to \varepsilon$\\ $), ) \to \varepsilon$\\ $\varepsilon, S \to SS$\\ $\varepsilon, S \to \varepsilon$ \\ $\varepsilon, S \to (S)$} (qI);
-  %    \path[->] (q0) edge node {\small $\varepsilon$, $\varepsilon \to S\$$} (qI);
-   %   \path[->] (qI) edge node {\small $\varepsilon$, $\$ \to \varepsilon$} (qF);
-%    \end{tikzpicture}
-%  \end{center}
+
+ \begin{center}
+    \begin{tikzpicture}
+      \node (S) {$S$};
+      \node (R1) at (0,-1) {$R$};
+      \node (R2) at (0,-2) {$R$};
+      \draw (S) to[bend right] (-3,-3);
+      \draw (S) to[bend left] (3,-3);
+      \draw (R1) to[bend right] (-2,-3);
+      \draw (R1) to[bend left] (2,-3);
+      \draw (R2) to[bend right] (-1,-3);
+      \draw (R2) to[bend left] (1,-3);
+      \draw[dotted] (S) to (R1);
+      \draw[dotted] (R1) to (R2);
+      \draw[|-|] (-3,-3) to node[below]{$u$} (-2,-3);
+      \draw[|-|] (-2,-3) to node[below]{$v$} (-1,-3);
+      \draw[|-|] (-1,-3) to node[below]{$x$} (1,-3);
+      \draw[|-|] (1,-3)  to node[below]{$y$} (2,-3);
+      \draw[|-|] (2,-3)  to node[below]{$z$} (3,-3);
+    \end{tikzpicture}
+  \end{center}
 
 Note que $S \Rightarrow^* uxz$ se substituirmos a penúltima ocorrência de $T$ pela última (i.e. $S \Rightarrow^* uTz \Rightarrow^* uxz$).
 
-%DIAGRAMA
+ \begin{center}
+    \begin{tikzpicture}
+      \node (S) {$S$};
+      \node (R) at (0,-1) {$R$};
+      \draw (S) to[bend right] (-2,-3);
+      \draw (S) to[bend left] (2,-3);
+      \draw (R) to[bend right] (-1,-2);
+      \draw (R) to[bend left] (1,-2);
+      \draw[dotted] (S) to (R);
+      \draw[dotted] (-1,-2) to (-1,-3);
+      \draw[dotted] (1,-2) to (1,-3);
+      \draw[|-|] (-2,-3) to node[below]{$u$} (-1,-3);
+      \draw[|-|] (-1,-2) to node[below]{$x$} (1,-2);
+      \draw[|-|] (1,-3) to node[below]{$z$} (2,-3);
+    \end{tikzpicture}
+  \end{center}
 
 Da mesma forma, $S \Rightarrow^* uv^ixy^iz$ para qualquer $i > 1$ bastando repetir $i$ vezes a última ocorrência de $T$ pela penúltima.
 
-%DIAGRAMA
+ \begin{center}
+    \begin{tikzpicture}
+      \node (S) {$S$};
+      \node (R1) at (0,-1) {$R$};
+      \node (R2) at (0,-2) {$R$};
+      \node (R3) at (0,-3) {$R$};
+      \draw (S) to[bend right] (-4,-3);
+      \draw (S) to[bend left] (4,-3);
+      \draw (R1) to[bend right] (-3,-3);
+      \draw (R1) to[bend left] (3,-3);
+      \draw (R2) to[bend right] (-2,-4);
+      \draw (R2) to[bend left] (2,-4);
+      \draw (R3) to[bend right] (-1,-4);
+      \draw (R3) to[bend left] (1,-4);
+      \draw[dotted] (S) to (R1);
+      \draw[dotted] (R1) to (R2);
+      \draw[dotted] (R2) to (R3);
+      \draw[dotted] (-2,-3) to (-2,-4);
+      \draw[dotted] (2,-3) to (2,-4);
+      \draw[|-|] (-4,-3) to node[below]{$u$} (-3,-3);
+      \draw[|-|] (-3,-3) to node[below]{$v$} (-2,-3);
+      \draw[|-|] (-2,-4) to node[below]{$v$} (-1,-4);
+      \draw[|-|] (-1,-4) to node[below]{$x$} (1,-4);
+      \draw[|-|] (1,-4)  to node[below]{$y$} (2,-4);
+      \draw[|-|] (2,-3)  to node[below]{$y$} (3,-3);
+      \draw[|-|] (3,-3)  to node[below]{$z$} (4,-3);
+    \end{tikzpicture}
+  \end{center}
 
 Se $|vy| = 0$ então $v = y = \varepsilon$ e, portanto, $S \Rightarrow^l uxz = \omega$ como substituindo a penúltima ocorrência de $T$ pela última e $l < k$ contrariando a suposição.
 
