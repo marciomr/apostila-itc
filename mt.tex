@@ -491,7 +491,7 @@ Dizemos que a configuração $C = \langle K, R_0, \dots, R_{k-1}, T\rangle$ de u
 A relação $\vdash_M^*$ é o fecho reflexivo transitivo de $\vdash_M$.
 
 \begin{example}
-  Considere a seguinte márquina $\langle Pi, 4 \rangle$:
+  Considere a seguinte márquina $\langle \Pi, 4 \rangle$:
   \begin{multicols}{2}
     \begin{enumerate}
     \item $store(2)$
@@ -590,9 +590,10 @@ senão
   Para toda RAM existe uma MT equivalente.  
 \end{theorem}
 \begin{proof}
-  Construir uma RAM que simula uma MT é possível, mas um exercício pedante que deixaremos aqui em aberto.
+  Construir uma RAM que simula uma MT é relativamente simples, mas pedante;
+  Deixaremos essa parte em aberto.
 
-  Construir uma MT que simula uma RAM é mais complicado, mas possível.
+  Construir uma MT que simula uma RAM é mais complicado, mas também possível.
   Para tanto precisaríamos de uma MT com $7$ fitas:
   \begin{enumerate}
   \item guarda a entrada
@@ -755,8 +756,7 @@ Poderíamos levantar a hipótese de que todo conjunto infinito possui a mesma ca
   Como $B \subseteq A$, por definição $B \in 2^A$.
   Se $f$ fosse bijetora, deveria existir $x \in A$ tal que $f(x) = B$.
 
-  Vejamos se $x \in f(x)$.
-  Mas se $x \in f(x)$, então $x \in B = f(x)$ e nesse caso $x \notin f(x)$ pela definição de $B$ o que seria uma contradição.
+  Se $x \in f(x)$, então $x \in B = f(x)$ e nesse caso $x \notin f(x)$ pela definição de $B$, o que seria uma contradição.
   Por outro lado, se $x \notin f(x) = B$ então, pela defição de $B$, temos que $x \in f(x)$, o que também seria uma contradição.
 
   Concluímos que não existe uma função bijetora entre $A$ e $2^A$.
@@ -778,9 +778,13 @@ Antes de mostrar um exemplo disso, vamos explorar uma consquência importante do
 
 \subsection{Máquina de Turing Universal}
 
-Uma MT universal $U$ recebe $m \in \Sigma_{MT}^*$ -- a representação de uma MT $M$ -- e uma entrada $x$.
+Uma MT universal $U$ recebe $\langle M \rangle \in \Sigma_{MT}^*$ -- a representação de uma MT $M$ -- e uma entrada $x$.
 A máquina $U$ e aceita essa entrada se $M$ aceita $x$ e rejeita a entrada se $M$ rejeita $x$.
-Em outras palavras $U$ reconhece a seguinte linguagem $A_{MT} := \{\langle m, x \rangle : m \in \Sigma_{MT}^*$ é a codificação de uma MT que aceita $x\}$. 
+Em outras palavras $U$ reconhece a seguinte linguagem:
+
+\begin{displaymath}
+A_{MT} := \{\langle M, x \rangle  : M \textrm{ aceita } x\} 
+\end{displaymath}
 
 A existência de uma MT universal nos mostra que se codificarmos uma única MT, a saber uma MT universal, em um harware, podemos {\em simular} qualquer MT como um software.
 Essa descoberta do começo dos anos 30 dá origem ao que hoje chamamos de {\em computação}.
@@ -788,38 +792,40 @@ Essa descoberta do começo dos anos 30 dá origem ao que hoje chamamos de {\em c
 
 \subsection{O Problema da Parada}
 
-Note que não dicemo que $U$ decide $A_{MT}$.
-Se $M$ aceita $x$, então, por definição $U$ aceita $\langle m, x\rangle$, mas não dicemos o que acontece se $M$ rejeita $x$.
-No caso de $M$ rejeitar $x$, $U$ não pode aceitar $\langle m, x \rangle$.
-Neste caso $U$ pode rejeitar $\langle m, x \rangle$, mas podem ocorrer outras coisas, por exemplo, $U$ pode entrar em loop infinito e nem aceitar nem rejeitar a entrada.
+Note que não dicemos que $U$ decide $A_{MT}$.
+Se $M$ aceita $x$, então, por definição $U$ aceita $\langle M, x\rangle$, mas não estabelecemos o que ocorre se $M$ não aceita $x$.
+Neste caso, a máquina $U$ não pode aceitar a entrada $\langle M, x \rangle$.
+Ela pode rejeitar $\langle M, x \rangle$, mas podem ocorrer outras coisas.
+$U$ pode, por exemplo, entrar em loop infinito.
+O teorema a seguir mostra que não é possível construir uma MT que decida para a entrada $\langle M, x \rangle$ se a MT $M$ reconhece $x$:
 
 \begin{theorem}
+  \label{teo:parada}
   $A_{MT}$ não é recursiva.
 \end{theorem}
 \begin{proof}
   Suponha por absurdo $A_{MT}$ seja recursiva.
   Por definição, deve existir uma MT $H$ tal que:
   \begin{displaymath}
-    H(m,x) = \left\{\begin{array}{cl}
+    H(\langle M, x \rangle) = \left\{\begin{array}{cl}
                  \textrm{aceita} & \textrm{se $M$ aceita $x$}\\
                  \textrm{rejeita} & \textrm{se $M$ não aceita $x$}\\ 
                \end{array}\right.
   \end{displaymath}
   Se essa MT existisse, poderíamos trivialmente construir uma MT $D$ que faz o seguinte:
   \begin{displaymath}
-    D(m) =  \left\{\begin{array}{cl}
-                \textrm{aceita} & \textrm{se $M$ não aceita $m$}\\
-                \textrm{rejeita} & \textrm{se $M$ aceita $m$}\\ 
+    D(\langle M \rangle) =  \left\{\begin{array}{cl}
+                \textrm{aceita} & \textrm{se $M$ não aceita $\langle M \rangle$}\\
+                \textrm{rejeita} & \textrm{se $M$ aceita $\langle M \rangle$}\\ 
               \end{array}\right.
   \end{displaymath}
 
-  Seja $d$ a codificação da MT $D$.
   Temos então que:
 
   \begin{displaymath}
-    D(d) = \left\{\begin{array}{cl}
-               \textrm{aceita} & \textrm{se $D$ não aceita $d$}\\
-               \textrm{rejeita} & \textrm{se $D$ aceita $d$}\\
+    D(\langle D \rangle) = \left\{\begin{array}{cl}
+               \textrm{aceita} & \textrm{se $D$ não aceita $\langle D \rangle$}\\
+               \textrm{rejeita} & \textrm{se $D$ aceita $\langle D \rangle$}\\
              \end{array}\right.
   \end{displaymath}
 
@@ -828,7 +834,7 @@ Neste caso $U$ pode rejeitar $\langle m, x \rangle$, mas podem ocorrer outras co
 \end{proof}
 
 \begin{corollary}
-  $\bar{A_{MT}}$ não é recursivamente enumerável.
+  $\overline{A_{MT}}$ não é recursivamente enumerável.
 \end{corollary}
 
 $A_{MT}$ é um exemplo de linguagem recursivamente enumerável que não é recursiva.
@@ -851,3 +857,141 @@ Temos três motivos para crer que a hipótese seja válida:
 \end{enumerate}
 
 Podemos manter, porém, uma postura cética e aceitar a tese enquanto não se apresenta nenhum outro modelo mais expressivo.
+
+\section{Redutibilidade}
+\label{sec:redutibilidade}
+
+Na seção anterior vimos um exemplo de problema indecidível.
+Para provar que outros problemas também são indecidíveis usaremos uma técnica chamada redução.
+Uma {\em redução} é uma maneira de converter um problema em outro.
+Assim se sabemos como resolver um problema $A$ podemos resolver outros problemas reduzindo-os a ele.
+Conversamente se sabemos que $A$ não pode ser resolvido e reduzimos $A$ a outro problema $B$ então descobrimos que $B$ também não pode ser resolvido.
+
+\begin{example}
+  \label{ex:vazio}
+  Considere a linguagem $V_{MT}$ das representações de Máquinas de Turing que reconhecem a linguagem vazia, ou seja, que não reconhecem nenhuma string.
+
+  \begin{displaymath}
+    V_{MT} := \{\langle M \rangle : L(M) = \emptyset \} 
+  \end{displaymath}
+
+  Vamos reduzir o problema $A_{MT}$ a esse problema.
+  Considere as seguintes MTs:
+
+  \begin{displaymath}
+    O_{\omega}(x) = \left\{\begin{array}{cl}
+                 \textrm{rejeita} & \textrm{se $x \neq \omega$}\\
+                 \textrm{aceita} & \textrm{se $M$ aceita $\omega$}\\ 
+               \end{array}\right.
+  \end{displaymath}
+
+  Note que a máquina $O_\omega$ simula a máquina $M$.
+  Além disso, já vimos no Exemplo \ref{ex:eq} que é possível construir uma MT que verifica se duas strings são iguais.
+
+  Agora suponha por absurdo que exista uma MT $R$ que decide $V_{MT}$.
+  Poderíamos, portanto, construir a seguinta máquina:
+
+  \begin{displaymath}
+    S(\langle M, \omega \rangle) = \left\{\begin{array}{cl}
+                 \textrm{rejeita} & \textrm{se $R$ aceita $\langle O_\omega \rangle$}\\
+                 \textrm{aceita} & \textrm{se $R$ rejeita $\langle O_\omega \rangle$}\\ 
+               \end{array}\right.
+  \end{displaymath}
+
+  Se $R$ aceita $\langle O_\omega \rangle$ então $L(O_\omega) = \emptyset$ e, portanto, $M$ não aceita $\omega$ (caso contrário $\omega \in L(O_\omega)$).
+  Ou seja, se $S$ rejeita $\langle M, \omega \rangle$ então $M$ não aceita $\omega$.
+
+  Por outro lado, se $R$ rejeita $\langle O_\omega \rangle$ então $L(O_\omega) \neq \emptyset$ e, portanto, $M$ aceita $\omega$.
+  Ou seja, se $S$ aceita $\langle M, \omega \rangle$ se e somente se $M$ aceita $\omega$.
+
+  Em outras palavras $L(S) = A_{MT}$.
+
+  Pelo Teorema \ref{teo:parada} sabemos que $A_{MT}$ é indecidível.
+  Portanto, $S$ não pode existir.
+  Vimos, porém, que a existência de $R$ implica que somos capazes de construir $S$.
+  Concluímos que $R$, uma máquina que decide $V_{MT}$, não pode existir.
+  Ou seja, $V_{MT}$ é indecidível.
+\end{example}
+
+Existem várias maneiras de definir formalmente o conceito de {\em redução} de um problema $A$ para um problema $B$.
+Focaremos em um tipo.
+A {\em redução por mapeamento} determina que existe uma {\em função computável} $f$ que converte instâncias do problema $A$ em instâncias de $B$.
+
+\begin{definition}{Função Computável}
+  Uma função $f: \Sigma^* \to \Sigma^*$ é {\em computável} se existe alguma MT $M$ que para toda entrada $\omega$ pára exatamente com $f(\omega)$ na fita.
+\end{definition}
+
+\begin{definition}{Redução por mapeamento}
+  A linguagem $A$ é {\em redutível por mapeamento} à linguagem $B$ (escrevemos $A \leq_m B$) se existe um função computável $f : \Sigma^* \to \Sigma^*$ tal que:
+  \begin{displaymath}
+    \omega \in A \textrm{ se e somente se } f(\omega) \in B
+  \end{displaymath}
+\end{definition}
+
+Derivamos dois resultados diretos dessa definição:
+
+\begin{corollary}
+  Se $A \leq_m B$ e $B$ é decidível, então $A$ é decidível.
+\end{corollary}
+\begin{proof}
+  Se $B$ é decidível então existe uma MT $M_B$ que decide $B$ -- ou seja, que aceita todas as strings $\omega \in B$ e rejeita todas as strings $\omega \notin B$.
+  Como $A \leq_m B$, por definição, existe $f$ computável que reduz de $A$ para $B$.
+  Podemos então construir uma MT $M_A$ que decide $A$ da seguinte forma:
+
+ \begin{displaymath}
+    M_A(\omega) = \left\{\begin{array}{cl}
+                 \textrm{aceita} & \textrm{se $M_B$ aceita $f(\omega)$}\\
+                 \textrm{aceita} & \textrm{se $M_B$ rejeita $f(\omega)$}\\ 
+               \end{array}\right.
+  \end{displaymath}  
+\end{proof}
+
+\begin{corollary}
+  Se $A \leq_m B$ e $A$ é indecidível, então $B$ é indecidível.
+\end{corollary}
+
+\begin{example}
+  Vamos usar a redução por mapeamento para mostrar que a seguinte linguagem é indecidível:
+  \begin{displaymath}
+    EQ_{MT} := \{\langle M_1, M_2 \rangle : L(M_1) = L(M_2)\}
+  \end{displaymath}
+
+  Considere a função $f$ que recebe como entrada $\langle M \rangle$ e produz como saída $\langle M, M_\bot\rangle$ em que $M_\bot$ é uma MT que rejeita qualquer entrada.
+  É faćil notar que $f$ é computável, basta criar uma MT que concatena na entrada a descrição da MT $M_\bot$, que é fácil de construir.
+  Essa função reduz o problema $V_{MT}$ ao problema $EQ_{MT}$, portanto, $V_{MT} \leq_m EQ_{MT}$.
+  No Exemplo \ref{ex:vazio} vimos que $V_{MT}$ não é decidível e concluímos que $EQ_{MT}$ também não é.
+\end{example}
+
+Vimos até aqui três problemas indecidíveis -- $A_{MT}$, $V_{MT}$ e $EQ_{MT}$.
+Os três recebem como entrada a codificação de uma ou mais MTs.
+Para concluir o capítulo vamos apresentar um exemplo de problema indecidível que recebe outro tipo de entrada.
+O problema a seguir foi concebido por Emil Post um cientista russo contemporâneo ao Turing que concebeu um modelo de computação muito similar ao que vimos neste capítulo.
+A prova da indecidibilidade desse problema é uma redução de $A_{MT}$ a ele, mas será omitida por conter muitos detalhes técnicos pouco interessantes.
+
+\begin{example}
+  Considere um conjunto de pares de strings $\{\langle t_1, b_1 \rangle, \langle t_2, b_2 \rangle \dots \langle t_k, b_k \rangle\}$ em que $t_i, b_i \in \Sigma^*$.
+  Um {\em emparelhamento} é uma sequência desses pares de strngs de forma que a concatenação dos $t$s seja idêntica a concatenação dos $b$s: $t_0 \cdot t_1 \cdots t_k = b_0 \cdot b_1 \cdot b_2 \cdots b_k$.
+
+  Se preferirem, podemos imaginar um par $\langle t_i, b_i \rangle$ como uma espécie de pedra de dominó.
+  No exemplo a seguir temos um emparelhamento válido com o alfabeto $\Sigma = \{a,b,c\}$.
+
+  \begin{displaymath}
+    \left[\frac{a}{ab}\right] \left[\frac{b}{ca}\right] \left[\frac{ca}{a}\right] \left[\frac{a}{ab}\right] \left[\frac{abc}{c}\right]
+  \end{displaymath}
+
+  Esse emparelhamento é válido pois a concatenação das strings da parte de cima do dominó coincide com a concatenação de baixo:
+  \begin{displaymath}
+    abcaaabc
+  \end{displaymath}
+  
+  O {\em Problema da Correspondência de Post} (PCP) é o seguinte.
+  Dado um conjunto de pares de strings (peças de dominó), determinar se existe um emparelhamento válido para esse conjunto.
+  Esse problema pode ser descrito por meio da seguinte linguagem:
+  
+  \begin{displaymath}
+    PCP := \{\langle P \rangle : P \textrm{ é uma instância que possui emparelhamento }\}
+  \end{displaymath}
+
+  Como adiantamos, a linguagem PCP é indecidível.
+\end{example}
+
