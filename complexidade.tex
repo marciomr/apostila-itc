@@ -431,6 +431,36 @@ Nesta seção apresentaremos sem as provas de redução uma lista de problemas N
   Além disso, é possível mostrar que este também é um problema NP-completo.
 \end{example}
 
+\subsection*{Transição de fase}
+
+Até aqui vimos resultados teóricos sobre NP-completude.
+Para completar nosso estudo mostraremos aqui uma constatação empírica.
+
+O problema SAT, além de ter sido o primeiro problema demostradamente NP-completo, é um dos problemas mais estudados na classe NP.
+Importantes competições para avaliara os melhores algoritmos e implementações de para esse problema são organizadas anualmente desde 2002.
+Esses programas se tornaram tão eficientes que muitas vezes compensa traduzir um problema NP qualquer para SAT e então resolvê-lo usando um desses programas.
+
+Aqueles que estudam o programa SAT notaram em meados dos anos 90 que as boas implementações de algoritmos para resolver o problema tem uma característica em comum.
+Esses algoritmos são eficientes para decidir a satisfatibilidade de fórmulas que possuem poucas cláusulas e muitas variáveis.
+Nesse caso a imensa maior parte das instâncias é satisfatível e isso é fácil de auferir computacionalmente.
+Esses algoritmos são bastante bons também para decidir a satisfatibilidade de fórmulas que possuem muitas cláusulas e poucas variáveis.
+Nesses caso a situação é inversa.
+A maior parte das fórmulas é insatisfatível e embora auferir isso seja um pouco mais difícil, o tempo de processamento é ainda bastante baixo.
+Os problemas que são realmente difíceis de processar são aqueles em que há uma proporção equilibrada de fórmulas satisfatíveis e insatisfatíveis.
+
+A Figura \ref{fig:phase-transition} plotamos de processamento do problema 3-SAT.
+O eixo $y$ desse gráfico representa o tempo médio de processamento de instâncias aleatórias desse problema.
+O eixo $x$ representa a razão $\frac{L}{N}$ em que $L$ é o número de cláusulas das instâncias e $N$ o número de variáveis proposicionais.
+O gráfico apresenta um pico quando essa fração é $4,3$ o que coincide com o ponto em que o número de instâncias satisfatíveis é igual ao número de instâncias insatisfatíveis.
+
+Esse fenômeno é chamado {\em transição de fase} em analogia a fenômenos físicos com a temperatura da água que passa por um situação singular na transição entre os estados.
+
+\begin{figure}
+  \label{fig:phase-transition}
+  \includegraphics[width=\textwidth]{phase-transition.png}
+  \caption{Transição de fase. A difículdade do problema 3-SAT ocorre no ponto em que há a mesma quatidade de instâncias satisfatíveis e insatisfatíveis.}
+\end{figure}
+
 
 \section{Relação entre as classes de complexidade de tempo}
 \label{sec:hierarquia}
