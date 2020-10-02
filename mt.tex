@@ -630,7 +630,7 @@ Porém, por mais que pareçam muito mais poderosas, assim com as outras variante
   Para toda MT não determinísitca existe uma MT simples equivalente.
 \end{theorem}
 \begin{proof}
-  Seja $N = \langle Q, \Sigma, \Gamma, \Delta, q_0, q_a, q_r \rangle$ uma MT não-determinística e seja $b$ o tamanho máximo de uma ramificação em $N$ pode chegar -- ou seja, $b = max_{(a,q) \in \Sigma \times Q}(|Delta(a,q)|)$ -- e seja então $\Sigma_b = \{1,2, \dots, b\}$.
+  Seja $N = \langle Q, \Sigma, \Gamma, \Delta, q_0, q_a, q_r \rangle$ uma MT não-determinística e seja $b$ o tamanho máximo de uma ramificação em $N$ pode chegar -- ou seja, $b = max_{(a,q) \in \Sigma \times Q}(|\Delta(a,q)|)$ -- e seja então $\Sigma_b = \{1,2, \dots, b\}$.
   
   Simularemos $N$ em uma MT com três fitas.
   A primeira fita contém a entrada $\omega$.
@@ -727,7 +727,7 @@ Nesta seção veremos que mesmo esse modelo super-expressivo tem limitações.
 
 Para tanto precisamos fazer uma digressão sobre o conceito de infinito
 
-\subsection{O infinito de Cantor}
+\subsection*{O infinito de Cantor}
 
 Dizemos que dois conjuntos $A$ e $B$ tem a mesma {\em cardinalidade} se existe uma bijeção entre eles.
 Ou seja, se existe alguma função $f: A \to B$ que leva cada elemento de $A$ em um elemento distinto de $B$ ({\em injetora}) de forma que não sobre elementos em $B$ ({\em sobrejetora}).
@@ -776,7 +776,7 @@ Ou seja, existem mais linguagens do que MTs.
 Concluímos que deve haver linguagens que não são reconhecidas por Máquinas de Turing.
 Antes de mostrar um exemplo disso, vamos explorar uma consquência importante do fato de que qualquer MT pode ser descrita como uma string.
 
-\subsection{Máquina de Turing Universal}
+\subsection*{Máquina de Turing Universal}
 
 Uma MT universal $U$ recebe $\langle M \rangle \in \Sigma_{MT}^*$ -- a representação de uma MT $M$ -- e uma entrada $x$.
 A máquina $U$ e aceita essa entrada se $M$ aceita $x$ e rejeita a entrada se $M$ rejeita $x$.
@@ -790,7 +790,7 @@ A existência de uma MT universal nos mostra que se codificarmos uma única MT, 
 Essa descoberta do começo dos anos 30 dá origem ao que hoje chamamos de {\em computação}.
 
 
-\subsection{O Problema da Parada}
+\subsection*{O Problema da Parada}
 
 Note que não dicemos que $U$ decide $A_{MT}$.
 Se $M$ aceita $x$, então, por definição $U$ aceita $\langle M, x\rangle$, mas não estabelecemos o que ocorre se $M$ não aceita $x$.
@@ -833,13 +833,16 @@ O teorema a seguir mostra que não é possível construir uma MT que decida para
   Logo, não podem existir uma MT $D$ e, portanto, não pode existir $H$ que decide $A_{MT}$.
 \end{proof}
 
+A prova do teorema acima segue uma lógica similar a demonstração do Teorema de Cantor.
+Ambas utilizam uma técnica chamada de ``diagonalização''.
+
 \begin{corollary}
   $\overline{A_{MT}}$ não é recursivamente enumerável.
 \end{corollary}
 
 $A_{MT}$ é um exemplo de linguagem recursivamente enumerável que não é recursiva.
 
-\subsection{Tese de Church-Turing}
+\subsection*{Tese de Church-Turing}
 
 Nas seções anteriores vimos o quão expressivas são as MTs.
 Nesta vimos algumas limitações.
@@ -941,7 +944,7 @@ Derivamos dois resultados diretos dessa definição:
  \begin{displaymath}
     M_A(\omega) = \left\{\begin{array}{cl}
                  \textrm{aceita} & \textrm{se $M_B$ aceita $f(\omega)$}\\
-                 \textrm{aceita} & \textrm{se $M_B$ rejeita $f(\omega)$}\\ 
+                 \textrm{rejeita} & \textrm{se $M_B$ rejeita $f(\omega)$}\\ 
                \end{array}\right.
   \end{displaymath}  
 \end{proof}
@@ -969,11 +972,19 @@ O problema a seguir foi concebido por Emil Post um cientista russo contemporâne
 A prova da indecidibilidade desse problema é uma redução de $A_{MT}$ a ele, mas será omitida por conter muitos detalhes técnicos pouco interessantes.
 
 \begin{example}
-  Considere um conjunto de pares de strings $\{\langle t_1, b_1 \rangle, \langle t_2, b_2 \rangle \dots \langle t_k, b_k \rangle\}$ em que $t_i, b_i \in \Sigma^*$.
-  Um {\em emparelhamento} é uma sequência desses pares de strngs de forma que a concatenação dos $t$s seja idêntica a concatenação dos $b$s: $t_0 \cdot t_1 \cdots t_k = b_0 \cdot b_1 \cdot b_2 \cdots b_k$.
+  Considere um conjunto de pares de strings $\{\langle t_1, b_1 \rangle, \langle t_2, b_2 \rangle, \dots, \langle t_k, b_k \rangle\}$ em que $t_i, b_i \in \Sigma^*$.
+  Um {\em emparelhamento} é uma sequência desses pares de strings de forma que a concatenação dos $t$s seja idêntica a concatenação dos $b$s.
+  (Note que não exigimos que cada par $\langle t, b \rangle$ ocorra uma única vez.)
 
-  Se preferirem, podemos imaginar um par $\langle t_i, b_i \rangle$ como uma espécie de pedra de dominó.
+  Se preferirem, podemos imaginar um par $\langle t, b \rangle$ como uma espécie de pedra de dominó.
   No exemplo a seguir temos um emparelhamento válido com o alfabeto $\Sigma = \{a,b,c\}$.
+  A entrada é dada pelo seguinte conjunto:
+
+  \begin{displaymath}
+    \Big\{  \left[\frac{ca}{a}\right], \left[\frac{b}{ca}\right], \left[\frac{abc}{c}\right], \left[\frac{a}{ab}\right] \Big\}
+  \end{displaymath}
+
+  O seguinte é um emparelhamento válido:
 
   \begin{displaymath}
     \left[\frac{a}{ab}\right] \left[\frac{b}{ca}\right] \left[\frac{ca}{a}\right] \left[\frac{a}{ab}\right] \left[\frac{abc}{c}\right]
