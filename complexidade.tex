@@ -138,6 +138,8 @@ Um {\em oráculo} (ou verificador) para uma linguagem $A$ é um algotimo $V$ tal
   A = \{\omega : V \textrm{ aceita $\langle \omega, o \rangle$ para alguma string $o$}\}
 \end{displaymath}
 
+A string $o$ na descrição acima é chamada de {\em certificado}.
+
 \begin{example}
   Seja $L = \{p_1, \dots, p_n, \bar{p_1} \dots \bar{p_n}\}$ uma alfabeto.
   Uma {\em cláusula} sobre $L$ é uma string $c \in L^*$ e uma {\em fórmula} é uma string $f \in (L\cup\{;\})^*$.
@@ -181,13 +183,28 @@ Um {\em oráculo} (ou verificador) para uma linguagem $A$ é um algotimo $V$ tal
   Se nenhum ramo $V$ aceitar a entrada então rejeitamos $\omega$.
 \end{proof}
 
+Temos, portanto, que um problema está na classe NP se existe um verificador polinomial para ele.
+Tal verificador estabelece com auxílio de um certificado, se a entrada é aceita.
+Podemos definir uma outra classe de problemas que possuem um verificador que decide em tempo polinomial se a entrada é {\em rejeitada} com auxílio e uma string chamda de {\em desqualificador}.
+Esse classe é chamada coNP.
+
+\begin{example}
+  Uma fórmula proposicional $f$ na Forma Normal Conjuntiva é {\em válida} ou uma {\em tautologia} se para toda valoração $v$ temos que $v(f) = 1$.
+
+  \begin{displaymath}
+    TAUT = \{f \in (L \cup \{;\})^*: \textrm{$V$ rejeita $\langle f, o \rangle$ para algum $o \in \{0,1\}^*$}\}
+  \end{displaymath}
+
+  O problema TAUT é, portanto, um problema CoNP.
+\end{example}
+
 \section{NP-completude}
 \label{sec:np-completude}
 
 Na última seção definimos as classes $P$ e $NP$ e mencionamos que a pergunta se $P \stackrel{?}{=} NP$ é um problema em aberto na computação.
 O que faremos então será tentar classificar que problemas são mais ``fáceis'' ou mais ``difíceis'' do que outros.
 
-Dizemos que uma função $f : \Sigma^* \to Sigma^*$ é {\em computável em tempo polinomial} se existe um polinômio $p$ e uma MT que ao receber $\omega \in \Sigma^*$ para depois de $p(|\omega|)$ passos e devolve $f(\omega)$.
+Dizemos que uma função $f : \Sigma^* \to \Sigma^*$ é {\em computável em tempo polinomial} se existe um polinômio $p$ e uma MT que ao receber $\omega \in \Sigma^*$ para depois de $p(|\omega|)$ passos e devolve $f(\omega)$.
 
 Uma linguagem $A$ é {\em polinomialmente redutível} a $B$ (escrevemos $A \leq_p B$) se existe $f: \Sigma^* \to \Sigma^*$ que seja computável em tempo polinomial e tal que $\omega \in A$ sse $f(\omega) \in B$.
 
@@ -205,6 +222,8 @@ O teorema a seguir mostra que a redutibilidade polinonimal preserva o pertencime
 \end{proof}
 
 \begin{example}
+  Considere o seguinte problema de decisão, uma restrição do problema SAT.
+  
   \begin{displaymath}
     3SAT = \{f \in SAT : \textrm{cada clásula de $f$ tem tamanho exatamente 3}\}
   \end{displaymath}
@@ -213,6 +232,8 @@ O teorema a seguir mostra que a redutibilidade polinonimal preserva o pertencime
 
   A transformação vai substituir cada cláusula $c_i = l_1 \dots l_n$ de cada fórmula $f = c_1;c_2; \dots; c_m$ pela seguinte sequência de cláusulas: $l_1l_2m_1;\overline{m_1}l_3m_2;\overline{m_2}l_4m_3; \dots ; \overline{m_{n-3}}l_{n-1}l_n$.
   Essa transformação é claramente polinomial e é possível mostrar que $f \in SAT$ sse essa nova fórmula também for satisfatível.
+
+  % exemplo da transformação
 \end{example}
 
 Uma linguagem $A$ é {\em NP-completa} se:
@@ -224,7 +245,7 @@ Uma linguagem $A$ é {\em NP-completa} se:
 Os seguintes são corolários da definição de NP-completude:
 
 \begin{corollary}
-  Seja $A$ uma linguagem NP-completa, se $A \in P$ entçao $P = NP$.
+  Seja $A$ uma linguagem NP-completa, se $A \in P$ então $P = NP$.
 \end{corollary}
 
 \begin{corollary}
@@ -240,9 +261,12 @@ Resta mostrar que pelo menos uma linguagem é NP-completa.
 A linguagem SAT é NP-completa.
 \end{theorem}
 \begin{proof}
+
+  % Explicar isso melhor
+  
   Mostramos na última seção que $SAT \in NP$.
-  Temos que mostrar que $B \neq_P SAT$ para todo $B \in NP$.
-  Se $B \in NP$ então existe uma MT não-determinística $N$ que decide $B$ em tempo polinomial $n^k$.
+  Temos que mostrar que $B \leq_P SAT$ para todo $B \in NP$.
+  Partimos da constatação de que se $B \in NP$, então existe uma MT não-determinística $N$ que decide $B$ em tempo polinomial $n^k$.
 
   Um {\em tableau} para $N$ sobre a entrada $\omega$ é uma tabela $n^k \times n^k$ cujas linhas são configurações de um ramo de $N$ com entrada $\omega$.
   Assim, a primeira linha contém a configuração inicial e deve haver um tableau que contém uma configuração de aceitação para cada $\omega \in B$.
@@ -306,5 +330,203 @@ A linguagem SAT é NP-completa.
   3SAT é NP-completa
 \end{corollary}
 
+
+\section{Problemas NP-completos}
+\label{sec:problemas}
+
+Na seção anterior vimos que há uma conjunto de problemas chamados NP-completos.
+Qualquer problema NP pode ser reduzido a um problema NP-completo.
+Assim, esses são os mais difíceis entre os problemas em NP.
+
+Vimos também que para provar que um problema é NP-completo podemos usar a técnica da redução polinomial.
+Se mostrarmos que é possível reduzir um problema NP-completo $A$ a nosso problema $B$, então $B$ e deve ser pelo menos tão difícil quanto $A$.
+Portanto, $B$ deve também ser um problema NP-completo.
+Mostrar que um problema é NP-completo não é uma prova de que ele não pode ser resolvido em tempo polinomial, mas indica que a dificuldade em encontrar uma solução polinomial não é uma incapacidade do programador, mas uma questão em aberto na ciência.
+
+Os problemas NP-completos ocorrem em diversas áreas distintas da computação.
+Nesta seção apresentaremos sem as provas de redução uma lista de problemas NP-completos.
+
+
+\begin{example}
+  O primeiro problema que trataremos é as vezes chamado de {\em problema do caixeiro viajante}.
+  Um caixeiro viagente, ou um mascate, é um vendedor que viaja de cidade em cidade levando suas mercadorias.
+  Imagino um caixeiro que precisa passar por um conjunto de cidades ligadas por uma malha de estradas.
+  Ele precisa passar por todas as cidades, mas quer evitar de passar duas vezes por uma mesma cidade, visto que isso seria ineficiente.
+  O problema do mascate é saber se existe uma forma de passar pelas cidades todas sem repetir.
+
+  O problema do caixeiro viajante poder ser modelado como um problema de grafos.
+
+  Um {\em grafo} é uma estrutura formada por um conjunto $V$ cujos elementos são chamados de {\em vértices} e um conjunto de pares de elementos $E \subseteq \{\{v,w\} : v, w \in V\}$ chamado de {\em arestas}.
+  Se $\{v,w\} \in E$ então dizemos que os vértices $v$ e $w$ são {\em adjacentes}. 
+  Um {\em caminho} em um grafo é uma sequencia de nós distintos $v_1, v_2, \dots, v_n \in V$ tal que para todo $i \in {1, \dots n-1}$ temos que $v_i$ e $v_{i+1}$ são adjacentes.
+  Um {\em ciclo} em um grafo é um caminho $v_1, v_2, \dots, v_n$ tal que $v_n$ é adjacente a $v_1$ .
+  Um {\em ciclo hamiltoniano} é um ciclo em um grafo que contém todos os vértices em $V$.
+
+  Podemos representar então as cidades como nós em um grafo $G = \langle V, E \rangle$ e as estradas como arestas.
+  O problema do caixeiro viajante se resume então ao de decidir se existe um ciclo hamiltonia em $G$.
+
+  Note que se conhecemos um ciclo hamiltoniano, podemos conferi-lo em tempo polinimial.
+  Esse ciclo é um certificado e, portanto, esse problema está em NP.
+  Além disso, é possível, embora não iremos fazê-lo, reduzir o problema 3-SAT ao problema dos ciclos hamiltonianos.
+  Portanto, esse problema é NP-completo.
+\end{example}
+
+\begin{example}
+  Imagine agora que você está organizando uma festa.
+  Cada convidado conhece outros convidados, mas não necessariamente todos.
+  Alguns amigos você conheceu em um mesmo contexto, eles fazem parte de uma mesma comunidade.
+  Nesse grupo todos conhecem todos.
+  Você se pergunta então qual será que a maior comunidade entre nesse conjunto de convidados.
+
+  Mais uma vez podemos modelar esse como um problema de grafos.
+  Os convidados são os vértices do seu grafo e uma aresta ocorre se eles se conhecem.
+  Uma conjunto de nós em que todos são adjacentes a todos os demais é chamado e um {\em clique}.
+  Dado um grafo, o {\em problema do clique} consiste em decidir se existe um clique no grafo com um certo tamanho $K$.
+
+  Se conhecemos um conjunto que resolve o problema, podemos verificá-lo em tepo polinomial.
+  Portanto, temos um cetificado e o problema está em NP.
+  É possível mostrar também que o problema do clique é NP-completo.
+\end{example}
+
+\begin{example}
+  Imagina que você possui um mapa e um estojo com $k$ lápis de cores diferentes.
+  Sua tarefa é colorir o mapa de forma que nunca dois países sejam coloridos com a mesma cor.
+
+  Novamente esse problema pode ser modelado como um problema de grafos.
+
+  Neste caso, cada país representa um nó e países que fazem fronteira são ligados por uma aresta.
+  O {\em problema da coloração} em um grafo é exatamente o de pintar os vértices com $k$ cores distintas de forma que vértices adjacentes não sejam pintados da mesma cor.
+
+  Uma instância desse problema ocorre quando $k = 3$, ou seja, quando temos 3 cores.
+  Novamente, se nos é dada uma mapeamento de cores -- que nó está pintado de que cor -- podemos verificá-lo em tempo polinomial.
+  Portanto, temos um certificado polinomial e o problema está em NP.
+  Além disso, é também mostrar que, no caso em que $k = 3$ esse problema é NP-completo.
+\end{example}
+
+\begin{example}
+  Suponha que você possui um conjunto de pedaços de rodapé de diferentes tamanhos e uma parede com um tamano determinado na qual você gostaria de aplicá-lo.
+  Qualquer pedaço desses rodapés pode ser aplicado em qualquer ordem, mas você gostaria de que ao final o comprimento total coincida exatamente com o comprimento da parede.
+  
+  Podemos modelar esse problema da seguinte forma.
+  Temos um conjunto de número inteiros $c_1, \dots, c_n$ que representam os comprimentos dos rodapés e o comprimento da parede $l$.
+  Desejamos selecionar selecionar um subonjunto $S \subseteq \{1, \dots n\}$ tal que $\sum_{i \in S} c_i = l$.
+
+  Se temos o subconjunto $S$ basta somar os elementos para verificar se a solução é válida.
+  Isso certamente pode ser feito em tempo polinomial e, poranto, o {\em problema da soma dos subconjuntos} está em NP.
+  É mais dificil, mas é possível mostrar que esse problema é em NP-completo.
+\end{example}
+
+\begin{example}
+  Suponha que você está em uma sala cheia de itens preciosos e uma mochila.
+  Você sabe o valor dos itens e sabe o peso de cada um.
+  Sua mochila tem um limite de capacidade de peso que você também conhece.
+  Seu objetivo é determinar se é possível guardar na mochila uma quantidade de itens que ultrapasse um certo valor $K$, mas não estoure a capacidade $W$ da mochila.
+
+  Podemos modelar esse problema da seguinte forma.
+  Para cada item $i$ temos seu peso que é dado por um inteiro $w_i$ e seu valor dado por outro inteiro $v_i$.
+  Existe um subconjunto $S \subseteq \{1, dots, n\}$ tal que $\sum_{i \in S} w_i \leq W$ e $\sum_{i \in S} v_i \geq K$?
+
+  Mais uma vez, se nos for dado o $S$ podemos verificar se ele satisfaz as condições em tempo polinomial.
+  Portanto, o {\em problema da mochila} está em NP.
+  Além disso, é possível mostrar que este também é um problema NP-completo.
+\end{example}
+
+
+\section{Relação entre as classes de complexidade de tempo}
+\label{sec:hierarquia}
+
+A discussão da seção anterior indica o pouco que conhecemos sobre a dificuldade de um problema.
+A classe dos problemas NP-completos é a classe dos mais difíceis dentre os problemas NP.
+Porém, não sabemos qual é relação entre a classe $P$ e a classe $NP$.
+Acreditamos que essas classes sejam distintas, mas isso nunca foi provado.
+
+A esta altura talvez seja interessante dar um passo atrás e nos perguntar uma coisa mais básica.
+Conseguimos garantir que dado mais tempo somos capazes de resolver mais problemas?
+A intuição que construímos no curso de Introdução à Analise de Algoritmo é de que sim.
+Existem problemas para os quais existem solução quadrática, mas não existe solução linear.
+
+O {\em Teorema da Hierarquia} foi possivelmente o primeiro resultado importante da teoria da complexidade.
+
+\begin{theorem}{Hierarquia}
+  \begin{displaymath}
+    TIME(t(n)) \varsubsetneq TIME(O(t^3(n))
+  \end{displaymath}
+\end{theorem}
+\begin{proof}
+  A afirmação $TIME(t(n)) \subsetneq TIME(t(n) log^2(t(n)))$ é trivial.
+  O que precisamos mostrar é que existe uma lingaguem que está em $TIME(t(n) log^2(t(n)))$, mas não está em $TIME(t(n))$.
+  
+  Vamos seguir um argumento de diagonalização similar ao da prova da indecidibilidade do problema da parada.
+  Primeiro considere a seguinte linguagem:
+
+  \begin{displaymath}
+    H_t = \{ \langle M, \omega \rangle : \textrm{ M aceita $\omega$ em no máximo $t(|\omega|)$ passos }\}
+  \end{displaymath}
+
+  Para mostrar que lingaugem $H_t \in O(t^3(n))$ precisaríamos mostrar que é possível construir uma Máquina Universal de Turinal que simula $M$ em $O(t^3(n))$ passos.
+  Essa é uma demonstração construtiva não muito interessante.
+  Antes de passar para a próxima parte da demonstração, apenas comentaremos que é simples construir uma simulação de $M$ usando um MT com 3-fitas: uma que guarda a entrada $\omega$, uma que produz a saída e outra que processa a simulação é relativamente fácil de construir.
+  Como vimos na Seção \ref{} é possível então transformar essa MT com 3-fitas em uma MT simples.
+  Esse caminho resvole o problema em tempo proporcional a $O(t^3(n))$ que é suficiente para o que pretendemos mostrar a seguir.
+  Cabe aqui comentar que é possível construir uma MT universal bem mais eficiente -- $O(t(n) log^2(t(n)))$ --, mas isso não é necessário para os resultados dessa seção.
+  
+  A parte interessante da demostração é provar que $H_t \notin TIME(t(\lfloor \frac{n}{2}\rfloor))$.
+  Suponha por absurdo o contrário.
+  Neste caso, seria possível construir a seguinte MT:
+
+  \begin{displaymath}
+    D_t(\langle M \rangle) =  \left\{\begin{array}{cl}
+    \textrm{aceita} & \textrm{se $M_{H_t}$ não aceita $\langle M, M \rangle$}\\
+    \textrm{rejeita} & \textrm{se $M_{H_t}$ aceita $\langle M, M \rangle$}\\ 
+    \end{array}\right.
+  \end{displaymath}
+
+  Note que $D_t$ processa $langle M, M \rangle$ no mesmo tempo $t(\lfloor \frac{2n+1}{2}\rfloor) = t(n)$ que $M_{H_t}$.
+
+  Podemos então repetir o mesmo argumento do problema da parada:
+  O que ocorre se passarmos a descrição $\langle D_t \rangle$ como entrada para $D_t$?
+  Se a entrada é aceita então $M_{H_t}$ não aceita $\langle D_t, D_t \rangle$, mas pela definião de $H_t$ isso significa que $D_t$ não aceita $\langle D_t \rangle$ o que é uma contradição.
+  Se a entrada não é aceita então $M_{H_t}$ aceita $\langle D_t, D_t \rangle$ e também chegamos em uma contradição.
+  Concluímos que $H_t \notin TIME(t(\lfloor \frac{n}{2}\rfloor))$.
+
+  Juntando as duas partes existe um problema que não está em $TIME(t(n))$, mas está em $TIME(t(2n + 1)^3)$.
+\end{proof}
+
+Vamos introduzir agora mais uma classe de complexidade.
+A classe $EXPTIME$ contém todos os problemas que podem ser decididos por uma Máquina de Turing determinísitica em tempo exponencial em relacão ao tamanho da entrada.
+O teorema da hierarquia nos mostra que essa classe está propriamente contida na classe $P$
+
+\begin{corollary}
+  \begin{displaymath}
+    P \subsetneq EXPTIME
+  \end{displaymath}
+\end{corollary}
+\begin{proof}
+  Partimos do fato conhecido que $P \subseteq TIME(2^n)$, ou seja, qualquer polinômio eventualemente se torna menor do que $2^n$.
+  Mas pelo Teorema da Hierarquia temos que $TIME(2^n) \varsubsetneq TIME(2^{O(n^3)}) \subseteq EXPTIME$.
+  Portanto, $P \varsubsetneq EXPTIME$.
+\end{proof}
+
+Vamos resumir o que sabemos até agora sobre as classes de complexidade.
+Apresentamos quatro classes:
+\begin{enumerate}
+\item $P$: a classe dos problemas decidíveis em tempo polinomial por uma MT determinística.
+\item $NP$: a classe dos problemas que possuem certificado polinomial.
+\item $coNP$: a classe dos problemas que possuem desqualificador polinomial.
+\item $EXPTIME$: a classe dos problemas decidívei e tempo exponencial por um MT determinística.
+\end{enumerate}
+
+Sabemos que $P \subseteq NP$ e que $P \subseteq coNP$.
+Além disso, quando introduzimos as MT não determinísticas, vimos que é possível simular qualquer uma delas em uma MT determinística.
+Essa simulação toma tempo exponencial e, portanto, $NP \subseteq EXPTIME$.
+Não é difícil perceber que da mesma forma temos que $coNP \subseteq EXPTIME$.
+Por fim, acabamos de demonstrar que $P \neq EXPTIME$.
+Sabemos, portanto que existem problemas que podemos resolver em tempo exponencial, mas que não são resolvíveis em tempo polinomial.
+Não sabemos, de fato esse é o maior problemas em aberto na computação (!), se $P \neq NP$.
+Na verdade não sabemos praticamente mais nada sobre as relações entre essas classes do que foi aqui exposto.
+
 %\section{Complexidade de Espaço}
 %\label{sec:espaco}
+
+% definição de PSPACE e NPSACE
+% Teorema de Salvitch
