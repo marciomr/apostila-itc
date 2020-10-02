@@ -478,12 +478,13 @@ Existem problemas para os quais existem solução quadrática, mas não existe s
 O {\em Teorema da Hierarquia} foi possivelmente o primeiro resultado importante da teoria da complexidade.
 
 \begin{theorem}{Hierarquia}
+  Para qualquer função $t: \mathbb{N} \to \mathbb{N}$ onde $t(n) > n$
   \begin{displaymath}
-    TIME(t(n)) \varsubsetneq TIME(O(t^3(n))
+    TIME(t(n)) \subset TIME(O(t^3(n))
   \end{displaymath}
 \end{theorem}
 \begin{proof}
-  A afirmação $TIME(t(n)) \subsetneq TIME(t(n) log^2(t(n)))$ é trivial.
+  A afirmação $TIME(t(n)) \subset TIME(t(n) log^2(t(n)))$ é trivial.
   O que precisamos mostrar é que existe uma lingaguem que está em $TIME(t(n) log^2(t(n)))$, mas não está em $TIME(t(n))$.
   
   Vamos seguir um argumento de diagonalização similar ao da prova da indecidibilidade do problema da parada.
@@ -511,7 +512,7 @@ O {\em Teorema da Hierarquia} foi possivelmente o primeiro resultado importante 
     \end{array}\right.
   \end{displaymath}
 
-  Note que $D_t$ processa $langle M, M \rangle$ no mesmo tempo $t(\lfloor \frac{2n+1}{2}\rfloor) = t(n)$ que $M_{H_t}$.
+  Note que $D_t$ processa $\langle M, M \rangle$ no mesmo tempo $t(\lfloor \frac{2n+1}{2}\rfloor) = t(n)$ que $M_{H_t}$.
 
   Podemos então repetir o mesmo argumento do problema da parada:
   O que ocorre se passarmos a descrição $\langle D_t \rangle$ como entrada para $D_t$?
@@ -528,13 +529,13 @@ O teorema da hierarquia nos mostra que essa classe está propriamente contida na
 
 \begin{corollary}
   \begin{displaymath}
-    P \subsetneq EXPTIME
+    P \subset EXPTIME
   \end{displaymath}
 \end{corollary}
 \begin{proof}
   Partimos do fato conhecido que $P \subseteq TIME(2^n)$, ou seja, qualquer polinômio eventualemente se torna menor do que $2^n$.
-  Mas pelo Teorema da Hierarquia temos que $TIME(2^n) \varsubsetneq TIME(2^{O(n^3)}) \subseteq EXPTIME$.
-  Portanto, $P \varsubsetneq EXPTIME$.
+  Mas pelo Teorema da Hierarquia temos que $TIME(2^n) \subset TIME(2^{O(n^3)}) \subseteq EXPTIME$.
+  Portanto, $P \subset EXPTIME$.
 \end{proof}
 
 Vamos resumir o que sabemos até agora sobre as classes de complexidade.
@@ -555,8 +556,117 @@ Sabemos, portanto que existem problemas que podemos resolver em tempo exponencia
 Não sabemos, de fato esse é o maior problemas em aberto na computação (!), se $P \neq NP$.
 Na verdade não sabemos praticamente mais nada sobre as relações entre essas classes do que foi aqui exposto.
 
-%\section{Complexidade de Espaço}
-%\label{sec:espaco}
+\section{Complexidade de Espaço}
+\label{sec:espaco}
 
-% definição de PSPACE e NPSACE
-% Teorema de Salvitch
+Até aqui nos ocupamos em estudar problemas que podem ser resolvidos com Máquinas de Turing que possuem uma limitação no tempo de processamento.
+Para completar nosso estudo sobre complexidade computacional, investigaremos classes de complexidade de problemas que podem ser resolvidos por MTs com espaço limitado.
+
+No modelo das MTs, o espaço é avaliado pelo número de células da fita que foram preenchidos.
+Como no caso da complexidade de tempo, mediremos a complexidade de espaço de uma MT como uma função $f: \mathbb{N} \to \mathbb{N}$ em que $n$ é o tamanho da entrada e $f(n)$ o número máximo de células preenchidas.
+
+\begin{displaymath}
+  SPACE(f(n)) = \{ L : \exists MT \textrm{ det. que decide $L$ usando espaço $O(f(n))$} \}
+\end{displaymath}
+
+No caso de uma MT não-determinística, a complexidade de espaço é medida no pior caso.
+Ou seja, $f(n)$ é o maior número de células preenchidas sobre qualquer um dos ramos.
+
+\begin{displaymath}
+  NSPACE(f(n)) = \{ L : \exists MT \textrm{ não-det. que decide $L$ usando espaço $O(f(n))$} \}
+\end{displaymath}
+
+Nos interessa particularmente a classe $PSPACE$ é a classe de todas as linguagens decidíveis usando espaço polinomial.
+
+\begin{displaymath}
+  PSPACE = \bigcup_k SPACE(n^k)
+\end{displaymath}
+
+Analogamente a classe $NPSPACE$ é a classe das linguagems decidíveis usando espaço polinomial em MTs não determinísticas.
+O teorema a seguir nos ajuda a entender a relação entre essas duas classes:
+
+\begin{theorem}[Savitch]
+  Para qualquer função $f: \mathbb{N} \to \mathbb{N}$ onde $f(n) > n$:
+  \begin{displaymath}
+    NPSPACE(f(n)) = SPACE(f^2(n))
+  \end{displaymath}
+\end{theorem}
+
+\begin{proof}
+  Para verificar se uma MT não-determinística $N$ aceita uma entrada $\omega$, vamos simulá-la usando uma MT determinística $M$, como fizemos na Capítulo \ref{}.
+  Desta vez, porém, precisamos cuidar de medir o espaço que estamos ocupando com essa simulação.
+
+  A primeira conta que precisamos fazer é calcular o número de possíveis de configurações de uma MT.
+  Definimos uma configuração como uma string da forma $\omega_1 q \omega_2$ em que $q$ é o estado atual e $\omega_1$ e $\omega_2$ são strings que representam o que está na fita antes e depois da cabeça de leitura.
+  O tamanho da string $\omega_1 \cdot \omega_2$ é no máximo $f(n)$ por definição.
+  O número de configurações possíveis é, portanto, no máximo $|Q|.|\Sigma|^{f(n)}$.
+  Os valores $|Q|$ e $|\Sigma|$ são constantes que dependem apenas da MT.
+  Portanto o número de configurações possíveis é $c^{f(n)}$ para uma constante $c$.
+
+  Podemos então imaginar um grafo em que os nós são as configurações e existe uma aresta entre duas configurações $C_i$ e $C_j$ se $C_i \Rightarrow C_j$.
+  O que precisamos testar é se existe um caminho da configuração inicial $C_0$ para alguma das possíveis configurações de aceitação.
+
+  Poderíamos resolver isso por meio de uma busca em profundidade.
+  Se recordarem da busca em profundidade em um grafo, ela usa uma chamada recursiva ou, equivalentemente, uma pilha.
+  Essa pilha deve armazenar os nós que foram visitados.
+  No pior caso, todos os nós são visitados até chegar em uma configuração de aceitação, portanto, seria necessário armazenar $c^{f(n)}$ nós.
+
+  A solução de Savitch, embora muito ineficiente do ponto de vista do tempo de execução, resolve o problema com um gasto muito modesto de espaço.
+
+  \begin{codebox}
+    \Procname{$\proc{PATH}(x, y, i)$}
+    \li \Comment Recebe dois nós $x$ e $y$ e um inteiro $i$
+    \li \Comment Verifica se existe caminho de $x$ até $y$ em $G$ de tamanho máximo $2^i$
+    \li \If $i = 0$
+    \li \Then \Return $x$ é adjacente a $y$?
+    \End
+    \li \For todos nós $z$
+    \li     \Then \Return $\proc{PATH}(x, z, i-1)$ e $\proc{PATH}(z, y, i-1)$
+    \End
+    \li \Return falso
+  \end{codebox}
+  
+  Esse algoritmo é recursivo e, portanto, precisa manter uma pilha de recursão.
+  O tamanho máximo dessa pilha é $i$.
+
+  Começamos da representação da configuração inicial $C_0$.
+  Para cada uma das possíveis configurações finais usamos o algoritmo acima para verificar se há um caminho até ela.
+  Como vimos, o tamanho máximo desse caminho é $c^{f(n)}$.
+  No pior caso, portanto, $2^i = c^{f(n)}$ o que daria $i = lg(c^{f(n)}) = O(f(n))$.
+
+  Portanto temos que armazenar no máximo $O(f(n))$ configurações cada qual com tamanho máximo $O(f(n))$.
+  Concluímos que nossa simulação ocupa espaço $O(f^2(n))$.
+\end{proof}
+
+\begin{corollary}
+  \begin{displaymath}
+    PSPACE = NPSPACE
+  \end{displaymath}
+\end{corollary}
+\begin{proof}
+  Segue do teorema anterior e o fato de que o quadrado de qualquer polinômio é um polinômio.
+\end{proof}
+
+
+Algumas relações a classe $PSPACE$ e as classes de complexidade de tempos são simples.
+Primeiro note que em tempo polínomial o máximo que somos capazes de preencher é uma quantidade polinomial de células.
+Portanto temos que $P \subseteq PSPACE$ e $NP \subseteq NPSPACE$, mas acabamos de ver que $PSPACE = NPSPACE$.
+Concluímos então que $NP \subseteq PSPACE$.
+
+Além disso, como vimos na prova do Teorema \ref{}, uma máquina que usa espaço limitado por uma função $f(n)$ pode ter no máximo $c^{f(n)}$ estados diferentes.
+Como $c$ elevado a qualquer polinômio é uma função exponencial, temos que $PSPACE \subseteq EXPTIME$.
+
+O diagrama abaixo resume todas as relações entre classes de complexidade que vimos:
+
+\begin{tikzpicture}[node distance=3cm, every node/.style={sloped},]
+  \node (P) {$P$};
+  \node (NP) at (3, -1) {$NP$};
+  \node (coNP) at (3, 1) {$coNP$};
+  \node (PSPACE) at (6, 0) {$PSPACE$};
+  \node (EXPTIME) at (10, 0) {$EXPTIME$};
+  \path (P) -- (NP) node[midway] {$\subseteq$};
+  \path (P) -- (coNP) node[midway] {$\subseteq$};
+  \path (NP) -- (PSPACE) node[midway] {$\subseteq$};
+  \path (coNP) -- (PSPACE) node[midway] {$\subseteq$};
+  \path (PSPACE) -- (EXPTIME) node[midway] {$\subseteq$};
+\end{tikzpicture}
