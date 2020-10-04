@@ -300,7 +300,89 @@ A linguagem $\L = \{\omega \# \omega : \omega \in \{a, b\}^*\}$ é recursiva.
   \end{tikzpicture}
   
 \end{example}
-  
+
+
+\section*{Hierarquia de Chomsky}
+
+A teoria das linguagens formais tem origem na convergência de diversas áreas:
+lógica e teoria das funções recursivas, circuitos booleanos, modelagem de sistemas biológicos, linguística computacional e projeto de linguagens de programação.
+Os modelos de Turing e Post são de meados dos anos 30 e 40 e deram origem à Ciência da Computação.
+O que se costumava se chamar de {\em sistemas generativos} (aqui chamados de gramáticas) começaram a ser estudados nos anos 40.
+As linguagens regulares aparecem nos trabalhos de Kleene e gramáticas livres de contexto aparecem nos trabalhos de linguistas como Bloch nessa época.
+Os trabalhos que organizaram o campo, porém, são da segunda metade dos anos 50.
+Em uma série de trabalhos seminais, Chomsky introduz o que hoje é conhecido como {\em Hierarquia de Chomsky} que apresentamos aqui.
+
+Uma {\em gramática}, no sentido mais geral, é uma tupla $\langle V, \Sigma, R, S\rangle$ cujas regras são da forma:
+
+\begin{displaymath}
+  uxv \to uyv 
+\end{displaymath}
+
+Em que $x \in V \cup \Sigma$ e $u, v, y \in (\Sigma \cup V)^*$.
+Dizemos que de uma string $\omega_1 uxv \omega_2$  derivamos outra string $\omega_1 uyv \omega_2$ a partir da gramática $G$ se a gramática possui a regra $uxv \to uyv$.
+Nesse caso escrevemos $\omega_1 u \omega_2 \Rightarrow_G \omega_1 v \omega_2$ ou simplesmente $\omega_1 u \omega_2 \Rightarrow \omega_1 v \omega_2$ se estiver claro pelo contexto sobre qual gramática nos referimos.
+As strings em $\Sigma^*$ que são derivadas a partir do variável inicial $S$ a partir de um número finito de passos de derivação formam uma linguagem que chamamos de $L(G)$.
+O {\em Tipo 0} é a classe de linguagens produzidas por quaisquer gramáticas.
+Essa classe coincide com o que chamamos de {\em recursivamente enumeráveis}.
+A demonstração desse fato foge ao escopo dessas notas.
+
+Como já vimos, se restringirmos a cabeça das regras a um únio símbolo não terminal temos o que chamamos de uma {\em Gramática Livre de Contexto} e a classe das linguagens geradas a partir delas coincide com a classe das linguagens reconhecidas por autômatos de pilha.
+Essa classe de liguagens é o {\em Tipo 2} da Hierarquia de Chomsky e está estritamente contida no Tipo 0.
+
+O {\em Tipo 3} é obtido restringindo as regras às fomas $A \to aB$ ou $A \to a$ em que $a \in \Sigma$ e $A, B \in V$.
+É possível mostrar que esse tipo de gramática gera exatamente as linguagens regulares.
+No Capítulo \ref{} mostramos que as linguagens regulares coincide com a classe das linguagens reconhecíveis por autômatos finitos.
+Vimos também um exemplo de LLC que não pertence ao Tipo 3 (a linguagem $\{a^nb^n: n \leq 0\}$).
+Portanto, o Tipo 3 está estritamente contido no 2.
+
+Por fim {\em Tipo 1} é o que hoje chamamos de {\em Linguagens Dependentes do Contexto} (LDC).
+Essas linguagens são produzidas a partir de gramáticas cujas regras são do tipo $uAv \to uyv$ em que $A \in V$ e $y \neq \varepsilon$.
+
+\begin{example}
+  Seja $G = \langle \{S, B, C, H \}, \{a,b,c\}, R, S \rangle$ tal que $R$ é formado pelas seguintes regras:
+  \begin{eqnarray*}
+    S  & \to & aSBC | aBC\\
+    CB & \to & HB \\
+    HB & \to & HC \\
+    HC & \to & BC \\
+    aB & \to & ab \\
+    bB & \to & bb \\
+    bC & \to & bc \\
+    cC & \to & cc \\
+  \end{eqnarray*}
+
+  Vamos mostrar que $aabbcc \in L(G)$
+
+  \begin{eqnarray*}
+    S  & \Rightarrow & aSBC \\
+       & \Rightarrow & aaBCBC \\
+       & \Rightarrow & aaBHBC \\
+       & \Rightarrow & aaBHCC \\
+       & \Rightarrow & aaBBCC \\
+       & \Rightarrow & aabBCC \\
+       & \Rightarrow & aabbCC \\
+       & \Rightarrow & aabbcC \\
+       & \Rightarrow & aabbcc \\
+  \end{eqnarray*}
+
+  Essa gramática dependente do contexto reconhece a linguagem $\{a^nb^nc^n : n \leq 0\}$ que não é livre de contexto.
+\end{example}
+
+A classe das linguagens dependentes de contexto coincidem com as linguagens reconhecíveis pelos chamados {\em autômatos linearmente limitados} (ALL).
+Um ALL é uma Máquina de Turing cuja fita é limitada pelo tamanho da entrada.
+Pela definição de MT que vimos, o cabeçote tem liberdade para se deslocar indefinidamente para a esquerda ou para a direita.
+Esse modelo pressupõe uma quantidade ilimitade de espaço de memória.
+Nos ALLs a memória é estritamente limitada.
+
+É possível mostrar, embora essa seja uma tarefa difícil, que existem linguagens recursivas que não estão em ALL.
+Não faremos essa demostração.
+No final deste capítulo mostraremos exemplos de linguagens recursivamente enumeráveis que não são recursivas.
+É também possível mostrar que toda LLC pode ser obtida por um ALL.
+Com isso chegamos à seguinte hierarquia que resume bem os principais resultados do campo:
+
+\begin{displaymath}
+  reg. \subset LLC \subset LDC \subset r.e. \subset rec.
+\end{displaymath}
 
 
 \section{Máquinas de Turing Múltifitas}
