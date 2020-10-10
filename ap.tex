@@ -605,7 +605,7 @@ Quando a pilha chega no fim (no símbolo $\$$), desempilhamos e vamos para o est
 
 
 \begin{example}
-  Considere a gramática $G = \langle V, \Sigma, R, S \rangle$ aonde $R$ possui as seguintes regras:
+  Considere a gramática $G = \langle \{S\}, \{0,1\}, R, S \rangle$ aonde $R$ possui as seguintes regras:
 
 \begin{displaymath}
   S \to 0S1 | \varepsilon
@@ -652,7 +652,7 @@ O diagrama acima é uma abreviação para o seguinte diagrama:
 
 
 \begin{example}
-  Considere a gramática com as seguintes regras:
+  Considere a gramática $G = \langle \{S,T\}, \{a,b\}, R, S \rangle$ com as seguintes regras:
 
   \begin{eqnarray*}
     S & \to & aTb | b \\
@@ -702,7 +702,7 @@ O diagrama acima é uma abreviação para o seguinte diagrama:
 
 
 \begin{example}
-  Considere outra gramática agora:
+  Considere outra gramática agora que possui um único não-terminal $S$ e dois dois símbolos terminais '(' e ')':
 
   \begin{eqnarray*}
     S & \to & (S) | SS | \varepsilon \\
@@ -784,15 +784,15 @@ Uma transição de $q_f'$ para si mesmo que não le nada e desempilha $s$ para c
     \end{tikzpicture}
   \end{center}
 
-    \begin{center}
-    \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
+   \begin{center}
+         \begin{tikzpicture}[node distance=2cm,auto,>=latex,every node/.style={sloped},initial text=]
       \tikzset{
         coil/.style={ decorate, decoration={ snake=coil} },
       }
       \node[state, initial, color=blue] (1) {$q_1$};
-      \node[state, minimum size=0pt, color=blue] (2) at (3,1){};
+      \node[state, minimum size=0pt, color=blue] (2) at (3,1.5){};
       \node[state, minimum size=0pt, color=blue] (3) at (3,0){};
-      \node[state, minimum size=0pt, color=blue] (4) at (3,-1){};
+      \node[state, minimum size=0pt, color=blue] (4) at (3,-1.5){};
       \node[state] (f1) at (6,0) {$q_f'$};
       \node[state, accepting] (f) at (9,0) {$q_f$};
       \path[->] (f1) edge[loop above] node {$\varepsilon, s \to \varepsilon$} (f1);
@@ -824,7 +824,7 @@ Para garantir a condição 2, substituimos toda transição que empilha e desemp
       \node[state] (qk) at (3, 0){$q_k$};
       \node[state] (qj) at (6, 0){$q_j$};
       \path[->] (qi) edge node {$a, s_1 \to \varepsilon$} (qk);
-      \path[->] (qk) edge node {$a, \varepsilon \to s_2$} (qj);
+      \path[->] (qk) edge node {$\varepsilon, \varepsilon \to s_2$} (qj);
     \end{tikzpicture}
   \end{center}
 \end{proof}
@@ -834,7 +834,7 @@ Para garantir a condição 2, substituimos toda transição que empilha e desemp
   Toda linguagem reconhecida por APs é livre de contexto.
 \end{theorem}
 \begin{proof}
-  Seja $P = \langle Q, \Sigma, \Gamma, \Delta, q_0, F \rangle$.
+  Seja $P = \langle Q, \Sigma, \Gamma, \Delta, p_0, F \rangle$.
   Pelo lema anterior existe $P'$ equivalente a $P$ satisfazendo as três proriedades.
 Criaremos uma gramática $G = \langle \Sigma, V, R, S \rangle$ que reconhece $L(P) = L(P')$.
 
@@ -885,7 +885,7 @@ Se $a$ é o símbolo lido no começo, $b$ o símbolo lido no fim, então $r$ o e
 Ou seja, se $\langle r,t \rangle \in \Delta(p, a, \varepsilon)$ e $\langle q, \varepsilon \rangle \in \Delta(s, b, t)$ então $A_{pq} \to a A_{rs} b \in R$.
 Seja $x = ayb$, pela H.I., $A_{rs} \Rightarrow^* y$ e logo $A_{pq} \Rightarrow^* x$.
 
-Por outro lado, se a pilha chega esvaziar entçai ela reconhece uma string $y$ até ficar vazia e $z$ até $q$ e $x = yz$.
+Por outro lado, se a pilha chega esvaziar então ela reconhece uma string $y$ até ficar vazia e $z$ até $q$ e $x = yz$.
 Seja $r$ o estado em $P$ quando a pilha está vazia.
 Pela H.I. $A_{pr} \Rightarrow^* y$ e $A_{rp} \Rightarrow^* z$.
 Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.
@@ -897,16 +897,16 @@ Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.
 \end{corollary}
 \begin{proof}
   Não é difícil notar que todo AFD é um AP aonde a pilha nunca é usada.
-  Vimos que toda linguagem regular é reconhecida por um AFD, portanto toda linguagem regular é reconhecida por um AP e portanto é livre de contexto.2
+  Vimos que toda linguagem regular é reconhecida por um AFD, portanto toda linguagem regular é reconhecida por um AP e portanto é livre de contexto.
 \end{proof}
 
 \begin{example}
     \begin{center}
     \begin{tikzpicture}[node distance=2cm,auto,>=latex,initial text=]
-      \node[state, initial] (0) {$0$};
-      \node[state] (1) at (3,0){$1$};
-      \node[state] (2) at (3,-2){$2$};
-      \node[state, accepting] (f) at (0,-2){$f$};
+      \node[state, initial] (0) {$q_0$};
+      \node[state] (1) at (3,0){$q_1$};
+      \node[state] (2) at (3,-2){$q_2$};
+      \node[state, accepting] (f) at (0,-2){$q_f$};
       \path[->] (1) edge[loop above] node{$0, \varepsilon \to 0$} (1);
       \path[->] (2) edge[loop below] node{$1, 0 \to \varepsilon$} (2);
       \path[->] (0) edge node{$\varepsilon, \varepsilon \to \$$} (1);
@@ -918,32 +918,32 @@ Como $A_{pq} \to A_{pr} A_{rq} \in R$ então $A_{pq} \Rightarrow^* yz = x$.
 
 \begin{displaymath}
   \left.\begin{array}{ccc}
-    \langle 1, 0 \rangle & \in & \Delta(1, 0, \varepsilon)\\
-    \langle 2, \varepsilon \rangle & \in & \Delta(2, 1, 0)\\
-  \end{array}\right\} A_{12} \to 0 A_{12} 1
+    \langle q_1, 0 \rangle & \in & \Delta(q_1, 0, \varepsilon)\\
+    \langle q_2, \varepsilon \rangle & \in & \Delta(q_2, 1, 0)\\
+  \end{array}\right\} A_{q_1q_2} \to 0 A_{q_1q_2} 1
 \end{displaymath}
 
 \begin{displaymath}
   \left.\begin{array}{ccc}
-    \langle 2, 0 \rangle & \in & \Delta(1, 0, \varepsilon)\\
-    \langle 2, \varepsilon \rangle & \in & \Delta(2, 1, 0)\\
-  \end{array}\right\} A_{12} \to 0 A_{22} 1
+    \langle q_1, 0 \rangle & \in & \Delta(q_1, 0, \varepsilon)\\
+    \langle q_2, \varepsilon \rangle & \in & \Delta(q_1, 1, 0)\\
+  \end{array}\right\} A_{q_1q_2} \to 0 A_{q_1q_1} 1
 \end{displaymath}
 
 \begin{displaymath}
   \left.\begin{array}{ccc}
-      \langle 1, \$ \rangle & \in & \Delta(0, \varepsilon, \varepsilon)\\
-      \langle f, \varepsilon \rangle & \in & \Delta(2, \varepsilon, \$)\\
-    \end{array}\right\} A_{0f} \to \varepsilon A_{12} \varepsilon
+      \langle q_1, \$ \rangle & \in & \Delta(q_0, \varepsilon, \varepsilon)\\
+      \langle q_f, \varepsilon \rangle & \in & \Delta(q_2, \varepsilon, \$)\\
+    \end{array}\right\} A_{q_0q_f} \to \varepsilon A_{q_1q_2} \varepsilon
 \end{displaymath}
 
 $P$ reconhece $0011$, portanto essa string deve estar em $L(G)$ onde $G$ é a gramática acima.
 
 
 \begin{eqnarray*}
-  A_{0f} & \Rightarrow & \varepsilon A_{12} \varepsilon \\
-        & \Rightarrow & 0 A_{12} 1 \\
-        & \Rightarrow & 00 A_{12} 11 \\
+  A_{q_0q_f} & \Rightarrow & \varepsilon A_{q_1q_2} \varepsilon = A_{q_1q_2}\\
+        & \Rightarrow & 0 A_{q_1q_2} 1 \\
+        & \Rightarrow & 00 A_{q_1q_1} 11 \\
         & \Rightarrow & 00 \varepsilon 11 = 0011
 \end{eqnarray*}
 \end{example}
@@ -977,14 +977,14 @@ Para isso seguiremos passos análogos aos do capítulo anterior: mostraremos uma
   É claro que esse caminho possui $|V|+1$ símbolos não-terminais, logo, pelo princípio da casa dos pombos, pelo menos uma variável ocorre mais de uma de uma vez neste caminho.
   Seja $T \in V$ a última variável que ocorre mais de uma vez.
 
-  Dividimos $\omega$ em $5$ partes $\omega = uvxyz$ de forma que a penúltima ocorrência de $T$ gera $vxy$ e a última gera $x$ (i.e. $S \Rightarrow^* uTz \Rightarrow^* uvTyz \Rightarrow uvxyz$).
+  Dividimos $\omega$ em $5$ partes $\omega = uvxyz$ de forma que a penúltima ocorrência de $T$ gera $vTy$ e a última gera $x$ (i.e. $S \Rightarrow^* uTz \Rightarrow^* uvTyz \Rightarrow uvxyz$).
 
 
  \begin{center}
     \begin{tikzpicture}
       \node (S) {$S$};
-      \node (R1) at (0,-1) {$R$};
-      \node (R2) at (0,-2) {$R$};
+      \node (R1) at (0,-1) {$T$};
+      \node (R2) at (0,-2) {$T$};
       \draw (S) to[bend right] (-3,-3);
       \draw (S) to[bend left] (3,-3);
       \draw (R1) to[bend right] (-2,-3);
@@ -1006,7 +1006,7 @@ Note que $S \Rightarrow^* uxz$ se substituirmos a penúltima ocorrência de $T$ 
  \begin{center}
     \begin{tikzpicture}
       \node (S) {$S$};
-      \node (R) at (0,-1) {$R$};
+      \node (R) at (0,-1) {$T$};
       \draw (S) to[bend right] (-2,-3);
       \draw (S) to[bend left] (2,-3);
       \draw (R) to[bend right] (-1,-2);
@@ -1025,9 +1025,9 @@ Da mesma forma, $S \Rightarrow^* uv^ixy^iz$ para qualquer $i > 1$ bastando repet
  \begin{center}
     \begin{tikzpicture}
       \node (S) {$S$};
-      \node (R1) at (0,-1) {$R$};
-      \node (R2) at (0,-2) {$R$};
-      \node (R3) at (0,-3) {$R$};
+      \node (R1) at (0,-1) {$T$};
+      \node (R2) at (0,-2) {$T$};
+      \node (R3) at (0,-3) {$T$};
       \draw (S) to[bend right] (-4,-3);
       \draw (S) to[bend left] (4,-3);
       \draw (R1) to[bend right] (-3,-3);
@@ -1084,7 +1084,7 @@ Se $|vxy| > p$ então, pelo princípio da casa dos pombos, na derivação da pen
     \item se $b$ não ocorre em $vy$, mas $a$ ocorre, então $uv^2xy^2z \notin C$, pois possui mais $a$s do que $b$s e se $c$ ocorre $uv^2xy^2z \notin C$ por motivo análogo;
     \item se $c$ não ocorre em $vy$ então $uv^2xy^2z \notin C$, pois a string possuiria mais $a$s ou mais $b$s do que $c$.
     \end{itemize}
-  \item se $y$ ou $z$ possuem mais de um tipo de símbolo então $uv^2xy^2z \notin C$, pois possui símbolos na ordem errada.
+  \item se $y$ ou $v$ possuem mais de um tipo de símbolo então $uv^2xy^2z \notin C$, pois possui símbolos na ordem errada.
   \end{enumerate}
   Concluímos que $C$ não é livre de contexto.
 \end{example}
