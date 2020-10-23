@@ -156,9 +156,9 @@ Um linguagem $B$ é {\em Turing-decidível} ou {\em recursiva} se existe uma MT 
 
 
 \begin{example}
-  A linguagem $\L = a^*b^*$ é recursiva.
+  A linguagem $L(a^*b^*)$ é recursiva.
 
-  \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+   \begin{tikzpicture}[node distance=2cm,auto,>=latex, every node/.style={sloped}]
     \tikzset{initial text={}}
     \node[circle, draw, initial] (q0) {};
     \node[circle, draw] (q1) at (2,0) {};
@@ -168,16 +168,16 @@ Um linguagem $B$ é {\em Turing-decidível} ou {\em recursiva} se existe uma MT 
     \path[->] (q1) edge[loop above] node {\tiny $b \rightarrow D$} (q1);
     \path[->] (q0) edge node {\tiny $b \rightarrow D$} (q1);
     \path[->] (q1) edge node {\tiny $a \rightarrow E$} (qr);
-    \path[->] (q0) edge[left] node {\tiny $\textvisiblespace \rightarrow E$} (qa);
+    \path[->] (q0) edge node {\tiny $\textvisiblespace \rightarrow E$} (qa);
     \path[->] (q1) edge node {\tiny $\textvisiblespace \rightarrow E$} (qa);
   \end{tikzpicture}
   
 \end{example}
 
 \begin{example}
-  A linguagem $\L = \{a^nb^nc^n : n \geq 0 \}$ é recursiva\footnote{Para não poluir o diagrama omitimos as transições para $q_r$}.
+  A linguagem $\{a^nb^nc^n : n \geq 0 \}$ é recursiva\footnote{Para não poluir o diagrama omitimos as transições para $q_r$}.
 
-  \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+  \begin{tikzpicture}[node distance=2cm,auto,>=latex, every node/.style={sloped}]
     \tikzset{initial text={}}
     \node[circle, draw, initial] (q0) {};
     \node[circle, draw] (q1) at (2,0) {};
@@ -187,47 +187,49 @@ Um linguagem $B$ é {\em Turing-decidível} ou {\em recursiva} se existe uma MT 
     \node[circle, draw] (q5) at (10,0) {};
     \node[circle, draw] (q6) at (12,0) {};
     \node[state] (qa) at (11,2) {$q_a$};
-    \node[circle, draw] (q7) at (2,-2) {};
-    \node[circle, draw] (q8) at (4,-2) {};
-    \node[circle, draw] (q9) at (6,-2) {};
-    \node[circle, draw] (q10) at (8,-2) {};
-    \node[circle, draw] (q11) at (7,-1) {};
+    \node[circle, draw] (q7) at (4,-2) {};
+    \node[circle, draw] (q8) at (6,-2) {};
+    \node[circle, draw] (q9) at (8,-2) {};
+    \node[circle, draw] (q10) at (10,-2) {};
+ %   \node[circle, draw] (q11) at (8,-1) {};
 
     \path[->] (q1) edge[loop above] node {\tiny $a \rightarrow D$} (q1);
-    \path[->] (q2) edge[loop above] node {\tiny $x \rightarrow D$} (q2);
+    \path[->] (q2) edge[loop above] node {\tiny $\times \rightarrow D$} (q2);
     \path[->] (q3) edge[loop above] node {\tiny $b \rightarrow D$} (q3);
-    \path[->] (q4) edge[loop above] node {\tiny $x \rightarrow D$} (q4);
-    \path[->] (q6) edge[loop below] node {\tiny $x \rightarrow E$} (q6);
+    \path[->] (q4) edge[loop above] node {\tiny $\times \rightarrow D$} (q4);
+    \path[->] (q6) edge[loop below] node {\tiny $\times \rightarrow E$} (q6);
     \path[->] (q7) edge[loop below] node {\tiny $a \rightarrow E$} (q7);
-    \path[->] (q8) edge[loop below] node {\tiny $x \rightarrow E$} (q8);
+    \path[->] (q8) edge[loop below] node {\tiny $\times \rightarrow E$} (q8);
     \path[->] (q9) edge[loop below] node {\tiny $b \rightarrow E$} (q9);
-    \path[->] (q10) edge[loop below] node {\tiny $x \rightarrow E$} (q10);
+    \path[->] (q10) edge[loop below] node {\tiny $\times \rightarrow E$} (q10);
     
-    \path[->] (q0) edge node {\tiny $a \rightarrow x,D$} (q1);
-    \path[->] (q1) edge node {\tiny $x \rightarrow D$} (q2);
-    \path[->] (q2) edge node {\tiny $b \rightarrow x,D$} (q3);
-    \path[->] (q3) edge node {\tiny $x \rightarrow D$} (q4);
-    \path[->] (q4) edge node {\tiny $c \rightarrow x,D$} (q5);
+    \path[->] (q0) edge node {\tiny $a \rightarrow \times,D$} (q1);
+    \path[->] (q1) edge node {\tiny $\times \rightarrow D$} (q2);
+    \path[->] (q2) edge node {\tiny $b \rightarrow \times,D$} (q3);
+    \path[->] (q3) edge node {\tiny $\times \rightarrow D$} (q4);
+    \path[->] (q4) edge node {\tiny $c \rightarrow \times,D$} (q5);
     \path[->] (q5) edge node {\tiny $\textvisiblespace \rightarrow E$} (q6);
     \path[->] (q6) edge node {\tiny $\textvisiblespace \rightarrow E$} (qa);
     \path[->] (q5) edge node {\tiny $c \rightarrow E$} (q10);
     \path[->] (q10) edge node {\tiny $b \rightarrow E$} (q9);
-    \path[->] (q9) edge node {\tiny $x \rightarrow E$} (q8);
+    \path[->] (q9) edge node {\tiny $\times \rightarrow E$} (q8);
     \path[->] (q8) edge node {\tiny $a \rightarrow E$} (q7);
-    \path[->] (q7) edge node {\tiny $x \rightarrow D$} (q0);
-    \path[->] (q3) edge node {\tiny $c \rightarrow x,D$} (q11);
-    \path[->] (q11) edge node {\tiny $\textvisiblespace \rightarrow E$} (q10);
+    \path[->] (q7) edge node {\tiny $\times \rightarrow D$} (q0);
+%    \path[->] (q3) edge node {\tiny $c \rightarrow \times,D$} (q11);
+%    \path[->] (q11) edge node {\tiny $\textvisiblespace \rightarrow E$} (q10);
 
     \path[->, bend left = 30] (q0) edge node {\tiny $\textvisiblespace \rightarrow D$} (qa);
-    \path[->, bend right = 30] (q1) edge node {\tiny $b \rightarrow x,D$} (q3);
-  \end{tikzpicture}  
+    \path[->, bend right = 30] (q1) edge[below] node {\tiny $b \rightarrow \times,D$} (q3);
+    \path[->, bend right = 30] (q3) edge[below] node {\tiny $c \rightarrow \times,D$} (q5);
+  \end{tikzpicture}
+
 \end{example}
 
 \begin{example}
   \label{ex:eq}
-A linguagem $\L = \{\omega \# \omega : \omega \in \{a, b\}^*\}$ é recursiva.
+A linguagem $\{\omega \# \omega : \omega \in \{a, b\}^*\}$ é recursiva.
 
-  \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+  \begin{tikzpicture}[node distance=2cm,auto,>=latex, every node/.style={sloped}]
     \tikzset{initial text={}}
     \node[circle, draw, initial] (q0) {};
     \node[circle, draw] (q1) at (2,2) {};
@@ -240,27 +242,27 @@ A linguagem $\L = \{\omega \# \omega : \omega \in \{a, b\}^*\}$ é recursiva.
     \node[state] (qa) at (0,-4) {$q_a$};
     \node[state] (qr) at (7,0) {$q_r$};
 
-    \path[->] (q0) edge[loop above] node {\tiny $x \rightarrow D$} (q0);
-    \path[->] (q1) edge[loop above, align=left] node {{\tiny $a \rightarrow D$}\\{\tiny $b \rightarrow D$}} (q1);
-    \path[->] (q2) edge[loop above] node {\tiny $x \rightarrow D$} (q2);
-    \path[->] (q3) edge[loop above, align=left] node {{\tiny $a \rightarrow E$}\\{\tiny $b \rightarrow E$}} (q3);
-    \path[->] (q4) edge[loop right] node {\tiny $x \rightarrow E$} (q4);
-    \path[->] (q5) edge[loop below, align=left] node {{\tiny $a \rightarrow D$}\\{\tiny $b \rightarrow D$}} (q5);
-    \path[->] (q6) edge[loop below] node {\tiny $x \rightarrow D$} (q6);
-    \path[->] (q7) edge[loop left] node {\tiny $x \rightarrow D$} (q7);
+    \path[->] (q0) edge[loop above] node {\tiny $\times \rightarrow D$} (q0);
+    \path[->] (q1) edge[loop above] node {{\tiny $a \rightarrow D$},\\{\tiny $b \rightarrow D$}} (q1);
+    \path[->] (q2) edge[loop above] node {\tiny $\times \rightarrow D$} (q2);
+    \path[->] (q3) edge[loop above] node {{\tiny $a \rightarrow E$},\\{\tiny $b \rightarrow E$}} (q3);
+    \path[->] (q4) edge[loop right] node {\tiny $\times \rightarrow E$} (q4);
+    \path[->] (q5) edge[loop below] node {{\tiny $a \rightarrow D$},\\{\tiny $b \rightarrow D$}} (q5);
+    \path[->] (q6) edge[loop below] node {\tiny $\times \rightarrow D$} (q6);
+    \path[->] (q7) edge[loop left] node {\tiny $\times \rightarrow D$} (q7);
 
-    \path[->] (q0) edge node {\tiny $b \rightarrow x,D$} (q1);
+    \path[->] (q0) edge node {\tiny $b \rightarrow \times,D$} (q1);
     \path[->] (q1) edge node {\tiny $\# \rightarrow D$} (q2);
-    \path[->] (q2) edge node {\tiny $b \rightarrow x,E$} (q4);
-    \path[->] (q2) edge node {{\tiny $\textvisiblespace \rightarrow D$}\\{\tiny $a \rightarrow D$}} (qr);
+    \path[->] (q2) edge node {\tiny $b \rightarrow \times,E$} (q4);
+    \path[->] (q2) edge node {{\tiny $\textvisiblespace \rightarrow D$},\\{\tiny $a \rightarrow D$}} (qr);
     \path[->] (q4) edge node {\tiny $\# \rightarrow E$} (q3);
     \path[->] (q3) edge node {\tiny $x \rightarrow D$} (q0);
-    \path[->] (q0) edge node {\tiny $a \rightarrow x,D$} (q5);
+    \path[->] (q0) edge node {\tiny $a \rightarrow \times,D$} (q5);
     \path[->] (q5) edge node {\tiny $\# \rightarrow D$} (q6);
-    \path[->] (q6) edge node {\tiny $a \rightarrow x,E$} (q4);
-    \path[->] (q6) edge[right] node {{\tiny $\textvisiblespace \rightarrow D$}\\{\tiny $b \rightarrow D$}} (qr);
-    \path[->] (q0) edge[left] node {\tiny $\# \rightarrow D$} (q7);
-    \path[->] (q7) edge[left] node {\tiny $\textvisiblespace \rightarrow D$} (qa);
+    \path[->] (q6) edge node {\tiny $a \rightarrow \times,E$} (q4);
+    \path[->] (q6) edge node {{\tiny $\textvisiblespace \rightarrow D$},\\{\tiny $b \rightarrow D$}} (qr);
+    \path[->] (q0) edge node {\tiny $\# \rightarrow D$} (q7);
+    \path[->] (q7) edge node {\tiny $\textvisiblespace \rightarrow D$} (qa);
   \end{tikzpicture}  
 
 \end{example}
@@ -303,7 +305,7 @@ A linguagem $\L = \{\omega \# \omega : \omega \in \{a, b\}^*\}$ é recursiva.
 
 
 
-\section{Máquinas de Turing Múltifitas}
+\section{Máquinas de Turing Multifitas}
 \label{sec:mt-fitas}
 
 Uma variante das Máquinas de Turing são aquelas com múltiplas fitas.
@@ -357,7 +359,7 @@ Ou seja, a função de transição leva um estado e $k$ símbolos em um novo est
   \item a entrada $a_1 \dots a_n$ será representada em uma única fita como $\# \bar{a_1} \dots a_n \# \textvisiblespace \# \dots \#$
   \item varre a entrada para verificar os símbolos sendo lidos
   \item varre novamente efetuando as transições em cada um dos trechos da fita
-  \item se em algum ponto estivermos em $\#$ e a instrução for $D$ devemos abrir um espaço em branco antes de $\#$ (Exercício \ref{ex:space}).
+  \item se em algum ponto estivermos em $\#$ e a instrução for $D$ devemos abrir um espaço em branco antes de $\#$ (Exemplo \ref{ex:space}).
   \end{itemize}
 \end{proof}
 
@@ -477,7 +479,7 @@ Além disso, o programa mantém um contador $K$ que indica a instrução a ser e
   \caption{Catálogo de instruções de uma RAM}
 \end{table}
 
-Uma {\em Máquina de Acesso Aleatório} (RAM) é um par $M = \langle k, \Pi\rangle$ em que $k > 0$ indica o número de registradores e $\Pi = \langle \pi_0, \pi_1, \dots, \pi_n \rangle$ é uma sequência de instruções (programa) da Tabela \ref{tab:instrucoes} admitindo que $\pi_n = halt$. 
+Uma {\em Máquina de Acesso Aleatório} (RAM) é um par $M = \langle k, \Pi \rangle$ em que $k > 0$ indica o número de registradores e $\Pi = \pi_0, \pi_1, \dots, \pi_n $ é uma sequência de instruções (programa) da Tabela \ref{tab:instrucoes} admitindo que $\pi_n = halt$. 
 
 Formalmente um {\em configuração} de uma RAM é uma $k+2$-upla $\langle K, R_0, \dots, R_{k-1}, T\rangle$ em que:
 \begin{enumerate}
@@ -487,15 +489,15 @@ Formalmente um {\em configuração} de uma RAM é uma $k+2$-upla $\langle K, R_0
 \item $T: \mathbb{N} \to \mathbb{N}$ leva um natural $i$ ({\em endereço}) em seu {\em conteúdo} $m$.
 \end{enumerate}
 
-Dizemos que a configuração $C = \langle K, R_0, \dots, R_{k-1}, T\rangle$ de uma RAM $M = \langle k, \Pi\rangle$ {\em produz em um passo} $C' = \langle K', R_0', \dots, R_{k-1}', T'\rangle$ (escrevemos $C \vdash_M C'$) se $C'$ reflete o resultado da aplicação da instrução $\pi_K$ em $C$.
-A relação $\vdash_M^*$ é o fecho reflexivo transitivo de $\vdash_M$.
+Dizemos que a configuração $C = \langle K, R_0, \dots, R_{k-1}, T\rangle$ de uma RAM $M = \langle k, \Pi\rangle$ {\em produz em um passo} $C' = \langle K', R_0', \dots, R_{k-1}', T'\rangle$ (escrevemos $C \Rightarrow_M C'$) se $C'$ reflete o resultado da aplicação da instrução $\pi_K$ em $C$.
+Se partindo de $C$ produzimos $C'$ em um número finito de passos, então escrevemos $C \Rightarrow^*_M C'$.
 
 \begin{example}
   Considere a seguinte márquina $\langle \Pi, 4 \rangle$:
   \begin{multicols}{2}
     \begin{enumerate}
     \item $store(2)$
-    \item $jzero(9)$
+    \item $jzero(10)$
     \item $load(3)$
     \item $add(1)$
     \item $store(3)$
@@ -537,7 +539,7 @@ A relação $\vdash_M^*$ é o fecho reflexivo transitivo de $\vdash_M$.
 
   Simulando com entrada $2$ e $3$ podemos conferir que:
 \begin{displaymath}
-\langle 1;2,3,0,0; \emptyset \rangle \vdash_M^* \langle 10; 6,3,0,6; \emptyset\rangle
+\langle 1;2,3,0,0; \emptyset \rangle \Rightarrow_M^* \langle 11; 6,3,0,6; \emptyset\rangle
 \end{displaymath}
   
 Para faciliar a leitura e a escrita de programas podemos usar a abreviação $R_3 \leftarrow R_3 + R_1$ para a sequência comum de instruções $load(3)$, $add(1)$, $store(3)$ e $R_2 \leftarrow R_2 - 1$ para $load(2)$, $sub(=1)$, $store(2)$.
@@ -548,7 +550,7 @@ O programa anterior pode, então ser reescrito da seguinte forma:
 
 \begin{verbatim}
 z = x
-while y > 0
+enquanto y > 0
    z = z + x
    y = y - 1
 x = z
@@ -559,30 +561,99 @@ Considere um alfabeto finite $\Sigma$.
 Podemos enumerar seus elementos $E: \Sigma \to \mathbb{N}$.
 A {\em configuração inicial} de uma RAM $M = \langle K, \Pi \rangle$ cuja entrada é $\omega = a_1 \dots a_n$ é $\langle 1;0,0, \dots; T \rangle$ em que $T[1] = E(a_1)$, $T[2] =E(a_2)$ $\dots$ $T[n] = E(a_n)$.
 
-Dizemos que $M$ {\em aceita} $x \in \Sigma^*$ se a configuração inicial de $M$ para entrada $x$ produz uma configuração de parada em que $R_0 = 1$ e {\em reiejta} $x$ se produz uma configuração de parada em que $R_0 = 1$.
-Dizemos que $M$ {\em decide} uma linguagem $\L$ se $M$ aceita todo $x \in \L$ e rejeita todo $x \notin \L$.
+Dizemos que $M$ {\em aceita} $x \in \Sigma^*$ se a configuração inicial de $M$ para entrada $x$ produz uma configuração de parada em que $R_0 = 1$ e {\em reiejta} $x$ se produz uma configuração de parada em que $R_0 = 0$.
+Dizemos que $M$ {\em decide} uma linguagem $A$ se $M$ aceita todo $x \in A$ e rejeita todo $x \notin A$.
 
 \begin{example}
-  Sendo a instrução $aceita$ é uma abreviação para $load(=1)$ seguido de $halt$ e a instrução $rejeita$ uma abreviação para $load(=0)$ seguido de $halt$, o seguinte programa decide a linguagem $\L = \{a^nb^nc^n : n \geq 0 \}$
+O seguinte programa decide a linguagem $\{a^nb^nb^n : n \geq 0\}$ considerando que $E(a) = 1$, $E(b) = 2$ e $E(c) = 3$:
 
+     \[\begin{array}{llr}
+       1 & load(=0) & \\
+       2 & store(1) & R_1 = 0\\
+       3 & store(2) & R_2 = 0\\
+       4 & store(3) & R_3 = 0\\
+       5 & load(=1) & \\
+       6 & store(4) & R_4 = 1\\
+     \end{array}\]
+     \[\left.\begin{array}{llr}
+       7 & read(4) & \\
+       8 & sub(=1) &  T[R_4] - 1\\
+       9 & jzero(17) & \\
+       10 & load(4) & \\
+       11 & add(=1) & \\
+       12 & store(4) & R_4 += 1\\
+       13 & load(1) & \\
+       14 & add(=1) & \\
+       15 & store(1) & R_1 += 1 \\
+       16 & jump(7) & \\
+     \end{array}\right\} \textrm{enquanto } T[R_4] = 1\]
+     \[\left.\begin{array}{llr}
+       17 & read(4) & \\
+       18 & sub(=2) & T[R_4] - 2\\
+       19 & jzero(27) & \\
+       20 & load(4) & \\
+       21 & add(=1) & \\
+       22 & store(4) & R_4 += 1\\
+       23 & load(2) & \\
+       24 & add(=1) & \\
+       25 & store(2) & R_2 += 1 \\
+       26 & jump(17) & \\
+     \end{array}\right\} \textrm{enquanto } T[R_4] = 2\]
+     \[\left.\begin{array}{llr}
+       27 & read(4) & \\
+       28 & sub(=3) &  T[R_4] - 3\\
+       29 & jzero(37) & \\
+       30 & load(4) & \\
+       31 & add(=1) & \\
+       32 & store(4) & R_4 += 1\\
+       33 & load(3) & \\
+       34 & add(=1) & \\
+       35 & store(3) & R_3 += 1 \\
+       36 & jump(27) & \\
+     \end{array}\right\} \textrm{enquanto } T[R_4] = 3\]
+     \[\left.\begin{array}{llr}
+       37 & load(1) & \\
+       38 & sub(2)  & R_1 - R_2\\
+       39 & jzero(42) & \\
+       40 & load(=0) & \\
+       41 & halt & rejeita \\
+     \end{array}\right\} \textrm{rejeita se } R_1 \neq R_2\]
+     \[\left.\begin{array}{llr}
+       42 & load(2) & \\
+       43 & sub(3)  & R_2 - R_3\\
+       44 & jzero(47) & \\
+       45 & load(=0) & \\
+       46 & halt & rejeita \\
+     \end{array}\right\} \textrm{rejeita se } R_2 \neq R_3\]
+     \[\left.\begin{array}{llr}
+       47 & read(4) & \\
+       48 & jzero(51) & \\
+       49 & load(=0) & \\
+       50 & halt & rejeita \\
+     \end{array}\right\} \textrm{rejeita se } T[R_4] \neq 0\] 
+     \[\left.\begin{array}{llr}
+       51 & load(=1) & \\
+       52 & halt     & \\
+     \end{array}\right\} \textrm{aceita se tiver chegado aqui} \]
+
+O seguinte é uma abreviação desse programa:
+     
 \begin{verbatim}
-a = 0
-b = 0
-c = 0
+a = b = c = 0
 n = 1
-while T[n] == 1
+enquanto T[n] == 1
    n = n + 1
    a = a + 1
-while T[n] == 2
+enquanto T[n] == 2
    n = n + 1
    b = b + 1
-while T[n] == 3
+enquanto T[n] == 3
    n = n + 1
    c = c + 1
-se a == b && T[n] == 0
-   aceita
-senão
+se a != b || b != c || T[n] != 0
    rejeita
+senão
+   aceita
 \end{verbatim}  
 \end{example}
 
@@ -622,6 +693,11 @@ Em que $\Delta$ não é uma função de transição que recebe um estado e um s�
   \Delta : Q \times \Gamma \to 2^{Q \times \Gamma \times \{E,D\}}
 \end{displaymath}
 
+Assim, partindo da configuração inicial, a cada passo temos um conjunto de próximas configurações possíveis.
+Podemos imaignar se formando uma árvore de configurações.
+A entrada é aceita se algum dos ramos da árvore chega a uma configuração de aceitação.
+A entrada é rejeitada apenas quando todos os ramos chegam em uma configuração de rejeição.
+
 Máquinas não-determinísticas são ideias.
 Não temos pretenção de construí-las.
 Porém, por mais que pareçam muito mais poderosas, assim com as outras variantes de MT que vimos até aqui, essas máquinas também computam o mesmo que uma MT simples.
@@ -637,12 +713,14 @@ Porém, por mais que pareçam muito mais poderosas, assim com as outras variante
   A segunda fita fará a simulação e a terceira contém uma string $s \in \Sigma_b^*$ que indica as escolhas não determinísticas a serem feitas.
   \begin{enumerate}
   \item Copiamos $\omega$ para a fita 2.
-  \item Seguindo o indicado na fita 3 simulamos as transições na fita 2.
-    Se chegarmos a um estado de rejeição ou se esgotarmos as instruções da fita 3 vamos para o item 3.
+  \item Simulamos $N$ na fita 2.
+    Antes de cada passo, verificamos o próximo símbolo da fita 3 para escolher qual das transições válidas seguir.
+    Se processamos todos os símbolos da fita 3, não há mais instruções válidas ou encontramos um estado de rejeição, vá para o próximo item.
+    Se encontramos um estado de aceitação, pare e aceite a entrada.
   \item Apagamos todo o conteúdo da fita 3 e escrevemos a próxima string em $\Sigma_b^*$ na ordem lexicográfica, apagamos a fita 2 e voltamos para o passo 1.
   \end{enumerate}
 
-  Em poucas palavras, estamos fazendo uma busca em largura nas configurações de $N$ e são paramos quando chegamos em um estado de aceitação.
+  Em poucas palavras, estamos fazendo uma busca em largura nas configurações de $N$.
 \end{proof}
 
 \begin{example}
@@ -662,7 +740,7 @@ Porém, por mais que pareçam muito mais poderosas, assim com as outras variante
   Vamos simular essa máquina com entrada $\omega = aa$.
   Nesse caso $b = 2$
 
-  \begin{tikzpicture}[node distance=2cm,auto,>=latex]
+  \begin{tikzpicture}[node distance=2cm,auto,>=latex, every node/.style={sloped}]
     \tikzset{initial text={}}
     \node (c0) {$C_0 = q_0aa$};
     \node (c1) at (-4, -2) {$C_1 = bq_1a$};
@@ -672,12 +750,12 @@ Porém, por mais que pareçam muito mais poderosas, assim com as outras variante
     \node (c21) at (2, -4) {$C_{21} = aaq_0\textvisiblespace$};
     \node (c22) at (6, -4) {$C_{22} = abq_1\textvisiblespace$};
     
-    \path[->] (c0) edge[left] node {$1$} (c1);
-    \path[->] (c0) edge[right] node {$2$} (c2);
-    \path[->] (c1) edge[left] node {$1$} (c11);
-    \path[->] (c1) edge[right] node {$2$} (c12);
-    \path[->] (c2) edge[left] node {$1$} (c21);
-    \path[->] (c2) edge[right] node {$2$} (c22);
+    \path[->] (c0) edge node {$1$} (c1);
+    \path[->] (c0) edge node {$2$} (c2);
+    \path[->] (c1) edge node {$1$} (c11);
+    \path[->] (c1) edge node {$2$} (c12);
+    \path[->] (c2) edge node {$1$} (c21);
+    \path[->] (c2) edge node {$2$} (c22);
   \end{tikzpicture}
 
   \begin{center}
@@ -710,8 +788,9 @@ O que se costumava se chamar de {\em sistemas generativos} (aqui chamados de gra
 As linguagens regulares aparecem nos trabalhos de Kleene e gramáticas livres de contexto aparecem nos trabalhos de linguistas como Bloch nessa época.
 Os trabalhos que organizaram o campo, porém, são da segunda metade dos anos 50.
 Em uma série de trabalhos seminais, Chomsky introduz o que hoje é conhecido como {\em Hierarquia de Chomsky} que apresentamos aqui.
-Para completar essa micro-retrospectiva histórica, os anos 60 foram marcados pelo desenvolvimento da área de complexidade computacional que tratareomos no próximo capítulo.
-Já nos anos 70 e 80, a complexidade computacional estabeleceu as bases dos fundamentos teóricos da criptografia.
+Para completar essa micro-retrospectiva histórica, os anos 60 foram marcados pelo desenvolvimento da área de complexidade computacional que trataremos no próximo capítulo.
+Nos anos 70 e 80, a complexidade computacional estabeleceu as bases dos fundamentos teóricos da criptografia.
+Desde os anos 90 uma dos temas mais quentes na área é o da computação quântica, seus modelos de computação e sua complexidade.
 
 
 Uma {\em gramática}, no sentido mais geral, é uma tupla $\langle V, \Sigma, R, S\rangle$ cujas regras são da forma:
@@ -889,7 +968,7 @@ Antes de mostrar um exemplo disso, vamos explorar uma consquência importante do
 \subsection*{Máquina de Turing Universal}
 
 Uma MT universal $U$ recebe $\langle M \rangle \in \Sigma_{MT}^*$ -- a representação de uma MT $M$ -- e uma entrada $x$.
-A máquina $U$ e aceita essa entrada se $M$ aceita $x$ e rejeita a entrada se $M$ rejeita $x$.
+A máquina $U$ e aceita essa entrada se $M$ aceita $x$ e rejeita a entrada se $M$ rejeita $x$\footnote{Para uma descrição compreensível da construção de uma MT universal tal qual descrita por Turing, veja \url{https://plato.stanford.edu/entries/turing-machine/\#TuriUnivMach} (Consultado em outubro de 2020)}.
 Em outras palavras $U$ reconhece a seguinte linguagem:
 
 \begin{displaymath}
